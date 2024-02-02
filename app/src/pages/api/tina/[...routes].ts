@@ -2,6 +2,7 @@ import { TinaNodeBackend, LocalBackendAuthProvider } from "@tinacms/datalayer";
 import { AuthJsBackendAuthProvider, TinaAuthJSOptions } from "tinacms-authjs";
 
 import databaseClient from "../../../../tina/__generated__/databaseClient";
+import {IncomingMessage, ServerResponse} from "node:http";
 
 const isLocal = process.env.TINA_PUBLIC_IS_LOCAL === "true";
 
@@ -17,7 +18,8 @@ const handler = TinaNodeBackend({
   databaseClient,
 });
 
-export default (req, res) => {
+const handle = (req: IncomingMessage, res: ServerResponse) => {
   // Modify the request here if you need to
   return handler(req, res);
 };
+export default handle;
