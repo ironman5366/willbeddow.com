@@ -1,10 +1,9 @@
-import Link from "next/link";
-
+import SquigglyCard from "@/components/molecules/SquigglyCard";
+import {Center} from "@mantine/core";
 export default function Home() {
-  return <div>
-    Hello
-   <Link href="/demo/blog/hello-world/">
-    Tina link
-  </Link>
-  </div>
+  return <Center>
+      <SquigglyCard>
+          Hello world
+      </SquigglyCard>
+  </Center>
 }
