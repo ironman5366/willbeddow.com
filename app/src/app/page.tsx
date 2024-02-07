@@ -1,9 +1,14 @@
 'use client'
-import {Affix, Grid, Text, Title} from "@mantine/core";
+import {Affix, Anchor, Grid, Text, Title} from "@mantine/core";
 import flower from "../../public/flower.svg"
 import HeroCard from "@/components/atoms/HeroCard";
 import Image from "next/image";
-import BlogTable from "@/components/organisms/BlogTable";
+import dynamic from "next/dynamic";
+
+// TODO: for some reason, even though BlogTable is a ClientComponent,
+//  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
+//  next app router - I should look into this again in a few months when things have stablized more between next tina and mantine
+const BlogTable = dynamic(() => import("@/components/organisms/BlogTable"), { ssr: false})
 
 
 export default function Home() {
@@ -20,15 +25,20 @@ export default function Home() {
               <HeroCard />
           </Grid.Col>
           <Grid.Col span={4}>
-              <Title order={3}>
-                  My latest posts
+              <Title c={"wine"}>
+                  Writing
               </Title>
               <BlogTable />
           </Grid.Col>
           <Grid.Col span={12}>
-              <Text>
-                  ABC 123 lorem ipsum
+              <Text c={"wine"}>
+                  Find me at:
               </Text>
+              <ul>
+                  <li>
+                      <Anchor href={"https://github.com/ironman5366"}>github.com/ironman5366</Anchor>
+                  </li>
+              </ul>
           </Grid.Col>
       </Grid>
       <Affix position={{ bottom: 0, left: 20}}>

@@ -2,7 +2,7 @@ import '@mantine/core/styles.css';
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import {createTheme, MantineProvider} from "@mantine/core";
+import {MantineProvider} from "@mantine/core";
 import theme from "@/theme";
 
 export const metadata: Metadata = {

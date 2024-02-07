@@ -3,14 +3,10 @@ import {Text, Title} from "@mantine/core";
 
 export default function HeroCard() {
     return <div>
-        <Title size={80} style={{
-            color: "#753742",
-        }}>
+        <Title size={80} c="wine">
             Hi, I&apos;m Will
         </Title>
-        <Text style={{
-            color: "#753742",
-        }} size={"xl"}>
+        <Text c={'wine'} size={"xl"}>
             I like writing code, being outside, and websites that feel cozy.
         </Text>
     </div>

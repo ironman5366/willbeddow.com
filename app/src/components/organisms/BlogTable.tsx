@@ -3,7 +3,7 @@ import React from "react";
 import {Table} from "@mantine/core";
 
 export default function BlogTable() {
-    return <Table>
+    return <Table c={"wine"}>
         <Table.Tr>
             <Table.Th>
                 Title
