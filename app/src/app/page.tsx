@@ -1,8 +1,7 @@
 'use client'
-import {Card, Center, Container, Flex, Grid, Text, Title} from "@mantine/core";
+import {Grid} from "@mantine/core";
 import flower from "../../public/flower.svg"
 import HeroCard from "@/components/atoms/HeroCard";
-import { Chicle } from "next/font/google"
 
 
 export default function Home() {
