@@ -1,5 +1,4 @@
 import { defineConfig } from "tinacms";
-import {getDocumentPath} from "@/blogUtils";
 
 // Your hosting provider likely exposes this as an environment variable
 const branch =
@@ -60,7 +59,7 @@ export default defineConfig({
         ],
         ui: {
           // This is an DEMO router. You can remove this to fit your site
-          router: ({ document }) => getDocumentPath(document),
+          router: ({ document }) => `/posts/${document?._sys?.filename}`,
         },
       },
     ],
