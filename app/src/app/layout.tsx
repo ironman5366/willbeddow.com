@@ -5,8 +5,6 @@ import "./globals.css";
 import {createTheme, MantineProvider} from "@mantine/core";
 import theme from "@/theme";
 
-const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "Will Beddow",
   description: "Will Beddow's Website",
@@ -19,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-        <body className={inter.className}>
+        <body>
             <MantineProvider theme={theme}>
               {children}
             </MantineProvider>
