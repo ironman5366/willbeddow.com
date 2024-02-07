@@ -42,7 +42,7 @@ export default function Home() {
           </Grid.Col>
       </Grid>
       <Affix position={{ bottom: 0, left: 20}}>
-          <Image src={"/hero.png"} width={400} height={400} alt={"A stylized sketch of me, used as a hero image."} />
+          <Image src={"/hero.png"} width={400} height={400} alt={"A stylized sketch of me, used as a hero image."} priority={true} />
       </Affix>
   </div>
 }

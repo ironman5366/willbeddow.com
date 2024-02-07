@@ -46,10 +46,20 @@ export default defineConfig({
             label: "Body",
             isBody: true,
           },
+          {
+            type: "datetime",
+            name: "created_at",
+            label: "Created At"
+          },
+          {
+            type: "datetime",
+            name: "updated_at",
+            label: "Last Updated At"
+          },
         ],
         ui: {
           // This is an DEMO router. You can remove this to fit your site
-          router: ({ document }) => `/demo/blog/${document._sys.filename}`,
+          router: ({ document }) => `/posts/${document?._sys?.filename}`,
         },
       },
     ],
