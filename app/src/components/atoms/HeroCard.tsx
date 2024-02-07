@@ -7,9 +7,7 @@ const breeSerif = Bree_Serif({subsets: ["latin"], weight: "400"})
 
 export default function HeroCard() {
     return <div style={{
-        backgroundColor: "white",
-        padding: 20,
-        borderRadius: 50,
+        padding: 20
     }}>
         <Title className={chicle.className} size={80} style={{
             color: "#753742",
