@@ -1,6 +1,4 @@
-import '@mantine/core/styles.css';
 import type { Metadata } from "next";
-import "./globals.css";
 import AppTree from "@/components/organisms/AppTree";
 
 export const metadata: Metadata = {

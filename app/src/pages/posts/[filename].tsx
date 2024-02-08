@@ -1,10 +1,9 @@
 import React from "react";
 import client from "../../../tina/__generated__/client";
 import {GetStaticPropsContext} from "next";
-import CozyContainer from "@/components/atoms/CozyContainer";
 import {useTina} from "tinacms/dist/react";
 import {PostQuery} from "../../../tina/__generated__/types";
-import {Center, Divider, Paper, Stack, Title} from "@mantine/core";
+import {Center, Divider, Group, Paper, Stack, Title} from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import {TinaMarkdown} from "tinacms/dist/rich-text";
 
@@ -51,35 +50,23 @@ export default function Post(props: {
         data: props.data,
     })
 
-    return <CozyContainer>
-        <Center>
-            <Paper style={{
-                minWidth: "90vw",
-                textAlign: "center",
-                borderRadius: 20,
-            }}>
-                <Stack>
-                    <Title>
-                        {data.post.title}
-                    </Title>
-                    <dl>
-                        <dt>
-                            Created At
-                        </dt>
-                        <dd>
-                            <FormattedDate isoString={data.post.created_at} />
-                        </dd>
-                        <dt>
-                            Updated At
-                        </dt>
-                        <dd>
-                            <FormattedDate isoString={data.post.updated_at} />
-                        </dd>
-                    </dl>
-                    <Divider />
-                    <TinaMarkdown content={data.post.body} />
-                </Stack>
-            </Paper>
-        </Center>
-    </CozyContainer>
+    return <Center>
+        <Paper style={{
+            padding: 30,
+            borderRadius: 20,
+            maxWidth: "728px"
+        }}>
+            <Stack>
+                <Title>
+                    {data.post.title}
+                </Title>
+                <Group>
+                    <><b>Created: </b> <FormattedDate isoString={data.post.created_at} /></>
+                    <><b>Updated: </b> <FormattedDate isoString={data.post.updated_at} /></>
+                </Group>
+                <Divider />
+                <TinaMarkdown content={data.post.body} />
+            </Stack>
+        </Paper>
+    </Center>
 }
