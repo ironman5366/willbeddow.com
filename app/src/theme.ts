@@ -4,6 +4,9 @@ import {Bree_Serif, Chicle} from "next/font/google";
 const chicle = Chicle({subsets: ["latin"], weight: "400"})
 const breeSerif = Bree_Serif({subsets: ["latin"], weight: "400"})
 
+// We want to use this in a server component that doesn't have mantine access
+export const WHITE_SMOKE = '#F5F5F5'
+
 const theme = createTheme({
     breakpoints: {
         xs: '30em',
@@ -66,7 +69,7 @@ const theme = createTheme({
             '#ffffff',
             '#ffffff',
             '#ffffff',
-            '#F5F5F5']
+            WHITE_SMOKE]
     }
 });
 
