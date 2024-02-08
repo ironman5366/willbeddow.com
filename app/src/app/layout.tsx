@@ -1,9 +1,5 @@
-import '@mantine/core/styles.css';
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "./globals.css";
-import {MantineProvider} from "@mantine/core";
-import theme from "@/theme";
+import AppTree from "@/components/organisms/AppTree";
 
 export const metadata: Metadata = {
   title: "Will Beddow",
@@ -18,9 +14,9 @@ export default function RootLayout({
   return (
     <html lang="en">
         <body>
-            <MantineProvider theme={theme}>
-              {children}
-            </MantineProvider>
+            <AppTree>
+                {children}
+            </AppTree>
         </body>
     </html>
   );

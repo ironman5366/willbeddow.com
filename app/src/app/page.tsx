@@ -1,9 +1,9 @@
 'use client'
 import {Affix, Anchor, Grid, Text, Title} from "@mantine/core";
-import flower from "../../public/flower.svg"
 import HeroCard from "@/components/atoms/HeroCard";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import {WINE_MID_COLOR} from "@/theme";
 
 // TODO: for some reason, even though BlogTable is a ClientComponent,
 //  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
@@ -12,16 +12,15 @@ const BlogTable = dynamic(() => import("@/components/organisms/BlogTable"), { ss
 
 
 export default function Home() {
+  // We only need this style to keep from an SSR flicker
   return <div style={{
-      backgroundImage: `url(${flower.src})`,
-      backgroundRepeat: "repeat",
-      backgroundColor: "#fefefa",
-      minHeight: "100vh",
-      minWidth: "100vw",
-      padding: 60,
+      color: WINE_MID_COLOR
   }}>
       <Grid>
-          <Grid.Col span={8}>
+          <Grid.Col span={{
+              xs: 12,
+              md: 8
+          }}>
               <HeroCard />
           </Grid.Col>
           <Grid.Col span={4}>
