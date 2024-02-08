@@ -65,7 +65,11 @@ export default function Post(props: {
                     <><b>Updated: </b> <FormattedDate isoString={data.post.updated_at} /></>
                 </Group>
                 <Divider />
-                <TinaMarkdown content={data.post.body} />
+                <div style={{
+                    fontWeight: 50
+                }}>
+                    <TinaMarkdown content={data.post.body} />
+                </div>
             </Stack>
         </Paper>
     </Center>
