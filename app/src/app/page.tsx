@@ -21,7 +21,10 @@ export default function Home() {
       padding: 60,
   }}>
       <Grid>
-          <Grid.Col span={8}>
+          <Grid.Col span={{
+              xs: 12,
+              md: 8
+          }}>
               <HeroCard />
           </Grid.Col>
           <Grid.Col span={4}>
