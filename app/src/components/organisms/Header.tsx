@@ -1,11 +1,14 @@
+"use client";
 import React from "react";
-import { Group, Text } from "@mantine/core";
+import { Group } from "@mantine/core";
 import Logo from "@/components/atoms/Logo";
 import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
 import Link from "next/link";
 import { EMAIL } from "@/constants";
+import useIsMobile from "@/hoks/useIsMobile";
 
 export default function Header() {
+  const isMobile = useIsMobile();
   return (
     <div
       style={{
@@ -26,7 +29,9 @@ export default function Header() {
         <Group justify={"space-evenly"} c={"wine"}>
           <Link href={"/writing"}>Writing</Link>
           <Link href={"/projects"}>Projects</Link>
-          <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link>
+          <Link href={`mailto:${EMAIL}`}>
+            {!isMobile && "Contact: "} {EMAIL}
+          </Link>
         </Group>
       </Group>
     </div>

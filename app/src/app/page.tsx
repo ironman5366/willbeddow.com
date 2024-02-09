@@ -1,10 +1,10 @@
 "use client";
-import { Affix, Anchor, em, Grid, Text, Title } from "@mantine/core";
+import { Affix, Stack } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
-import { useMediaQuery } from "@mantine/hooks";
+import useIsMobile from "@/hoks/useIsMobile";
 
 // TODO: for some reason, even though BlogTable is a ClientComponent,
 //  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
@@ -14,7 +14,7 @@ const BlogTable = dynamic(() => import("@/components/organisms/BlogTable"), {
 });
 
 export default function Home() {
-  const isMobile = useMediaQuery(`(max-width: ${em(800)})`);
+  const isMobile = useIsMobile();
 
   // We only need this style to keep from an SSR flicker
   return (
@@ -23,25 +23,9 @@ export default function Home() {
         color: WINE_MID_COLOR,
       }}
     >
-      <Grid>
-        <Grid.Col span={8}>
-          <HeroCard />
-        </Grid.Col>
-        <Grid.Col span={4} hidden={isMobile}>
-          <Title c={"wine"}>Writing</Title>
-          <BlogTable truncateTo={1} />
-        </Grid.Col>
-        <Grid.Col span={12}>
-          <Text c={"wine"}>Find me at:</Text>
-          <ul>
-            <li>
-              <Anchor href={"https://github.com/ironman5366"}>
-                github.com/ironman5366
-              </Anchor>
-            </li>
-          </ul>
-        </Grid.Col>
-      </Grid>
+      <Stack>
+        <HeroCard />
+      </Stack>
       <Affix position={{ bottom: 0, left: 20 }}>
         <Image
           src={"/hero.png"}
