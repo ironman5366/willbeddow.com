@@ -5,7 +5,7 @@ import CozyContainer from "@/components/atoms/CozyContainer";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <AppTree>
-      <CozyContainer flowers>
+      <CozyContainer>
         <Component {...pageProps} />
       </CozyContainer>
     </AppTree>
