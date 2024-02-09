@@ -26,7 +26,7 @@ export default function Header() {
         <Group justify={"space-evenly"} c={"wine"}>
           <Link href={"/writing"}>Writing</Link>
           <Link href={"/projects"}>Projects</Link>
-          <Link href={`mailto:${EMAIL}`}>Contact: {EMAIL}</Link>
+          <Link href={`mailto:${EMAIL}`}>{EMAIL}</Link>
         </Group>
       </Group>
     </div>
