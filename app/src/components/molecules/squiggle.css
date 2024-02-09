@@ -4,75 +4,74 @@
 .squiggle-bottom,
 .squiggle-left,
 .squiggle-right {
-    position: relative;
-    /* background-color: inherit; */
+  position: relative;
+  /* background-color: inherit; */
 }
 .squiggle-top {
-    margin-top: 32px;
+  margin-top: 32px;
 }
 .squiggle-bottom {
-    margin-bottom: 32px;
+  margin-bottom: 32px;
 }
 .squiggle-top::before,
 .squiggle-bottom::after {
-    content: " ";
-    position: absolute;
-    width: 100%;
-    left: 0;
-    height: 32px;
+  content: " ";
+  position: absolute;
+  width: 100%;
+  left: 0;
+  height: 32px;
 }
 .squiggle-top::before {
-    bottom: calc(100% - 1px);
-    background: url("/squiggle/squiggle-top-invert.svg") repeat top center;
-    background-color: inherit;
-    -webkit-mask: url("/squiggle/squiggle-top-mask.svg") repeat top center;
-    mask: url("/squiggle/squiggle-top-mask.svg") repeat top center;
+  bottom: calc(100% - 1px);
+  background: url("/squiggle/squiggle-top-invert.svg") repeat top center;
+  background-color: inherit;
+  -webkit-mask: url("/squiggle/squiggle-top-mask.svg") repeat top center;
+  mask: url("/squiggle/squiggle-top-mask.svg") repeat top center;
 }
 .squiggle-bottom::after {
-    top: calc(100% - 1px);
-    background: url("/squiggle/squiggle-bottom-invert.svg") repeat bottom center;
-    background-color: inherit;
-    -webkit-mask: url("/squiggle/squiggle-bottom-mask.svg") repeat bottom center;
-    mask: url("/squiggle/squiggle-bottom-mask.svg") repeat bottom center;
+  top: calc(100% - 1px);
+  background: url("/squiggle/squiggle-bottom-invert.svg") repeat bottom center;
+  background-color: inherit;
+  -webkit-mask: url("/squiggle/squiggle-bottom-mask.svg") repeat bottom center;
+  mask: url("/squiggle/squiggle-bottom-mask.svg") repeat bottom center;
 }
 
 .squiggle-left {
-    margin-left: 32px;
+  margin-left: 32px;
 }
 
 .squiggle-right {
-    margin-right: 32px;
+  margin-right: 32px;
 }
 
 .squiggle-left::before,
 .squiggle-right::after {
-    content: " ";
-    position: absolute;
-    height: 100%; /* Full height to cover the side */
-    width: 32px;
-    top: 0;
+  content: " ";
+  position: absolute;
+  height: 100%; /* Full height to cover the side */
+  width: 32px;
+  top: 0;
 }
 
-
 .squiggle-left::before {
-    left: calc(100% - 1px);
-    background: url("/squiggle/squiggle-top-invert.svg") repeat center center;
-    -webkit-mask: url("/squiggle/squiggle-top-mask.svg") repeat center center;
-    mask: url("/squiggle/squiggle-top-mask.svg") repeat center center;
-    /* Rotate the SVG for the left side */
-    transform: rotate(90deg);
-    transform-origin: top left;
+  left: calc(100% - 1px);
+  background: url("/squiggle/squiggle-top-invert.svg") repeat center center;
+  -webkit-mask: url("/squiggle/squiggle-top-mask.svg") repeat center center;
+  mask: url("/squiggle/squiggle-top-mask.svg") repeat center center;
+  /* Rotate the SVG for the left side */
+  transform: rotate(90deg);
+  transform-origin: top left;
 }
 
 .squiggle-right::after {
-    right: calc(100% - 1px);
-    background: url("/squiggle/squiggle-right-invert.svg") repeat center center;
-    -webkit-mask: url("/squiggle/squiggle-right-mask.svg") repeat center center;
-    mask: url("/squiggle/squiggle-right-mask.svg") repeat center center;
+  right: calc(100% - 1px);
+  background: url("/squiggle/squiggle-right-invert.svg") repeat center center;
+  -webkit-mask: url("/squiggle/squiggle-right-mask.svg") repeat center center;
+  mask: url("/squiggle/squiggle-right-mask.svg") repeat center center;
 }
 
 hr.squiggle {
-    border: none;
-    height: 32px;
-    background-image: url("/squiggle/squiggle-line.svg");
+  border: none;
+  height: 32px;
+  background-image: url("/squiggle/squiggle-line.svg");
 }

@@ -1,5 +1,5 @@
 ---
-title: '2024: Getting Back to Blogging, and Building in Public'
+title: "2024: Getting Back to Blogging, and Building in Public"
 created_at: 2024-01-31T05:00:00.000Z
 updated_at: 2024-01-31T05:00:00.000Z
 ---
@@ -38,13 +38,13 @@ I’d also like to integrate AI book recommendations with LLMs. Hopefully more o
 
 I have big plans to be another asshole talking about OpenAI on the internet. But like, really.
 
-Working on Waverly for the past few months has thrown me in the deep end with AI engineering. I don’t want to oversell my experience here - it’s just been about 4 months of working with LLMs full time. But \~500 hours in, while stochastic programming still feels just plain *strange*, I’m starting to form opinions and intuition about it.
+Working on Waverly for the past few months has thrown me in the deep end with AI engineering. I don’t want to oversell my experience here - it’s just been about 4 months of working with LLMs full time. But \~500 hours in, while stochastic programming still feels just plain _strange_, I’m starting to form opinions and intuition about it.
 
 I don’t have any particuraly ground-breaking insights here (evals are really important, and I agree with pretty much everything this blog post: [https://arvid.xyz/posts/prompt-design/](https://arvid.xyz/posts/prompt-design/)). I still want to talk about it, though!
 
 I’ve also come to dislike LangChain, and most other libraries that provide abstractions over the actual process of prompting the model yourself. It’s undeniable that you want some level of abstraction over any individual provider’s API, though - it’s crucial that any AI project be able to hot-swap models.
 
-Everybody has their own solutions to this (and about half the class of any given YC batch is trying to build a new one), but after wrestling with it a few times in a few different projects, my preferred  answer is an LLM proxy server that just abstracts the OpenAI API spec (which is becoming the de-facto standard among all providers) into a websocket server that you can use as a service.
+Everybody has their own solutions to this (and about half the class of any given YC batch is trying to build a new one), but after wrestling with it a few times in a few different projects, my preferred answer is an LLM proxy server that just abstracts the OpenAI API spec (which is becoming the de-facto standard among all providers) into a websocket server that you can use as a service.
 
 I’d like to build a Rust implementation of this proxy server and publish it with clients in a number of languages. I’d also like to call it Weatherwax, after the character from Discworld.
 
@@ -52,12 +52,12 @@ I’ll write more extensively about motivations for this when I get around to bu
 
 ## Revamp of This Website
 
-I’ve been meaning to do this for *years*. I hacked together the current version of this website on a roadtrip freshman year of college, when I realized I was out of money and needed to start freelancing. It still uses jQuery (🙁), and I’m afraid to touch the server it runs on for fear I’ll never get it back up.
+I’ve been meaning to do this for _years_. I hacked together the current version of this website on a roadtrip freshman year of college, when I realized I was out of money and needed to start freelancing. It still uses jQuery (🙁), and I’m afraid to touch the server it runs on for fear I’ll never get it back up.
 
 I started remaking it in the summer of 2022 but two things went wrong:
 
-* I got instantly distracted by every other possible task.
-* My goals for it got impossibly large - not only was it going to have a custom built portal for my consulting, but I’d also build the CMS myself, and I’d make a little link shortener too. And ooh! Maybe I can also copy that cool file sharing tool that BCG has internally. And it has to look *sick.*
+- I got instantly distracted by every other possible task.
+- My goals for it got impossibly large - not only was it going to have a custom built portal for my consulting, but I’d also build the CMS myself, and I’d make a little link shortener too. And ooh! Maybe I can also copy that cool file sharing tool that BCG has internally. And it has to look _sick._
 
 This time I’ll aim to keep myself to somewhat more modest goals. I want a flexible foundation that I can eventually add all these things to, but first I must make the foundation. And I should build it in something profoundly boring and reliable.
 
@@ -67,7 +67,7 @@ I have a number of small one-off ideas I want to publish with LLMs.
 
 For example, I think most chat-with-your-documentation implementations have fallen short for me because they try to chat with the full site. What I really want is a little chatbox under each page where I can ask follow-up questions. “How do I use this with middleware?”, “This isn’t working, what CORS settings can I mess with?”.
 
-Other small things I might put here are a john henry ([https://en.wikipedia.org/wiki/John\_Henry\_(folklore)](https://en.wikipedia.org/wiki/John_Henry_\(folklore\))) style game where you have to try and build a working web app faster than an LLM, some fun interactive creative writing exercises, and maybe some home grown evals (perhaps in the form of a snarky “are we agentic yet”?)
+Other small things I might put here are a john henry ([https://en.wikipedia.org/wiki/John_Henry\_(folklore)](<https://en.wikipedia.org/wiki/John_Henry_(folklore)>)) style game where you have to try and build a working web app faster than an LLM, some fun interactive creative writing exercises, and maybe some home grown evals (perhaps in the form of a snarky “are we agentic yet”?)
 
 This should be pretty easy to set up - I just need to revamp my site first!
 

@@ -3,15 +3,14 @@
 @tailwind utilities;
 
 .cozy-container {
-    background-image: url('/flower.svg');
-    background-repeat: repeat;
-    background-color: #F5F5F5;
-    min-height: 100vh;
-    min-width: 100vw;
-    padding: 20px;
+  background-image: url("/flower.svg");
+  background-repeat: repeat;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+  min-width: 100vw;
+  padding: 20px;
 
-    @media (min-width: 640px) {
-        padding: 60px;
-    }
-
+  @media (min-width: 640px) {
+    padding: 60px;
+  }
 }

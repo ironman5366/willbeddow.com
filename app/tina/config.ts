@@ -49,12 +49,12 @@ export default defineConfig({
           {
             type: "datetime",
             name: "created_at",
-            label: "Created At"
+            label: "Created At",
           },
           {
             type: "datetime",
             name: "updated_at",
-            label: "Last Updated At"
+            label: "Last Updated At",
           },
         ],
         ui: {
