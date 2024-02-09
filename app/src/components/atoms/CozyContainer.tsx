@@ -17,7 +17,6 @@ export default function CozyContainer({
       className="cozy-container"
       style={{
         ...style,
-        position: "relative",
         minWidth: "100vw",
         minHeight: "calc(100vh - 74px)",
       }}

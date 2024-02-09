@@ -3,6 +3,7 @@ import { Group, Text } from "@mantine/core";
 import Logo from "@/components/atoms/Logo";
 import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
 import Link from "next/link";
+import { EMAIL } from "@/constants";
 
 export default function Header() {
   return (
@@ -22,9 +23,10 @@ export default function Header() {
           <Logo />
         </Link>
 
-        <Group justify={"space-evenly"}>
-          <Text>First option</Text>
-          <Text>Second option</Text>
+        <Group justify={"space-evenly"} c={"wine"}>
+          <Link href={"/writing"}>Writing</Link>
+          <Link href={"/projects"}>Projects</Link>
+          <Link href={`mailto:${EMAIL}`}>Contact: {EMAIL}</Link>
         </Group>
       </Group>
     </div>

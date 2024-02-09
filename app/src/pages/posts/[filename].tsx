@@ -6,6 +6,7 @@ import { PostQuery } from "../../../tina/__generated__/types";
 import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
+import NicelyCentered from "@/components/atoms/NicelyCentered";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -52,36 +53,31 @@ export default function Post(props: {
   });
 
   return (
-    <Center>
-      <Paper
-        style={{
-          padding: 30,
-          borderRadius: 20,
-          maxWidth: "728px",
-        }}
-      >
-        <Stack>
-          <Title>{data.post.title}</Title>
-          <Group>
-            <>
-              <b>Created: </b>{" "}
-              <FormattedDate isoString={data.post.created_at} />
-            </>
-            <>
-              <b>Updated: </b>{" "}
-              <FormattedDate isoString={data.post.updated_at} />
-            </>
-          </Group>
-          <Divider />
-          <div
-            style={{
-              fontWeight: 50,
-            }}
-          >
-            <TinaMarkdown content={data.post.body} />
-          </div>
-        </Stack>
-      </Paper>
-    </Center>
+    <NicelyCentered
+      component={Paper}
+      style={{
+        borderRadius: 20,
+      }}
+    >
+      <Stack>
+        <Title>{data.post.title}</Title>
+        <Group>
+          <>
+            <b>Created: </b> <FormattedDate isoString={data.post.created_at} />
+          </>
+          <>
+            <b>Updated: </b> <FormattedDate isoString={data.post.updated_at} />
+          </>
+        </Group>
+        <Divider />
+        <div
+          style={{
+            fontWeight: 50,
+          }}
+        >
+          <TinaMarkdown content={data.post.body} />
+        </div>
+      </Stack>
+    </NicelyCentered>
   );
 }
