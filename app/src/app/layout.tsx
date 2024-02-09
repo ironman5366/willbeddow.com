@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppTree>
-          <CozyContainer flowers>{children}</CozyContainer>
+          <CozyContainer>{children}</CozyContainer>
         </AppTree>
       </body>
     </html>
