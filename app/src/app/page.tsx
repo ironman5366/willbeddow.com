@@ -1,10 +1,9 @@
 "use client";
-import { Affix, Anchor, Grid, Stack, Text, Title } from "@mantine/core";
+import { Affix, Anchor, Grid, Text, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
-import Header from "@/components/organisms/Header";
 
 // TODO: for some reason, even though BlogTable is a ClientComponent,
 //  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
@@ -50,6 +49,9 @@ export default function Home() {
           src={"/hero.png"}
           width={400}
           height={400}
+          style={{
+            maxWidth: "40vw",
+          }}
           alt={"A stylized sketch of me, used as a hero image."}
           priority={true}
         />
