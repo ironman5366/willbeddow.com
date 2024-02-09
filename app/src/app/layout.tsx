@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import AppTree from "@/components/organisms/AppTree";
 import CozyContainer from "@/components/atoms/CozyContainer";
+import Header from "@/components/organisms/Header";
 
 export const metadata: Metadata = {
   title: "Will Beddow",
@@ -16,7 +17,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <AppTree>
-          <CozyContainer>{children}</CozyContainer>
+          <Header />
+          <CozyContainer minHeight={"90vh"}>{children}</CozyContainer>
         </AppTree>
       </body>
     </html>
