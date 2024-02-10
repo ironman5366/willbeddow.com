@@ -8,7 +8,7 @@ export default function HeroImage() {
       width={400}
       height={400}
       style={{
-        maxWidth: "40vw",
+        maxWidth: "60vw",
       }}
       alt={"A stylized sketch of me, used as a hero image."}
       priority={true}

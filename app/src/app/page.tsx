@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Grid, Stack, Title } from "@mantine/core";
+import { Affix, Center, Grid, Stack, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
@@ -44,10 +44,17 @@ function GridHomeLayout() {
 
 function MobileHomeLayout() {
   return (
-    <NicelyCentered component={Stack}>
+    <NicelyCentered
+      component={Stack}
+      style={{
+        textAlign: "center",
+      }}
+    >
       <HeroCard />
       <BlogList />
-      <HeroImage />
+      <Center>
+        <HeroImage />
+      </Center>
     </NicelyCentered>
   );
 }

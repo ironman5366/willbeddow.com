@@ -9,8 +9,6 @@ interface Props {
 export default function CozyContainer({
   children,
   style,
-  minWidth,
-  minHeight,
 }: PropsWithChildren<Props>) {
   return (
     <div
