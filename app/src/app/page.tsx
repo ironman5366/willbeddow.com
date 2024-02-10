@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Center, Grid, Stack, Title } from "@mantine/core";
+import { Affix, Center, Divider, Grid, Stack, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
@@ -51,6 +51,8 @@ function MobileHomeLayout() {
       }}
     >
       <HeroCard />
+      <Divider />
+      <Title>Writing</Title>
       <BlogList />
       <Center>
         <HeroImage />

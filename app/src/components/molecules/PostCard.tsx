@@ -1,10 +1,10 @@
 import React from "react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Card, Stack, Title, Text } from "@mantine/core";
+import { Card, Title, Text } from "@mantine/core";
 import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { getDocumentPath } from "@/blogUtils";
-import Link from "next/link";
+import FancyLink from "@/components/atoms/FancyLink";
 
 interface Props {
   post: PostQuery["post"];
@@ -23,9 +23,9 @@ export default function PostCard({ post }: Props) {
       }}
     >
       <Title order={2}>
-        <Link href={postLink} className="underline">
+        <FancyLink href={postLink} className="underline">
           {post.title}
-        </Link>
+        </FancyLink>
       </Title>
       <Text size={"sm"}>
         Created {<FormattedDate isoString={post.created_at} />}, Updated{" "}

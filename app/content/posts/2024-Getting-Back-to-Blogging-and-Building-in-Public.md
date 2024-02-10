@@ -23,7 +23,7 @@ The Building in Public movement has resonated with me for years on these grounds
 
 So, all of that being said, what do I want to work on this year?
 
-## Ursula
+# Ursula
 
 Ursula (named for Ursula Le Guin) will be a a stack-ranking app for books, a la [https://beliapp.com/](https://beliapp.com/). I had this idea last year, when I started using Beli more. A stack rank, as opposed to stars, forces you to decide which is better between two options, and, at least on Beli, provides a much stronger signal than a star ranking.
 

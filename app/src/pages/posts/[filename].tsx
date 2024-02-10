@@ -7,6 +7,7 @@ import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
+import { WINE_MID_COLOR } from "@/theme";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -57,6 +58,7 @@ export default function Post(props: {
       component={Paper}
       style={{
         borderRadius: 20,
+        border: `2px dotted ${WINE_MID_COLOR}`,
       }}
     >
       <Stack>

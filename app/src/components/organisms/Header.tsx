@@ -1,30 +1,26 @@
 "use client";
 import React from "react";
-import { em, Flex, Group } from "@mantine/core";
+import { em, Group } from "@mantine/core";
 import Logo from "@/components/atoms/Logo";
 import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
-import Link from "next/link";
 import { EMAIL } from "@/constants";
 import useIsMobile from "@/hoks/useIsMobile";
 import { useMediaQuery } from "@mantine/hooks";
+import FancyLink from "@/components/atoms/FancyLink";
 
 export default function Header() {
   const isMobile = useIsMobile();
   const isTiny = useMediaQuery(`(max-width: ${em(350)})`);
   const sidePadding = isMobile ? "5px" : "10px";
 
-  let fontSize;
   let contactSection;
   if (isTiny) {
     contactSection = "Email";
-    fontSize = "0.75em";
   } else {
     if (isMobile) {
       contactSection = EMAIL;
-      fontSize = "0.9em";
     } else {
       contactSection = `Contact: ${EMAIL}`;
-      fontSize = "1.1em";
     }
   }
 
@@ -41,20 +37,20 @@ export default function Header() {
       }}
     >
       <Group justify={"space-between"}>
-        <Link href={"/"}>
+        <FancyLink href={"/"}>
           <Logo />
-        </Link>
+        </FancyLink>
 
         <Group
           justify={"space-evenly"}
           c={"wine"}
           style={{
-            fontSize,
+            fontSize: "1em",
           }}
         >
-          <Link href={"/writing"}>Writing</Link>
-          <Link href={"/projects"}>Projects</Link>
-          <Link href={`mailto:${EMAIL}`}>{contactSection}</Link>
+          <FancyLink href={"/writing"}>Writing</FancyLink>
+          <FancyLink href={"/projects"}>Projects</FancyLink>
+          <FancyLink href={`mailto:${EMAIL}`}>{contactSection}</FancyLink>
         </Group>
       </Group>
     </div>
