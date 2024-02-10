@@ -4,7 +4,7 @@ import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
-import useIsMobile from "@/hoks/useIsMobile";
+import useIsMobile from "@/hooks/useIsMobile";
 import HeroImage from "@/components/atoms/HeroImage";
 
 // TODO: for some reason, even though BlogTable is a ClientComponent,

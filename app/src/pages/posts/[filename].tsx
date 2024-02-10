@@ -26,7 +26,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext<{
   filename: string;
 }>) {
-  let variables = { relativePath: `${params?.filename}.md` };
+  let variables = { relativePath: `${params?.filename}.mdx` };
 
   const res = await client.queries.post(variables);
   const query = res.query;
@@ -42,11 +42,18 @@ export async function getStaticProps({
   };
 }
 
+const components = {
+  video: (props: { src: string }) => {
+    return <video src={props.src}></video>;
+  },
+};
+
 export default function Post(props: {
   query: string;
   variables: any;
   data: PostQuery;
 }) {
+  console.log("in post");
   const { data } = useTina({
     query: props.query,
     variables: props.variables,
@@ -77,7 +84,7 @@ export default function Post(props: {
             fontWeight: 50,
           }}
         >
-          <TinaMarkdown content={data.post.body} />
+          <TinaMarkdown content={data.post.body} components={components} />
         </div>
       </Stack>
     </NicelyCentered>

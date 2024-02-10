@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
-import AppTree from "@/components/organisms/AppTree";
 import CozyContainer from "@/components/atoms/CozyContainer";
 import Header from "@/components/organisms/Header";
-import { ColorSchemeScript } from "@mantine/core";
+import "@/globals.css";
+import "@mantine/core/styles.css";
+import { ColorSchemeScript, MantineProvider } from "@mantine/core";
+import theme from "@/theme";
 
 export const metadata: Metadata = {
   title: "Will Beddow",
@@ -20,10 +22,10 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
-        <AppTree>
+        <MantineProvider theme={theme}>
           <Header />
           <CozyContainer minHeight={"90vh"}>{children}</CozyContainer>
-        </AppTree>
+        </MantineProvider>
       </body>
     </html>
   );

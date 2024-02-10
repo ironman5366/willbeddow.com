@@ -12,6 +12,7 @@
         "name": "post",
         "label": "Posts",
         "path": "content/posts",
+        "format": "mdx",
         "fields": [
           {
             "type": "string",
@@ -37,9 +38,26 @@
             "name": "body",
             "label": "Body",
             "isBody": true,
+            "templates": [
+              {
+                "name": "video",
+                "label": "Video",
+                "fields": [
+                  {
+                    "type": "string",
+                    "name": "src",
+                    "label": "URL Source",
+                    "namespace": ["post", "body", "video", "src"],
+                    "searchable": true,
+                    "uid": false
+                  }
+                ],
+                "namespace": ["post", "body", "video"]
+              }
+            ],
             "namespace": ["post", "body"],
             "searchable": true,
-            "parser": { "type": "markdown" },
+            "parser": { "type": "mdx" },
             "uid": false
           },
           {
@@ -1035,30 +1053,28 @@
       },
       {
         "kind": "InputObjectTypeDefinition",
-        "name": { "kind": "Name", "value": "RichTextFilter" },
+        "name": { "kind": "Name", "value": "PostBodyVideoFilter" },
         "fields": [
           {
             "kind": "InputValueDefinition",
-            "name": { "kind": "Name", "value": "startsWith" },
+            "name": { "kind": "Name", "value": "src" },
             "type": {
               "kind": "NamedType",
-              "name": { "kind": "Name", "value": "String" }
+              "name": { "kind": "Name", "value": "StringFilter" }
             }
-          },
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "PostBodyFilter" },
+        "fields": [
           {
             "kind": "InputValueDefinition",
-            "name": { "kind": "Name", "value": "eq" },
+            "name": { "kind": "Name", "value": "video" },
             "type": {
               "kind": "NamedType",
-              "name": { "kind": "Name", "value": "String" }
-            }
-          },
-          {
-            "kind": "InputValueDefinition",
-            "name": { "kind": "Name", "value": "exists" },
-            "type": {
-              "kind": "NamedType",
-              "name": { "kind": "Name", "value": "Boolean" }
+              "name": { "kind": "Name", "value": "PostBodyVideoFilter" }
             }
           }
         ]
@@ -1137,7 +1153,7 @@
             "name": { "kind": "Name", "value": "body" },
             "type": {
               "kind": "NamedType",
-              "name": { "kind": "Name", "value": "RichTextFilter" }
+              "name": { "kind": "Name", "value": "PostBodyFilter" }
             }
           },
           {

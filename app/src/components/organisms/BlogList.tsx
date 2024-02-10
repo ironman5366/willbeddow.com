@@ -4,7 +4,7 @@ import { PostConnectionQuery } from "../../../tina/__generated__/types";
 import client from "../../../tina/__generated__/client";
 import PostCard from "@/components/molecules/PostCard";
 import Link from "next/link";
-import useIsMobile from "@/hoks/useIsMobile";
+import useIsMobile from "@/hooks/useIsMobile";
 
 function AllPostsButton({ style }: { style?: React.CSSProperties }) {
   return (

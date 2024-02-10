@@ -32,6 +32,7 @@ export default defineConfig({
         name: "post",
         label: "Posts",
         path: "content/posts",
+        format: "mdx",
         fields: [
           {
             type: "string",
@@ -51,6 +52,19 @@ export default defineConfig({
             name: "body",
             label: "Body",
             isBody: true,
+            templates: [
+              {
+                name: "video",
+                label: "Video",
+                fields: [
+                  {
+                    type: "string",
+                    name: "src",
+                    label: "URL Source",
+                  },
+                ],
+              },
+            ],
           },
           {
             type: "datetime",
