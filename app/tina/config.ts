@@ -54,13 +54,55 @@ export default defineConfig({
             isBody: true,
             templates: [
               {
-                name: "video",
+                name: "Video",
                 label: "Video",
                 fields: [
                   {
                     type: "string",
                     name: "src",
                     label: "URL Source",
+                  },
+                  {
+                    type: "number",
+                    name: "width",
+                    label: "Width",
+                  },
+                  {
+                    type: "number",
+                    name: "height",
+                    label: "Height",
+                  },
+                ],
+              },
+              {
+                name: "CustomImage",
+                label: "Image (Custom)",
+                fields: [
+                  {
+                    type: "string",
+                    name: "src",
+                    label: "URL Source",
+                    required: true,
+                  },
+                  {
+                    type: "number",
+                    name: "width",
+                    label: "Width",
+                  },
+                  {
+                    type: "number",
+                    name: "height",
+                    label: "Height",
+                  },
+                  {
+                    type: "string",
+                    name: "alt",
+                    label: "Alt Text",
+                  },
+                  {
+                    type: "string",
+                    name: "caption",
+                    label: "Caption",
                   },
                 ],
               },

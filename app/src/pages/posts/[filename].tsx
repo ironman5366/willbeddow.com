@@ -8,6 +8,7 @@ import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
 import { WINE_MID_COLOR } from "@/theme";
+import Image from "next/image";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -43,8 +44,47 @@ export async function getStaticProps({
 }
 
 const components = {
-  video: (props: { src: string }) => {
-    return <video src={props.src} controls></video>;
+  Video: ({
+    src,
+    ...props
+  }: {
+    src: string;
+    width?: number;
+    height?: number;
+  }) => {
+    return <video src={src} controls {...props} />;
+  },
+  CustomImage: ({
+    src,
+    caption,
+    alt,
+    width,
+    height,
+    ...props
+  }: {
+    src: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+  }) => {
+    // Show captions in italics beneath the image
+    return (
+      <div>
+        <Image
+          src={src}
+          alt={alt || ""}
+          width={width || 512}
+          height={height || 512}
+          {...props}
+        />
+        {caption && (
+          <p>
+            <i>{caption}</i>
+          </p>
+        )}
+      </div>
+    );
   },
 };
 
