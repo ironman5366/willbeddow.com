@@ -9,6 +9,7 @@ import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
 import { WINE_MID_COLOR } from "@/theme";
 import Image from "next/image";
+import { Text } from "@mantine/core";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -109,6 +110,7 @@ export default function Post(props: {
     >
       <Stack>
         <Title>{data.post.title}</Title>
+        <Text>{data.post.blurb}</Text>
         <Group>
           <>
             <b>Created: </b> <FormattedDate isoString={data.post.created_at} />
