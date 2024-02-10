@@ -3,7 +3,7 @@ import client from "../../../tina/__generated__/client";
 import { GetStaticPropsContext } from "next";
 import { useTina } from "tinacms/dist/react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
+import { Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
@@ -44,7 +44,7 @@ export async function getStaticProps({
 
 const components = {
   video: (props: { src: string }) => {
-    return <video src={props.src}></video>;
+    return <video src={props.src} controls></video>;
   },
 };
 
@@ -53,7 +53,6 @@ export default function Post(props: {
   variables: any;
   data: PostQuery;
 }) {
-  console.log("in post");
   const { data } = useTina({
     query: props.query,
     variables: props.variables,

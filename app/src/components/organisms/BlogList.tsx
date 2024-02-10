@@ -40,7 +40,11 @@ export default function BlogList({ truncateTo }: Props) {
   });
 
   const postList =
-    (posts && posts.postConnection && posts.postConnection.edges) || [];
+    (posts &&
+      posts.postConnection &&
+      posts.postConnection.edges &&
+      posts.postConnection.edges.reverse()) ||
+    [];
 
   return (
     <Stack>
