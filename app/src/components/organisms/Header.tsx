@@ -10,17 +10,21 @@ import FancyLink from "@/components/atoms/FancyLink";
 
 export default function Header() {
   const isMobile = useIsMobile();
-  const isTiny = useMediaQuery(`(max-width: ${em(350)})`);
+  const isTiny = useMediaQuery(`(max-width: ${em(370)})`);
   const sidePadding = isMobile ? "5px" : "10px";
 
   let contactSection;
+  let fontSize;
   if (isTiny) {
     contactSection = "Email";
+    fontSize = "0.9em";
   } else {
     if (isMobile) {
       contactSection = EMAIL;
+      fontSize = "0.9em";
     } else {
       contactSection = `Contact: ${EMAIL}`;
+      fontSize = "1em";
     }
   }
 
@@ -34,6 +38,7 @@ export default function Header() {
         paddingTop: "5px",
         backgroundColor: WHITE_SMOKE,
         borderBottom: `5px solid ${WINE_MID_COLOR}`,
+        maxWidth: "100vw",
       }}
     >
       <Group justify={"space-between"}>
@@ -45,7 +50,7 @@ export default function Header() {
           justify={"space-evenly"}
           c={"wine"}
           style={{
-            fontSize: "1em",
+            fontSize,
           }}
         >
           <FancyLink href={"/writing"}>Writing</FancyLink>
