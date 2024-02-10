@@ -12,6 +12,7 @@
         "name": "post",
         "label": "Posts",
         "path": "content/posts",
+        "format": "mdx",
         "fields": [
           {
             "type": "string",
@@ -39,7 +40,7 @@
             "isBody": true,
             "namespace": ["post", "body"],
             "searchable": true,
-            "parser": { "type": "markdown" },
+            "parser": { "type": "mdx" },
             "uid": false
           },
           {

@@ -26,7 +26,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext<{
   filename: string;
 }>) {
-  let variables = { relativePath: `${params?.filename}.md` };
+  let variables = { relativePath: `${params?.filename}.mdx` };
 
   const res = await client.queries.post(variables);
   const query = res.query;
