@@ -32,7 +32,7 @@ function GridHomeLayout() {
         </Grid.Col>
         <Grid.Col span={5}>
           <Title>Writing</Title>
-          <BlogList />
+          <BlogList truncateTo={5} />
         </Grid.Col>
       </Grid>
       <Affix position={{ bottom: 0, left: 10 }}>
@@ -53,7 +53,7 @@ function MobileHomeLayout() {
       <HeroCard />
       <Divider />
       <Title>Writing</Title>
-      <BlogList />
+      <BlogList truncateTo={3} />
       <Center>
         <HeroImage />
       </Center>

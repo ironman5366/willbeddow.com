@@ -1,9 +1,24 @@
 import React, { useEffect, useState } from "react";
-import { Stack } from "@mantine/core";
+import { Button, Center, Stack } from "@mantine/core";
 import { PostConnectionQuery } from "../../../tina/__generated__/types";
 import client from "../../../tina/__generated__/client";
-import { useRouter } from "next/navigation";
 import PostCard from "@/components/molecules/PostCard";
+import Link from "next/link";
+import useIsMobile from "@/hoks/useIsMobile";
+
+function AllPostsButton({ style }: { style?: React.CSSProperties }) {
+  return (
+    <Button
+      component={Link}
+      href={"/writing"}
+      style={{
+        ...style,
+      }}
+    >
+      All Posts →
+    </Button>
+  );
+}
 
 interface Props {
   truncateTo?: number;
@@ -11,7 +26,7 @@ interface Props {
 
 export default function BlogList({ truncateTo }: Props) {
   const [posts, setPosts] = useState<PostConnectionQuery | undefined>();
-  const router = useRouter();
+  const isMobile = useIsMobile();
 
   useEffect(() => {
     client.queries
@@ -33,7 +48,19 @@ export default function BlogList({ truncateTo }: Props) {
         ? postList.map((post) => (
             <PostCard post={post!.node!} key={post?.node?.id} />
           ))
-        : "No Posts"}
+        : "Loading posts..."}
+      {truncateTo !== undefined &&
+        (isMobile ? (
+          <Center>
+            <AllPostsButton />
+          </Center>
+        ) : (
+          <AllPostsButton
+            style={{
+              marginLeft: "80%",
+            }}
+          />
+        ))}
     </Stack>
   );
 }

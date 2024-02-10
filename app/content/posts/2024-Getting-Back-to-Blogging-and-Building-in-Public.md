@@ -1,6 +1,8 @@
 ---
 title: "2024: Getting Back to Blogging, and Building in Public"
-blurb: "In which I lay out the projects I plan to half-finish this year, and set the intention to start blogging regularly again."
+blurb: >-
+  In which I lay out the projects I plan to half-finish this year, and set the
+  intention to start blogging regularly again.
 created_at: 2024-01-31T05:00:00.000Z
 updated_at: 2024-01-31T05:00:00.000Z
 ---
@@ -15,9 +17,7 @@ My goal is to once again shed that crust - if I want to make my writing less dri
 
 In addition to writing practice, and clarity of thought, another benefit of blogging is the sense of accountability when I hit “Publish”. Is it rational to feel accountable to a crowd of crawler bots and the occasional salesperson trolling through LinkedIn? Maybe not, but the Baidu web spider has visited every one of my projects, and I’d hate to disappoint it.
 
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e13b3297-226c-40f8-9506-3494bca1ab62/c73a7266-cfb4-46c9-90f1-4b8cf8d74805/Untitled.png)
-
-Caption: “ChatGPT: Homie, please make an image of me hanging out with the Baidu web spider”
+![An AI-generated cartoon of me with a robot spider that says "Baidu"](/uploads/67d9e5d8-044e-4581-a751-36cae0c813c6.jpg "ChatGPT: Homie, please make an image of me hanging out with the Baidu web spider")\*\*
 
 The Building in Public movement has resonated with me for years on these grounds; I have a huge graveyard of 20% finished side projects, and if the parasociality of blogging about them can get me to actually finish one, it’d be a successful experiment. At this point, I’d even take getting to the 40% mark!
 
@@ -26,8 +26,6 @@ So, all of that being said, what do I want to work on this year?
 # Ursula
 
 Ursula (named for Ursula Le Guin) will be a a stack-ranking app for books, a la [https://beliapp.com/](https://beliapp.com/). I had this idea last year, when I started using Beli more. A stack rank, as opposed to stars, forces you to decide which is better between two options, and, at least on Beli, provides a much stronger signal than a star ranking.
-
-![Untitled](https://prod-files-secure.s3.us-west-2.amazonaws.com/e13b3297-226c-40f8-9506-3494bca1ab62/999815d6-f09a-496e-acfe-69201eb63417/Untitled.jpeg)
 
 Caption: “Beli’s stack-ranking interface forces you to make tough choices”
 

@@ -9,6 +9,10 @@
   }
 }
 
+a {
+  color: #63a375;
+}
+
 a:hover {
   text-decoration: underline dotted;
 }
