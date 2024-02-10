@@ -1,10 +1,10 @@
 import { AppProps } from "next/app";
+import CozyContainer from "@/components/atoms/CozyContainer";
+import Header from "@/components/organisms/Header";
 import { AppShell, MantineProvider } from "@mantine/core";
 import theme from "@/theme";
 import "@/globals.css";
 import "@mantine/core/styles.css";
-import Header from "@/components/organisms/Header";
-import CozyContainer from "@/components/atoms/CozyContainer";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

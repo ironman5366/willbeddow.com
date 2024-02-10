@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import CozyContainer from "@/components/atoms/CozyContainer";
-import Header from "@/components/organisms/Header";
 import "@/globals.css";
 import "@mantine/core/styles.css";
+import CozyContainer from "@/components/atoms/CozyContainer";
+import Header from "@/components/organisms/Header";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import theme from "@/theme";
 
