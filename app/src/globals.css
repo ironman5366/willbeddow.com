@@ -2,7 +2,11 @@
   background-image: url("/flower.svg");
   background-repeat: repeat;
   background-color: #f5f5f5;
-  padding: 20px;
+  padding: 5px;
+
+  @media (min-width: 400px) {
+    padding: 20px;
+  }
 
   @media (min-width: 640px) {
     padding: 60px;

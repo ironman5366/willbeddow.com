@@ -3,7 +3,7 @@ import client from "../../../tina/__generated__/client";
 import { GetStaticPropsContext } from "next";
 import { useTina } from "tinacms/dist/react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Divider, Group, Paper, Stack, Title } from "@mantine/core";
+import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
@@ -71,20 +71,33 @@ const components = {
   }) => {
     // Show captions in italics beneath the image
     return (
-      <div>
-        <Image
-          src={src}
-          alt={alt || ""}
-          width={width || 512}
-          height={height || 512}
-          {...props}
-        />
+      <Stack>
+        <Center
+          style={{
+            maxWidth: "calc(100vw - 75px)",
+          }}
+        >
+          <Image
+            src={src}
+            alt={alt || ""}
+            width={width || 512}
+            height={height || 512}
+            style={{
+              maxWidth: "calc(100vw - 75px)",
+            }}
+            {...props}
+          />
+        </Center>
         {caption && (
-          <p>
+          <Center
+            style={{
+              textAlign: "center",
+            }}
+          >
             <i>{caption}</i>
-          </p>
+          </Center>
         )}
-      </div>
+      </Stack>
     );
   },
 };
@@ -109,16 +122,40 @@ export default function Post(props: {
       }}
     >
       <Stack>
-        <Title>{data.post.title}</Title>
-        <Text>{data.post.blurb}</Text>
-        <Group>
-          <>
-            <b>Created: </b> <FormattedDate isoString={data.post.created_at} />
-          </>
-          <>
-            <b>Updated: </b> <FormattedDate isoString={data.post.updated_at} />
-          </>
-        </Group>
+        <div
+          style={{
+            textAlign: "center",
+          }}
+        >
+          <Title
+            style={{
+              fontSize: "2.2em",
+              textAlign: "center",
+            }}
+          >
+            {data.post.title}
+          </Title>
+          <Text
+            style={{
+              textAlign: "center",
+            }}
+          >
+            {data.post.blurb}
+          </Text>
+          <Center>
+            <Group>
+              <>
+                <b>Created: </b>{" "}
+                <FormattedDate isoString={data.post.created_at} />
+              </>
+              <>
+                <b>Updated: </b>{" "}
+                <FormattedDate isoString={data.post.updated_at} />
+              </>
+            </Group>
+          </Center>
+        </div>
+
         <Divider />
         <div
           style={{
