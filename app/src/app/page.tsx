@@ -1,10 +1,11 @@
 "use client";
-import { Affix, Grid, Paper, Title } from "@mantine/core";
+import { Affix, Grid, Stack } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
+import useIsMobile from "@/hoks/useIsMobile";
+import HeroImage from "@/components/atoms/HeroImage";
 
 // TODO: for some reason, even though BlogTable is a ClientComponent,
 //  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
@@ -14,34 +15,53 @@ const BlogTable = dynamic(() => import("@/components/organisms/BlogTable"), {
   ssr: false,
 });
 
-export default function Home() {
-  // We only need this style to keep from an SSR flicker
+/**
+ * For desktop, shows the hero image affixed and tries to show recent blog posts next to the main content
+ */
+function GridHomeLayout() {
   return (
     <div
+      style={{
+        marginLeft: "auto",
+        marginRight: "auto",
+      }}
+    >
+      <Grid>
+        <Grid.Col span={8}>
+          <HeroCard />
+        </Grid.Col>
+        <Grid.Col span={4}>
+          <BlogTable />
+        </Grid.Col>
+      </Grid>
+      <Affix position={{ bottom: 0, left: 10 }}>
+        <HeroImage />
+      </Affix>
+    </div>
+  );
+}
+
+function MobileHomeLayout() {
+  return (
+    <NicelyCentered component={Stack}>
+      <HeroCard />
+      <BlogTable />
+      <HeroImage />
+    </NicelyCentered>
+  );
+}
+
+export default function Home() {
+  const isMobile = useIsMobile();
+
+  return (
+    <div
+      // We only need this style to keep from an SSR flicker
       style={{
         color: WINE_MID_COLOR,
       }}
     >
-      <NicelyCentered
-        component={"div"}
-        style={{
-          borderRadius: 20,
-        }}
-      >
-        <HeroCard />
-      </NicelyCentered>
-      <Affix position={{ bottom: 0, left: 10 }}>
-        <Image
-          src={"/hero.png"}
-          width={400}
-          height={400}
-          style={{
-            maxWidth: "40vw",
-          }}
-          alt={"A stylized sketch of me, used as a hero image."}
-          priority={true}
-        />
-      </Affix>
+      {isMobile ? <MobileHomeLayout /> : <GridHomeLayout />}
     </div>
   );
 }
