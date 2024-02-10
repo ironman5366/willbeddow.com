@@ -37,7 +37,7 @@ export default function BlogList({ truncateTo }: Props) {
       .then((res) => {
         setPosts(res.data);
       });
-  });
+  }, []);
 
   const postList =
     (posts &&
