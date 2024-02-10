@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import AppTree from "@/components/organisms/AppTree";
 import CozyContainer from "@/components/atoms/CozyContainer";
 import Header from "@/components/organisms/Header";
+import { ColorSchemeScript } from "@mantine/core";
 
 export const metadata: Metadata = {
   title: "Will Beddow",
@@ -15,6 +16,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <ColorSchemeScript />
+      </head>
       <body>
         <AppTree>
           <Header />
