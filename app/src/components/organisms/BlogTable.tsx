@@ -6,6 +6,7 @@ import FormattedDate from "@/components/atoms/FormattedDate";
 import { getDocumentPath } from "@/blogUtils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { WINE_MID_COLOR } from "@/theme";
 
 interface Props {
   truncateTo?: number;
@@ -27,61 +28,58 @@ export default function BlogTable({ truncateTo }: Props) {
   });
 
   return (
-    <Stack>
-      <Table
-        c={"wine"}
-        style={{
-          fontSize: "1.5em",
-        }}
-        highlightOnHover
-      >
-        <Table.Thead>
-          <Table.Tr>
-            <Table.Th>Title</Table.Th>
-            <Table.Th>Date</Table.Th>
-          </Table.Tr>
-        </Table.Thead>
-        <Table.Tbody>
-          {posts &&
-            posts.postConnection &&
-            posts.postConnection.edges &&
-            posts.postConnection.edges.reverse().map((post) => (
-              <Table.Tr
-                key={post?.node?.id}
-                style={{
-                  cursor: "pointer",
-                  textDecoration: "underline",
-                }}
-                onClick={() => {
-                  router.push(getDocumentPath(post?.node));
-                }}
-              >
-                <Table.Td>{post?.node?.title}</Table.Td>
-                <Table.Td>
-                  {post?.node?.created_at && (
-                    <FormattedDate isoString={post.node.created_at} />
-                  )}
-                </Table.Td>
-              </Table.Tr>
-            ))}
-        </Table.Tbody>
-      </Table>
+    <Table
+      c={"wine"}
+      style={{
+        fontSize: "1.5em",
+      }}
+      highlightOnHover
+      captionSide={"bottom"}
+    >
+      <Table.Thead>
+        <Table.Tr>
+          <Table.Th>Title</Table.Th>
+          <Table.Th>Date</Table.Th>
+        </Table.Tr>
+      </Table.Thead>
+      <Table.Tbody>
+        {posts &&
+          posts.postConnection &&
+          posts.postConnection.edges &&
+          posts.postConnection.edges.reverse().map((post) => (
+            <Table.Tr
+              key={post?.node?.id}
+              style={{
+                cursor: "pointer",
+                textDecoration: "underline",
+              }}
+              onClick={() => {
+                router.push(getDocumentPath(post?.node));
+              }}
+            >
+              <Table.Td>{post?.node?.title}</Table.Td>
+              <Table.Td>
+                {post?.node?.created_at && (
+                  <FormattedDate isoString={post.node.created_at} />
+                )}
+              </Table.Td>
+            </Table.Tr>
+          ))}
+      </Table.Tbody>
       {truncateTo && (
-        <Group
-          style={{
-            marginLeft: "80%",
-          }}
-        >
+        <Table.Caption>
           <Link
             href={"/writing"}
             style={{
-              fontSize: "1em",
+              fontSize: "0.8em",
+              color: WINE_MID_COLOR,
             }}
+            color={"wine"}
           >
             All Posts →{" "}
           </Link>
-        </Group>
+        </Table.Caption>
       )}
-    </Stack>
+    </Table>
   );
 }

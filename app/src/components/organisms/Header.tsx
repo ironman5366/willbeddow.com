@@ -9,12 +9,13 @@ import useIsMobile from "@/hoks/useIsMobile";
 
 export default function Header() {
   const isMobile = useIsMobile();
+  const sidePadding = isMobile ? "5px" : "10px";
   return (
     <div
       style={{
         height: "74px",
-        paddingLeft: "10px",
-        paddingRight: "10px",
+        paddingLeft: sidePadding,
+        paddingRight: sidePadding,
         paddingBottom: "5px",
         paddingTop: "5px",
         backgroundColor: WHITE_SMOKE,
@@ -26,7 +27,13 @@ export default function Header() {
           <Logo />
         </Link>
 
-        <Group justify={"space-evenly"} c={"wine"}>
+        <Group
+          justify={"space-evenly"}
+          c={"wine"}
+          style={{
+            fontSize: "1em",
+          }}
+        >
           <Link href={"/writing"}>Writing</Link>
           <Link href={"/projects"}>Projects</Link>
           <Link href={`mailto:${EMAIL}`}>

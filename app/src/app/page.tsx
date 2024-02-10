@@ -1,21 +1,20 @@
 "use client";
-import { Affix, Stack } from "@mantine/core";
+import { Affix, Grid, Paper, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
-import useIsMobile from "@/hoks/useIsMobile";
+import NicelyCentered from "@/components/atoms/NicelyCentered";
 
 // TODO: for some reason, even though BlogTable is a ClientComponent,
 //  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
-//  next app router - I should look into this again in a few months when things have stablized more between next tina and mantine
+//  next app router - I should look into this again in a few months when things have stabilized more between
+//  next, tina, and mantine
 const BlogTable = dynamic(() => import("@/components/organisms/BlogTable"), {
   ssr: false,
 });
 
 export default function Home() {
-  const isMobile = useIsMobile();
-
   // We only need this style to keep from an SSR flicker
   return (
     <div
@@ -23,10 +22,15 @@ export default function Home() {
         color: WINE_MID_COLOR,
       }}
     >
-      <Stack>
+      <NicelyCentered
+        component={"div"}
+        style={{
+          borderRadius: 20,
+        }}
+      >
         <HeroCard />
-      </Stack>
-      <Affix position={{ bottom: 0, left: 20 }}>
+      </NicelyCentered>
+      <Affix position={{ bottom: 0, left: 10 }}>
         <Image
           src={"/hero.png"}
           width={400}
