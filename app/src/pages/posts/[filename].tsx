@@ -3,7 +3,7 @@ import client from "../../../tina/__generated__/client";
 import { GetStaticPropsContext } from "next";
 import { useTina } from "tinacms/dist/react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
+import { Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
@@ -26,7 +26,7 @@ export async function getStaticProps({
 }: GetStaticPropsContext<{
   filename: string;
 }>) {
-  let variables = { relativePath: `${params?.filename}.mdx` };
+  let variables = { relativePath: `${params?.filename}.md` };
 
   const res = await client.queries.post(variables);
   const query = res.query;
@@ -84,7 +84,7 @@ export default function Post(props: {
             fontWeight: 50,
           }}
         >
-          <TinaMarkdown content={data.post.body} components={components} />
+          <TinaMarkdown content={data.post.body} />
         </div>
       </Stack>
     </NicelyCentered>
