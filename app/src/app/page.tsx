@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Grid, Stack } from "@mantine/core";
+import { Affix, Grid, Stack, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
 import { WINE_MID_COLOR } from "@/theme";
@@ -27,10 +27,11 @@ function GridHomeLayout() {
       }}
     >
       <Grid>
-        <Grid.Col span={8}>
+        <Grid.Col span={7}>
           <HeroCard />
         </Grid.Col>
-        <Grid.Col span={4}>
+        <Grid.Col span={5}>
+          <Title>Writing</Title>
           <BlogTable />
         </Grid.Col>
       </Grid>
