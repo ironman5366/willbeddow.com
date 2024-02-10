@@ -22,7 +22,7 @@ export default function PostCard({ post }: Props) {
         color: WINE_MID_COLOR,
       }}
     >
-      <Title order={2}>
+      <Title order={3}>
         <FancyLink href={postLink} className="underline">
           {post.title}
         </FancyLink>

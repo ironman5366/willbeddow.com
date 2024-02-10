@@ -53,7 +53,16 @@ const components = {
     width?: number;
     height?: number;
   }) => {
-    return <video src={src} controls {...props} />;
+    return (
+      <video
+        src={src}
+        controls
+        style={{
+          maxWidth: "calc(100vw - 75px)",
+        }}
+        {...props}
+      />
+    );
   },
   CustomImage: ({
     src,
@@ -129,7 +138,7 @@ export default function Post(props: {
         >
           <Title
             style={{
-              fontSize: "2.2em",
+              fontSize: "1.5em",
               textAlign: "center",
             }}
           >
@@ -160,6 +169,7 @@ export default function Post(props: {
         <div
           style={{
             fontWeight: 50,
+            maxWidth: "calc(100vw - 75px)",
           }}
         >
           <TinaMarkdown content={data.post.body} components={components} />

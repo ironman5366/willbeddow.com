@@ -4,12 +4,7 @@ import BlogList from "@/components/organisms/BlogList";
 
 export default function Writing() {
   return (
-    <NicelyCentered
-      component={Paper}
-      style={{
-        borderRadius: 20,
-      }}
-    >
+    <NicelyCentered component={"div"}>
       <Center>
         <Title c={"wine"}>Writing</Title>
       </Center>

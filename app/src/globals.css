@@ -15,6 +15,7 @@
 
 a {
   color: #63a375;
+  word-wrap: break-word;
 }
 
 a:hover {

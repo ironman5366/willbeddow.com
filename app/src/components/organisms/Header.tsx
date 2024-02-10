@@ -17,11 +17,11 @@ export default function Header() {
   let fontSize;
   if (isTiny) {
     contactSection = "Email";
-    fontSize = "0.9em";
+    fontSize = "0.8em";
   } else {
     if (isMobile) {
       contactSection = EMAIL;
-      fontSize = "0.9em";
+      fontSize = "0.8em";
     } else {
       contactSection = `Contact: ${EMAIL}`;
       fontSize = "1em";
