@@ -3,11 +3,13 @@ import client from "../../../tina/__generated__/client";
 import { GetStaticPropsContext } from "next";
 import { useTina } from "tinacms/dist/react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
+import { Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
 import { WINE_MID_COLOR } from "@/theme";
+import Image from "next/image";
+import { Text } from "@mantine/core";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -42,6 +44,51 @@ export async function getStaticProps({
   };
 }
 
+const components = {
+  Video: ({
+    src,
+    ...props
+  }: {
+    src: string;
+    width?: number;
+    height?: number;
+  }) => {
+    return <video src={src} controls {...props} />;
+  },
+  CustomImage: ({
+    src,
+    caption,
+    alt,
+    width,
+    height,
+    ...props
+  }: {
+    src: string;
+    width?: number;
+    height?: number;
+    alt?: string;
+    caption?: string;
+  }) => {
+    // Show captions in italics beneath the image
+    return (
+      <div>
+        <Image
+          src={src}
+          alt={alt || ""}
+          width={width || 512}
+          height={height || 512}
+          {...props}
+        />
+        {caption && (
+          <p>
+            <i>{caption}</i>
+          </p>
+        )}
+      </div>
+    );
+  },
+};
+
 export default function Post(props: {
   query: string;
   variables: any;
@@ -63,6 +110,7 @@ export default function Post(props: {
     >
       <Stack>
         <Title>{data.post.title}</Title>
+        <Text>{data.post.blurb}</Text>
         <Group>
           <>
             <b>Created: </b> <FormattedDate isoString={data.post.created_at} />
@@ -77,7 +125,7 @@ export default function Post(props: {
             fontWeight: 50,
           }}
         >
-          <TinaMarkdown content={data.post.body} />
+          <TinaMarkdown content={data.post.body} components={components} />
         </div>
       </Stack>
     </NicelyCentered>

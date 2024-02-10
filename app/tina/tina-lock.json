@@ -38,6 +38,87 @@
             "name": "body",
             "label": "Body",
             "isBody": true,
+            "templates": [
+              {
+                "name": "Video",
+                "label": "Video",
+                "fields": [
+                  {
+                    "type": "string",
+                    "name": "src",
+                    "label": "URL Source",
+                    "namespace": ["post", "body", "Video", "src"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "number",
+                    "name": "width",
+                    "label": "Width",
+                    "namespace": ["post", "body", "Video", "width"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "number",
+                    "name": "height",
+                    "label": "Height",
+                    "namespace": ["post", "body", "Video", "height"],
+                    "searchable": true,
+                    "uid": false
+                  }
+                ],
+                "namespace": ["post", "body", "Video"]
+              },
+              {
+                "name": "CustomImage",
+                "label": "Image (Custom)",
+                "fields": [
+                  {
+                    "type": "string",
+                    "name": "src",
+                    "label": "URL Source",
+                    "required": true,
+                    "namespace": ["post", "body", "CustomImage", "src"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "number",
+                    "name": "width",
+                    "label": "Width",
+                    "namespace": ["post", "body", "CustomImage", "width"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "number",
+                    "name": "height",
+                    "label": "Height",
+                    "namespace": ["post", "body", "CustomImage", "height"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "string",
+                    "name": "alt",
+                    "label": "Alt Text",
+                    "namespace": ["post", "body", "CustomImage", "alt"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "string",
+                    "name": "caption",
+                    "label": "Caption",
+                    "namespace": ["post", "body", "CustomImage", "caption"],
+                    "searchable": true,
+                    "uid": false
+                  }
+                ],
+                "namespace": ["post", "body", "CustomImage"]
+              }
+            ],
             "namespace": ["post", "body"],
             "searchable": true,
             "parser": { "type": "mdx" },
@@ -1036,14 +1117,38 @@
       },
       {
         "kind": "InputObjectTypeDefinition",
-        "name": { "kind": "Name", "value": "RichTextFilter" },
+        "name": { "kind": "Name", "value": "NumberFilter" },
         "fields": [
           {
             "kind": "InputValueDefinition",
-            "name": { "kind": "Name", "value": "startsWith" },
+            "name": { "kind": "Name", "value": "lt" },
             "type": {
               "kind": "NamedType",
-              "name": { "kind": "Name", "value": "String" }
+              "name": { "kind": "Name", "value": "Float" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "lte" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "Float" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "gte" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "Float" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "gt" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "Float" }
             }
           },
           {
@@ -1051,7 +1156,7 @@
             "name": { "kind": "Name", "value": "eq" },
             "type": {
               "kind": "NamedType",
-              "name": { "kind": "Name", "value": "String" }
+              "name": { "kind": "Name", "value": "Float" }
             }
           },
           {
@@ -1060,6 +1165,115 @@
             "type": {
               "kind": "NamedType",
               "name": { "kind": "Name", "value": "Boolean" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "in" },
+            "type": {
+              "kind": "ListType",
+              "type": {
+                "kind": "NamedType",
+                "name": { "kind": "Name", "value": "Float" }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "PostBodyVideoFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "src" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "width" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "NumberFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "height" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "NumberFilter" }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "PostBodyCustomImageFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "src" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "width" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "NumberFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "height" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "NumberFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "alt" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "caption" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "PostBodyFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "Video" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "PostBodyVideoFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "CustomImage" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "PostBodyCustomImageFilter" }
             }
           }
         ]
@@ -1138,7 +1352,7 @@
             "name": { "kind": "Name", "value": "body" },
             "type": {
               "kind": "NamedType",
-              "name": { "kind": "Name", "value": "RichTextFilter" }
+              "name": { "kind": "Name", "value": "PostBodyFilter" }
             }
           },
           {

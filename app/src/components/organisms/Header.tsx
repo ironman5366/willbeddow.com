@@ -4,7 +4,7 @@ import { em, Group } from "@mantine/core";
 import Logo from "@/components/atoms/Logo";
 import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
 import { EMAIL } from "@/constants";
-import useIsMobile from "@/hoks/useIsMobile";
+import useIsMobile from "@/hooks/useIsMobile";
 import { useMediaQuery } from "@mantine/hooks";
 import FancyLink from "@/components/atoms/FancyLink";
 

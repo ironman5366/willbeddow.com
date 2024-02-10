@@ -27,7 +27,7 @@ So, all of that being said, what do I want to work on this year?
 
 Ursula (named for Ursula Le Guin) will be a a stack-ranking app for books, a la [https://beliapp.com/](https://beliapp.com/). I had this idea last year, when I started using Beli more. A stack rank, as opposed to stars, forces you to decide which is better between two options, and, at least on Beli, provides a much stronger signal than a star ranking.
 
-Caption: “Beli’s stack-ranking interface forces you to make tough choices”
+![A screenshot of the "Beli" restaurant ranking app](/uploads/IMG_3A4CD5A149E2-1.jpg "Beli's stack-ranking interface forces you to make tough choices")
 
 A huge caveat here is that Beli is young, and hasn’t yet had to contend with the poisonous forces of monetization, which is probably a larger factor in driving down the rating quality of Yelp and Google than the star form factor. I think it’s cool, though, and I’d love to try it out with books.
 
@@ -51,6 +51,8 @@ I’ll write more extensively about motivations for this when I get around to bu
 
 ## Revamp of This Website
 
+(update 2/20/24: this is done! you're lookin' at it :) )
+
 I’ve been meaning to do this for _years_. I hacked together the current version of this website on a roadtrip freshman year of college, when I realized I was out of money and needed to start freelancing. It still uses jQuery (🙁), and I’m afraid to touch the server it runs on for fear I’ll never get it back up.
 
 I started remaking it in the summer of 2022 but two things went wrong:
@@ -73,5 +75,7 @@ This should be pretty easy to set up - I just need to revamp my site first!
 ## Do a Triathlon
 
 This isn’t code related, but maybe writing it down will force me to actually find a good pool to train in in Brooklyn! The Gowanus Canal is starting to look mighty appealing with what pool access costs in this city.
+
+# In Conclusion
 
 Time will tell whether I follow-through on any of these things. If you’re a human who’s made it to end though, and any of these interest you, please get in touch about them! I’d love a collaborator, user, or just an interesting conversation on any of them. My email is [will@willbeddow.com](mailto:will@willbeddow.com).
