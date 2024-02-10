@@ -1,6 +1,6 @@
 import { Center, Paper, Title } from "@mantine/core";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
-import BlogTable from "@/components/organisms/BlogTable";
+import BlogList from "@/components/organisms/BlogList";
 
 export default function Writing() {
   return (
@@ -13,7 +13,7 @@ export default function Writing() {
       <Center>
         <Title c={"wine"}>Writing</Title>
       </Center>
-      <BlogTable />
+      <BlogList />
     </NicelyCentered>
   );
 }

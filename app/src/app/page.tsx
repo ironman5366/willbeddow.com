@@ -11,7 +11,7 @@ import HeroImage from "@/components/atoms/HeroImage";
 //  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
 //  next app router - I should look into this again in a few months when things have stabilized more between
 //  next, tina, and mantine
-const BlogTable = dynamic(() => import("@/components/organisms/BlogTable"), {
+const BlogList = dynamic(() => import("@/components/organisms/BlogList"), {
   ssr: false,
 });
 
@@ -32,7 +32,7 @@ function GridHomeLayout() {
         </Grid.Col>
         <Grid.Col span={5}>
           <Title>Writing</Title>
-          <BlogTable />
+          <BlogList />
         </Grid.Col>
       </Grid>
       <Affix position={{ bottom: 0, left: 10 }}>
@@ -46,7 +46,7 @@ function MobileHomeLayout() {
   return (
     <NicelyCentered component={Stack}>
       <HeroCard />
-      <BlogTable />
+      <BlogList />
       <HeroImage />
     </NicelyCentered>
   );

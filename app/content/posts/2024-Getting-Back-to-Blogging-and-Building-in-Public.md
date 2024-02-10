@@ -1,5 +1,6 @@
 ---
 title: "2024: Getting Back to Blogging, and Building in Public"
+blurb: "In which I lay out the projects I plan to half-finish this year, and set the intention to start blogging regularly again."
 created_at: 2024-01-31T05:00:00.000Z
 updated_at: 2024-01-31T05:00:00.000Z
 ---
