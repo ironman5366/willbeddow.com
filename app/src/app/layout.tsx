@@ -5,6 +5,8 @@ import CozyContainer from "@/components/atoms/CozyContainer";
 import Header from "@/components/organisms/Header";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import theme from "@/theme";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { GOOGLE_ANALYTICS_ID } from "@/constants";
 
 export const metadata: Metadata = {
   title: "Will Beddow",
@@ -27,6 +29,7 @@ export default function RootLayout({
           <CozyContainer minHeight={"90vh"}>{children}</CozyContainer>
         </MantineProvider>
       </body>
+      <GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />
     </html>
   );
 }

@@ -54,7 +54,11 @@ export default function Header() {
           }}
         >
           <FancyLink href={"/writing"}>Writing</FancyLink>
-          <FancyLink href={"/projects"}>Projects</FancyLink>
+
+          {
+            // Disabled until I build the projects page
+            //<FancyLink href={"/projects"}>Projects</FancyLink>
+          }
           <FancyLink href={`mailto:${EMAIL}`}>{contactSection}</FancyLink>
         </Group>
       </Group>

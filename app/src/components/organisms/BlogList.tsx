@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Button, Center, Stack } from "@mantine/core";
 import { PostConnectionQuery } from "../../../tina/__generated__/types";
 import client from "../../../tina/__generated__/client";
@@ -39,12 +39,17 @@ export default function BlogList({ truncateTo }: Props) {
       });
   }, []);
 
-  const postList =
-    (posts &&
-      posts.postConnection &&
-      posts.postConnection.edges &&
-      posts.postConnection.edges.reverse()) ||
-    [];
+  const postList = useMemo(() => {
+    if (posts && posts.postConnection && posts.postConnection.edges) {
+      // Sort by created_at descending
+      return posts.postConnection.edges.sort(
+        (a, b) =>
+          new Date(b!.node!.created_at!).getTime() -
+          new Date(a!.node!.created_at!).getTime()
+      );
+    }
+    return [];
+  }, [posts]);
 
   return (
     <Stack>
