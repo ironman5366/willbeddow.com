@@ -61,7 +61,7 @@ export default function BlogList({ truncateTo }: Props) {
         ) : (
           <AllPostsButton
             style={{
-              marginLeft: "80%",
+              marginLeft: "60%",
             }}
           />
         ))}
