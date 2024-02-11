@@ -33,7 +33,7 @@ function GridHomeLayout() {
         </Grid.Col>
         <Grid.Col span={5}>
           <Title>Writing</Title>
-          <BlogList truncateTo={5} />
+          <BlogList truncateTo={4} />
         </Grid.Col>
       </Grid>
       <Affix position={{ bottom: 0, left: 10 }}>
