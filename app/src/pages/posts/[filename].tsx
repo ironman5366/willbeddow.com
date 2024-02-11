@@ -10,6 +10,7 @@ import NicelyCentered from "@/components/atoms/NicelyCentered";
 import { WINE_MID_COLOR } from "@/theme";
 import Image from "next/image";
 import { Text } from "@mantine/core";
+import Head from "next/head";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -123,58 +124,63 @@ export default function Post(props: {
   });
 
   return (
-    <NicelyCentered
-      component={Paper}
-      style={{
-        borderRadius: 20,
-        border: `2px dotted ${WINE_MID_COLOR}`,
-      }}
-    >
-      <Stack>
-        <div
-          style={{
-            textAlign: "center",
-          }}
-        >
-          <Title
-            style={{
-              fontSize: "1.5em",
-              textAlign: "center",
-            }}
-          >
-            {data.post.title}
-          </Title>
-          <Text
+    <>
+      <Head>
+        <title>{data.post.title} | Will Beddow</title>
+      </Head>
+      <NicelyCentered
+        component={Paper}
+        style={{
+          borderRadius: 20,
+          border: `2px dotted ${WINE_MID_COLOR}`,
+        }}
+      >
+        <Stack>
+          <div
             style={{
               textAlign: "center",
             }}
           >
-            {data.post.blurb}
-          </Text>
-          <Center>
-            <Group>
-              <>
-                <b>Created: </b>{" "}
-                <FormattedDate isoString={data.post.created_at} />
-              </>
-              <>
-                <b>Updated: </b>{" "}
-                <FormattedDate isoString={data.post.updated_at} />
-              </>
-            </Group>
-          </Center>
-        </div>
+            <Title
+              style={{
+                fontSize: "1.5em",
+                textAlign: "center",
+              }}
+            >
+              {data.post.title}
+            </Title>
+            <Text
+              style={{
+                textAlign: "center",
+              }}
+            >
+              {data.post.blurb}
+            </Text>
+            <Center>
+              <Group>
+                <>
+                  <b>Created: </b>{" "}
+                  <FormattedDate isoString={data.post.created_at} />
+                </>
+                <>
+                  <b>Updated: </b>{" "}
+                  <FormattedDate isoString={data.post.updated_at} />
+                </>
+              </Group>
+            </Center>
+          </div>
 
-        <Divider />
-        <div
-          style={{
-            fontWeight: 50,
-            maxWidth: "calc(100vw - 75px)",
-          }}
-        >
-          <TinaMarkdown content={data.post.body} components={components} />
-        </div>
-      </Stack>
-    </NicelyCentered>
+          <Divider />
+          <div
+            style={{
+              fontWeight: 50,
+              maxWidth: "calc(100vw - 75px)",
+            }}
+          >
+            <TinaMarkdown content={data.post.body} components={components} />
+          </div>
+        </Stack>
+      </NicelyCentered>
+    </>
   );
 }
