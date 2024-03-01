@@ -14,7 +14,7 @@ updated_at: 2024-02-29T08:00:00.000Z
 - I aim for there to be two distinguishing features:
   - **Stack-Ranking**, inspired by [Beli](https://beliapp.com/). Each book is definitively ranked in your list, rather than being given a star ranking. On Beli I find this is a much higher signal of how good a restaurant is - if a friend who eats out often ranks a restaurant in their top 10, I'm going to go!
   - **AI Recommendations**. I already frequently ask ChatGPT questions like "If I like sprawling sci-fi epics like "A Fire Upon the Deep", what should I read next?" This should be easy to build into Ursula.
-    - Bonus points if I get my LLM proxy project Weatherwax involved in this. Read more in my last post.
+    - Bonus points if I get my LLM proxy project Weatherwax involved in this.
 - I'm giving myself a deadline: I want to have a public beta on the app store by **April 1, 2024**
 - If anything about Ursula interests you, please reach out at [will@willbeddow.com](mailto:will@willbeddow.com)
 
@@ -60,7 +60,7 @@ align my incentives to make sure I do.
 ### What's done so far:
 
 - Basic app CRUD and setup on supabase
-- Binary search
+- Binary search to figure out where to put a book in the rankings
 - Book search and google books integration
 - Spend way too long browsing coolors.co for a color scheme
 
@@ -104,5 +104,7 @@ Again, this is for _book_ metadata, and OCLC is a _nonprofit_ consortium of libr
 and I certainly have no broader context to speculate, but the cost seems absurd.
 
 To put this in context, if you wanted to get the same information for [movies](https://developer.imdb.com/non-commercial-datasets/),
-[Video Games](https://www.igdb.com/api), or [music](http://www.onemusicapi.com/), you'd be able to get this data in a high quality format, for free or at-cost, with no restrictions. It would seem intuitively to me that
+[video games](https://www.igdb.com/api), or [music](http://www.onemusicapi.com/), you'd be able to get this data in a high quality format, for free or at-cost, with no restrictions. It would seem intuitively to me that
 movies, games, and music, are much more closed in most cases than books - it's strange that this case should be different.
+
+Regardless, I hate rent-seeking incumbents, so I'm determined to get around these data quality challenges at some point in the project (without forking over thousands to OCLC). Potential options include partnering with an institution, building my own database, or just putting a tremendous amount of work to make Google Books usable. I'm not sure - I've certainly gotten sucked down this rabbit hole enough already for such an early-stage project, so I'm going to force myself to stay on Google Books at least until I have the first beta out. If anybody has any experience in this area or suggestions, I'd love to hear from you!
