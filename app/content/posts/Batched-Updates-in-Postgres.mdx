@@ -1,0 +1,66 @@
+---
+title: Batched Updates in Postgres
+blurb: A little procedure I'm finding handy at the moment
+created_at: 2024-03-14T04:00:00.000Z
+updated_at: 2024-03-14T04:00:00.000Z
+---
+
+As I've been working on [Ursula](/posts/Ursula-Development-Log-1 "Ursula") this month, I've been managing a large dataset of book metadata in postgres - it's a bit unwieldy, and often, when running some large operation, I want to run it in batches (so I can resume if it fails), and see the progress as it slowly executes. I created this procedure after a lot of pain this week: \
+
+
+```pgsql
+CREATE OR REPLACE PROCEDURE proc_batched_update(table_name text, get_total_query text, update_query text) AS $$
+DECLARE affected_rows INTEGER;
+    DECLARE total_rows INTEGER;
+    DECLARE progress INTEGER;
+BEGIN
+    -- Get the total number of rows to be updated
+    EXECUTE get_total_query INTO total_rows;
+
+    RAISE NOTICE 'Total rows to update on %: %', table_name, total_rows;
+
+    progress := 0;
+
+    LOOP
+        EXECUTE update_query;
+
+        GET DIAGNOSTICS affected_rows = ROW_COUNT;
+        progress := progress + affected_rows;
+
+        RAISE NOTICE 'Updated % rows in %, progress: %/%', affected_rows, table_name, progress, total_rows;
+
+        COMMIT;
+
+        EXIT WHEN affected_rows = 0;
+    END LOOP;
+
+    RAISE NOTICE 'Update completed. Total rows updated in %: %', table_name, progress;
+END $$ LANGUAGE plpgsql;
+```
+
+Here's an example of how you use it:\
+\
+
+
+```pgsql
+CALL proc_batched_update(
+  'ol_editions',
+  'SELECT COUNT(*) FROM ol_editions WHERE book_id IS NULL',
+  'WITH cte AS (
+                SELECT ol_editions.id, book_ol_id
+                FROM ol_editions
+                JOIN ol_books ON ol_books.ol_id = ol_editions.book_ol_id
+                WHERE ol_editions.book_id IS NULL
+                LIMIT 50000
+)
+            UPDATE ol_editions
+            SET book_id = ol_books.id
+            FROM cte
+            JOIN ol_books ON ol_books.ol_id = book_ol_id
+            WHERE ol_editions.id = cte.id; '
+);
+```
+
+Note that the LIMIT in here is the batch size.\
+\
+Hope this is helpful to someone else! 
