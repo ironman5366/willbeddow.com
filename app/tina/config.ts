@@ -54,6 +54,23 @@ export default defineConfig({
             isBody: true,
             templates: [
               {
+                name: "A",
+                label: "Link",
+                fields: [
+                  {
+                    type: "string",
+                    name: "href",
+                    label: "href",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "target",
+                    label: "target",
+                  },
+                ],
+              },
+              {
                 name: "Video",
                 label: "Video",
                 fields: [

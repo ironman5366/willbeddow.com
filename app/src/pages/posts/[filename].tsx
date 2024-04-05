@@ -3,7 +3,16 @@ import client from "../../../tina/__generated__/client";
 import { GetStaticPropsContext } from "next";
 import { useTina } from "tinacms/dist/react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
+import {
+  Anchor,
+  AnchorProps,
+  Center,
+  Divider,
+  Group,
+  Paper,
+  Stack,
+  Title,
+} from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
@@ -46,6 +55,7 @@ export async function getStaticProps({
 }
 
 const components = {
+  A: (props: Partial<AnchorProps>) => <Anchor {...props} />,
   Video: ({
     src,
     ...props
