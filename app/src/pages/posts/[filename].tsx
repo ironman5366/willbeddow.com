@@ -65,14 +65,16 @@ const components = {
     height?: number;
   }) => {
     return (
-      <video
-        src={src}
-        controls
-        style={{
-          maxWidth: "calc(100vw - 75px)",
-        }}
-        {...props}
-      />
+      <Center>
+        <video
+          src={src}
+          controls
+          style={{
+            maxWidth: "calc(100vw - 75px)",
+          }}
+          {...props}
+        />
+      </Center>
     );
   },
   CustomImage: ({
