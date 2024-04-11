@@ -14,16 +14,16 @@ Today I'm releasing **Ursula**, an open-source app that lets you rank, curate, a
 
 <Video src="/uploads/ursulapromocompressed.mp4" width={350} />
 
-I built Ursula over the last two months, in what's turned out to be a lovely little period of unemployment after my
+I built Ursula over the last two months, in what's turned out to be a (genuinely) lovely little period of unemployment after my
 startup failed. In a few days I move to San Francisco and start a new job, so it's time to write this post and release Ursula publicly, though I'm not
 sure I'll ever feel that it's "ready".
 
-Ursula features a stack-ranking mechanism (instead of stars), some light social features, and AI recommendations. It's named after Ursula Le Guin.
-I'm indebted to [Mash Ibtesum](https://mash.studio/) for his contributions to the app's design, and my early testers
-(especially Max Vale and Julia Short) for giving me invaluable and honest feedback. Ursula is a non-commercial and
-permissively-licensed project.
+Ursula features a stack-ranking mechanism (instead of stars), some light social features, and AI recommendations.
+It's named after Ursula Le Guin, one of my favorite authors. I'm indebted to [Mash Ibtesum](https://mash.studio/) for his contributions to the app's design, and my early testers
+(especially Max Vale and Julia Short) for giving me invaluable honest feedback and criticism. Ursula is non-commercial and
+permissively-licensed (ISC).
 
-If you use it, I'd love to hear your feedback as I continue to polish this very unfinished project.
+If you use it, I'd love to hear your feedback as I continue to putter along on this very unfinished project.
 You can get in touch via the [Ursula Discord](https://discord.gg/ETPqBdrVjn), or by emailing me at
 [will@willbeddow.com](mailto\:will@willbeddow.com). No note is too small or too big, so please let me know what you love and
 hate about it!
@@ -38,8 +38,11 @@ friend ranked a restaurant as #1 out of 424 restaurants they've been to, I'll go
 <CustomImage src="/uploads/ursulafavorites.png" width={353} height={750} alt="A screenshot of my favorite books on Ursula, with &#x22;Behind the Beautiful Forevers&#x22; by Katherine Boo in position #1" caption="'Behind the Beautiful Forevers', my #1 book, deserves more praise than just '5 stars'" />
 
 As well as this works for restaurants, I think it's even more powerful for books - the time I spend reading and engaging with
-a book are much richer than a single meal. I have more to say about that time,
+a book is much richer than a single meal. I have more to say about that time,
 and I'm more discerning about what I read - a bad meal only costs me an hour, but the opportunity cost of a bad book is a good book I could have read instead.
+
+Additionally, I've been increasingly using ChatGPT for book recommendations, for ex. "I like sweeping sci-fi epics like _'A Fire Upon the Deep'_, what else might I like?" I felt that integrating this into Ursula would be both very simple and very fun, and I was right on both counts.
+The current AI features just tell an AI chatbot which books you like and give it a facility to recommend books from the database, but I have many ideas of other AI projects that might be fun - some of which I'll detail below.
 
 ## Reflections
 
@@ -49,10 +52,15 @@ got to spend my time focusing on what I want the product to be, rather than bury
 
 The core loop of development felt creative in a way I don't often get - I would talk to my friends about how they read,
 work on design, and try different ideas. Collaborating with Mash on the design was a joy. It's highlighted how much I have to learn
-about design, and how much I enjoy learning about it. As a general rule - anything that looks good in the app is to
+about design, and how much I enjoy learning about it. As a general rule, anything that looks good in the app is to
 Mash's credit, and all errors are mine.
 
-## Things I'd like to do
+I'm reminded of the last time Mash helped me with an app, when I built a little app for our college radio station
+freshman year. I think I built the whole thing sitting in a hammock in our college's arboretum, and blew off
+most of my classes that term to work on it, because it was so _fun_. Ursula feels the same way, and I'm grateful to
+have had such an extended period of time to work on something without any expectation of profits or results.
+
+## Things I'd like to do next
 
 If any of these ideas resonate with you, let me know! I'm not sure when I'll get to them, but knowing that
 someone is interested in any of them would definitely move any of them up the priority list.
@@ -68,11 +76,12 @@ Most of these will be super simple once I get a chance to pick them up.
 
 ## Development
 
-### General App
-
 (if you're interested in contributing to Ursula in any way, technical or non-technical,
 please reach out! I love collaborating - no prior experience in any
 particular area is necessary)
+
+### General App
+
 
 Ursula is a pretty basic React Native app. The backend runs on Supabase.
 The data comes from [Open Library](https://openlibrary.org/), and data quality is very much a work in progress.
