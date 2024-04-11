@@ -177,6 +177,11 @@ and then it integrates nicely with the app types in a minimal little hook:
 
 ([mobile/hooks/activities.ts](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/mobile/hooks/activities.ts#L77)\)
 
+The app UI is powered by [Tamagui](https://tamagui.dev/), which I'm also using for the first time. I have mixed feelings about Tamagui. One one hand, it's a
+good stylish cross-platform component library compatible with react native, which puts it in a category basically all
+on its own. On the other hand, it goes wayyyy over the complexity cliff with all of the compilation and theme tokens
+things it tries to do, and I'm still confused by it a month into using it daily. All in all, it feels very cool, but immature, and it doesn't play well with others.
+
 ### AI Features
 
 The AI features of the app are very straightforward, powered by a pattern that I really have come to love
@@ -227,31 +232,8 @@ This is powered by a Deno function that acts as a simple proxy to an LLM provide
 This is as simple as you might expect, with the one interesting bit being [an adapter between Anthropic's weird old XML function calling spec and the more standard OpenAI one](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/supabase/functions/invoke-ai/providers/anthropic/function_adapter.ts).
 I want to pull that adapter into Weatherwax, the generalized proxy server I'm working on to do this, at some point.
 
-## What I didn't like: Deno and Tamagui
+## Conclusion
 
-The other new technologies I used in this project were Deno, for the Supabase edge functions, and [Tamagui](https://tamagui.dev/),
-a cross-platform React UI library. I actually have the same complaint about both, even though they're extremely
-different technologies: in doing the cool things they do, I feel that they go over the complexity cliff and make
-developer experience worse.
+> _“We read books to find out who we are. What other people, real or imaginary, do and think and feel... is an essential guide to our understanding of what we ourselves are and may become.”_ - **Ursula Le Guin**
 
-In Deno's case, the new URL based imports don't yet integrate well with any of the IDEs I use, and I find it difficult to debug.
-You could argue that this will change as adoption increases, but today my experience is that it's a pain, and
-makes development slower. I also just in general don't love the URL imports - I understand the arguments
-about mitigating supply chain issues, pinning dependencies more explicitly, and acting more like a one-off script, but it's not my preference.
-
-Tamagui is a totally different beast. Deno is a mature piece of engineering that I happen to not jive with yet, but
-Tamagui feels, while impressive, immature. There's an extremely complex system of theme overrides, tokens, and
-custom configuration that tries to take over the app - I found myself fighting with it constantly. For instance, every
-Tamagui component accepts every possible style prop outside of the `style` key. So this is a valid tamagui component:
-<CodeBlock language="tsx">
-```tsx
-<Button
-  // the normal style prop
-  style={{ backgroundColor: "red" }}
-  // The tamagui prop
-  backgroundColor: "green"
-/>
-```
-</CodeBlock>
-
-Components are compiled at build-time, and I ran into bugs several times with component compilation.
+I loved building Ursula. If you try it, I hope you like it. Thanks for reading :)
