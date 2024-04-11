@@ -54,6 +54,39 @@ export default defineConfig({
             isBody: true,
             templates: [
               {
+                name: "CodeBlock",
+                label: "Code",
+                fields: [
+                  {
+                    type: "rich-text",
+                    name: "children",
+                    parser: { type: "markdown", skipEscaping: "all" },
+                  },
+                  {
+                    type: "string",
+                    name: "language",
+                    label: "Language",
+                  },
+                ],
+              },
+              {
+                name: "A",
+                label: "Link",
+                fields: [
+                  {
+                    type: "string",
+                    name: "href",
+                    label: "href",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "target",
+                    label: "target",
+                  },
+                ],
+              },
+              {
                 name: "Video",
                 label: "Video",
                 fields: [

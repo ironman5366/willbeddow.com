@@ -1,8 +1,9 @@
 import { createTheme } from "@mantine/core";
-import { Bree_Serif, Chicle } from "next/font/google";
+import { Bree_Serif, Chicle, Domine } from "next/font/google";
 
 const chicle = Chicle({ subsets: ["latin"], weight: "400" });
-const breeSerif = Bree_Serif({ subsets: ["latin"], weight: "400" });
+export const BREE_SERIF = Bree_Serif({ subsets: ["latin"], weight: "400" });
+const domine = Domine({ subsets: ["latin"] });
 
 // We want to use these in a server component that doesn't have mantine access
 export const WHITE_SMOKE = "#F5F5F5";
@@ -20,7 +21,7 @@ const theme = createTheme({
   headings: {
     fontFamily: chicle.style.fontFamily,
   },
-  fontFamily: breeSerif.style.fontFamily,
+  fontFamily: domine.style.fontFamily,
   primaryColor: "wine",
   colors: {
     mint: [

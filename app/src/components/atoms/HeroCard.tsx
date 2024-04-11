@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Text, Title } from "@mantine/core";
-import { WINE_MID_COLOR } from "@/theme";
+import { BREE_SERIF, WINE_MID_COLOR } from "@/theme";
 import { EMAIL } from "@/constants";
 import FancyLink from "@/components/atoms/FancyLink";
 
@@ -30,7 +30,13 @@ export default function HeroCard() {
     >
       <Title size="3em">{HERO_TITLE}</Title>
       {SECTIONS.map((section, i) => (
-        <Text key={i} size={"xl"}>
+        <Text
+          key={i}
+          size={"xl"}
+          style={{
+            fontFamily: BREE_SERIF.style.fontFamily,
+          }}
+        >
           {section}
         </Text>
       ))}

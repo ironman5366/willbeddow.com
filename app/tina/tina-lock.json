@@ -40,6 +40,52 @@
             "isBody": true,
             "templates": [
               {
+                "name": "CodeBlock",
+                "label": "Code",
+                "fields": [
+                  {
+                    "type": "rich-text",
+                    "name": "children",
+                    "parser": { "type": "markdown", "skipEscaping": "all" },
+                    "namespace": ["post", "body", "CodeBlock", "children"],
+                    "searchable": true
+                  },
+                  {
+                    "type": "string",
+                    "name": "language",
+                    "label": "Language",
+                    "namespace": ["post", "body", "CodeBlock", "language"],
+                    "searchable": true,
+                    "uid": false
+                  }
+                ],
+                "namespace": ["post", "body", "CodeBlock"]
+              },
+              {
+                "name": "A",
+                "label": "Link",
+                "fields": [
+                  {
+                    "type": "string",
+                    "name": "href",
+                    "label": "href",
+                    "required": true,
+                    "namespace": ["post", "body", "A", "href"],
+                    "searchable": true,
+                    "uid": false
+                  },
+                  {
+                    "type": "string",
+                    "name": "target",
+                    "label": "target",
+                    "namespace": ["post", "body", "A", "target"],
+                    "searchable": true,
+                    "uid": false
+                  }
+                ],
+                "namespace": ["post", "body", "A"]
+              },
+              {
                 "name": "Video",
                 "label": "Video",
                 "fields": [
@@ -1117,6 +1163,80 @@
       },
       {
         "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "RichTextFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "startsWith" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "String" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "eq" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "String" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "exists" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "Boolean" }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "PostBodyCodeBlockFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "children" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "RichTextFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "language" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
+        "name": { "kind": "Name", "value": "PostBodyAFilter" },
+        "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "href" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "target" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "StringFilter" }
+            }
+          }
+        ]
+      },
+      {
+        "kind": "InputObjectTypeDefinition",
         "name": { "kind": "Name", "value": "NumberFilter" },
         "fields": [
           {
@@ -1260,6 +1380,22 @@
         "kind": "InputObjectTypeDefinition",
         "name": { "kind": "Name", "value": "PostBodyFilter" },
         "fields": [
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "CodeBlock" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "PostBodyCodeBlockFilter" }
+            }
+          },
+          {
+            "kind": "InputValueDefinition",
+            "name": { "kind": "Name", "value": "A" },
+            "type": {
+              "kind": "NamedType",
+              "name": { "kind": "Name", "value": "PostBodyAFilter" }
+            }
+          },
           {
             "kind": "InputValueDefinition",
             "name": { "kind": "Name", "value": "Video" },

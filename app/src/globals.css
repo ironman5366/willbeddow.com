@@ -25,3 +25,7 @@ a {
 a:hover {
   text-decoration: underline dotted;
 }
+
+strong {
+  font-weight: bold;
+}

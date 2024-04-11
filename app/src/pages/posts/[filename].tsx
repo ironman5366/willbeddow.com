@@ -8,9 +8,9 @@ import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
 import { WINE_MID_COLOR } from "@/theme";
-import Image from "next/image";
 import { Text } from "@mantine/core";
 import Head from "next/head";
+import POST_COMPONENTS from "@/components/organisms/PostComponents";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
@@ -44,73 +44,6 @@ export async function getStaticProps({
     },
   };
 }
-
-const components = {
-  Video: ({
-    src,
-    ...props
-  }: {
-    src: string;
-    width?: number;
-    height?: number;
-  }) => {
-    return (
-      <video
-        src={src}
-        controls
-        style={{
-          maxWidth: "calc(100vw - 75px)",
-        }}
-        {...props}
-      />
-    );
-  },
-  CustomImage: ({
-    src,
-    caption,
-    alt,
-    width,
-    height,
-    ...props
-  }: {
-    src: string;
-    width?: number;
-    height?: number;
-    alt?: string;
-    caption?: string;
-  }) => {
-    // Show captions in italics beneath the image
-    return (
-      <Stack>
-        <Center
-          style={{
-            maxWidth: "calc(100vw - 75px)",
-          }}
-        >
-          <Image
-            src={src}
-            alt={alt || ""}
-            width={width || 512}
-            height={height || 512}
-            style={{
-              maxWidth: "calc(100vw - 75px)",
-            }}
-            {...props}
-          />
-        </Center>
-        {caption && (
-          <Center
-            style={{
-              textAlign: "center",
-            }}
-          >
-            <i>{caption}</i>
-          </Center>
-        )}
-      </Stack>
-    );
-  },
-};
 
 export default function Post(props: {
   query: string;
@@ -177,7 +110,10 @@ export default function Post(props: {
               maxWidth: "calc(100vw - 75px)",
             }}
           >
-            <TinaMarkdown content={data.post.body} components={components} />
+            <TinaMarkdown
+              content={data.post.body}
+              components={POST_COMPONENTS}
+            />
           </div>
         </Stack>
       </NicelyCentered>

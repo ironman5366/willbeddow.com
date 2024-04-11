@@ -23,6 +23,7 @@ export async function getServerSideProps(context: any): Promise<{
 
   const redirects: { [key: string]: string } = {
     meet: "https://calendly.com/willbeddow",
+    ursula: "/posts/ursula",
   };
 
   const target = redirects[slug.join("/")];

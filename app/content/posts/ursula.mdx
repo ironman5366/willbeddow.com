@@ -1,0 +1,239 @@
+---
+title: Ursula
+blurb: The release of my open-source book app
+created_at: 2024-04-11T04:00:00.000Z
+updated_at: 2024-04-11T04:00:00.000Z
+---
+
+Today I'm releasing **Ursula**, an open-source app that lets you rank, curate, and share books.
+
+* **[Download Ursula on the App Store](https://apps.apple.com/us/app/ursula-books/id6478836951)**
+* **Check out the source code at [github.com/ironman5366/ursula](https://github.com/ironman5366/ursula)**
+* **Let me know if you want to be [notified when it's ready for Android / Google Play](https://forms.gle/rBYx6zG2y3juzfkcA)**
+* **Join the [Ursula Discord](https://discord.gg/ETPqBdrVjn)**
+
+<Video src="/uploads/ursulapromocompressed.mp4" width={350} />
+
+I built Ursula over the last two months, in what's turned out to be a (genuinely) lovely little period of unemployment after my
+startup failed. In a few days I move to San Francisco and start a new job, so it's time to write this post and release Ursula publicly, though I'm not
+sure I'll ever feel that it's "ready".
+
+Ursula features a stack-ranking mechanism (instead of stars), some light social features, and AI recommendations.
+It's named after Ursula Le Guin, one of my favorite authors. I'm indebted to [Mash Ibtesum](https://mash.studio/) for his contributions to the app's design, and my early testers
+(especially Max Vale and Julia Short) for giving me invaluable honest feedback and criticism. Ursula is non-commercial and
+permissively-licensed (ISC).
+
+If you use it, I'd love to hear your feedback as I continue to putter along on this very unfinished project.
+You can get in touch via the [Ursula Discord](https://discord.gg/ETPqBdrVjn), or by emailing me at
+[will@willbeddow.com](mailto\:will@willbeddow.com). No note is too small or too big, so please let me know what you love and
+hate about it!
+
+## Motivation
+
+The initial idea from Ursula came from an app called [Beli](https://beliapp.com/). I love that Beli forces you to
+*stack-rank* your favorite restaurants rather than assign them star ratings. I think these stack rankings are much
+higher signal than stars - it doesn't mean much to me if a friend ranks a restaurant as 5 stars, but if I see that my
+friend ranked a restaurant as #1 out of 424 restaurants they've been to, I'll go out of my way to try it.
+
+<CustomImage src="/uploads/ursulafavorites.png" width={353} height={750} alt="A screenshot of my favorite books on Ursula, with &#x22;Behind the Beautiful Forevers&#x22; by Katherine Boo in position #1" caption="'Behind the Beautiful Forevers', my #1 book, deserves more praise than just '5 stars'" />
+
+As well as this works for restaurants, I think it's even more powerful for books - the time I spend reading and engaging with
+a book is much richer than a single meal. I have more to say about that time,
+and I'm more discerning about what I read - a bad meal only costs me an hour, but the opportunity cost of a bad book is a good book I could have read instead.
+
+Additionally, I've been increasingly using ChatGPT for book recommendations, for ex. "I like sweeping sci-fi epics like _'A Fire Upon the Deep'_, what else might I like?" I felt that integrating this into Ursula would be both very simple and very fun, and I was right on both counts.
+The current AI features just tell an AI chatbot which books you like and give it a facility to recommend books from the database, but I have many ideas of other AI projects that might be fun - some of which I'll detail below.
+
+## Reflections
+
+Ursula has been the perfect project for this period of my life. It's non-commercial, passion driven, and pro-social -
+a welcome departure and palette cleanser from AI spreadsheets for private equity. It's also meaningfully simple - I
+got to spend my time focusing on what I want the product to be, rather than burying my head in technical details.
+
+The core loop of development felt creative in a way I don't often get - I would talk to my friends about how they read,
+work on design, and try different ideas. Collaborating with Mash on the design was a joy. It's highlighted how much I have to learn
+about design, and how much I enjoy learning about it. As a general rule, anything that looks good in the app is to
+Mash's credit, and all errors are mine.
+
+I'm reminded of the last time Mash helped me with an app, when I built a little app for our college radio station
+freshman year. I think I built the whole thing sitting in a hammock in our college's arboretum, and blew off
+most of my classes that term to work on it, because it was so _fun_. Ursula feels the same way, and I'm grateful to
+have had such an extended period of time to work on something without any expectation of profits or results.
+
+## Things I'd like to do next
+
+If any of these ideas resonate with you, let me know! I'm not sure when I'll get to them, but knowing that
+someone is interested in any of them would definitely move any of them up the priority list.
+Most of these will be super simple once I get a chance to pick them up.
+
+- **Separate reading lists**: I'd like to allow you to separate your books into "playlist" style different lists
+- **Do more with AI recommendations**: Maybe AI could build book lists for you, or facilitate book club discussions, or discuss what your friends are reading.
+- **Book clubs!**: It'd be fun if you could connect with your book club in the app and share what you all are reading at any given time, and collect your thoughts all together.
+- **Direct Recommendations**: It'd be cool if you could directly recommend a book to a friend in the app.
+- **Sharable 'bookmarks'**: A great idea that Mash had, add an option to make a cute little picture of a bookmark with your favorite books and the Ursula logo that you could share on social media.
+- **Beef up data quality**: I want to combine the open library data with google books so book descriptions and covers are higher quality and more consistent.
+- **Android**: Unfortunately, I need to buy or borrow a physical android phone to verify my Google Play developer profile. I plan to do this in the next month or two, after asking around if any of my friends have an old unused phone, and getting settled in SF.
+
+## Development
+
+(if you're interested in contributing to Ursula in any way, technical or non-technical,
+please reach out! I love collaborating - no prior experience in any
+particular area is necessary)
+
+### General App
+
+
+Ursula is a pretty basic React Native app. The backend runs on Supabase.
+The data comes from [Open Library](https://openlibrary.org/), and data quality is very much a work in progress.
+In the monorepo, you'll find all React Native code in the `mobile` directory, SQL migrations and supabase functions in
+the `supabase` directory, and python scripts that I used to load in \~30M books from Open Library in `data`.
+
+The Supabase Deno functions and the react-native code share typescript types which are automatically generated from the
+Supabase database - any time I make a change to the database, I run `npm run write-types`, and the types are updated.
+
+This is my first time working with Supabase, and I've found it to be very pleasant. I have the very minor complaint
+that the CLI + migrations experience feels like a second-class citizen to the web UI, but in general I love that
+everything is built on top of Postgres, and the type integration is excellent.
+
+Take the social feed as an example of how everything integrates - I write a SQL migration defining a function that
+returns a feed of activities for a user:
+
+<CodeBlock language="sql">
+  ```sql
+  -- Users get
+  -- All activities from users they follow
+  -- All join activities
+  -- All activities of anybody following them
+  CREATE OR REPLACE FUNCTION social_feed(for_user_id uuid) RETURNS SETOF activities
+  LANGUAGE sql
+  AS
+  $$
+  SELECT DISTINCT ON (feed.id) feed.* FROM (
+       SELECT
+           activities.* FROM activities JOIN follows ON activities.user_id = follows.followee_id WHERE follows.follower_id =
+                                                                                                       for_user_id
+       UNION
+       SELECT activities.*  FROM activities WHERE activities.type = 'joined'
+       UNION
+       SELECT activities.* FROM activities WHERE activities.type = 'followed' AND activities.data->>'user_id' = for_user_id::text
+   ) feed
+  $$;
+
+  ```
+</CodeBlock>
+
+([supabase/migrations/20240402144217\_social\_feed\_joined\_for\_everybody.sql](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/supabase/migrations/20240402144217_social_feed_joined_for_everybody.sql))
+
+Supabase pulls it into `Database.ts` when I run `npm run write-types`:
+
+<CodeBlock language="typescript">
+  ```typescript
+  social_feed: {
+      Args: {
+          for_user_id: string;
+      };
+      Returns: {
+          created_at: string;
+          data: Json;
+          id: number;
+          type: string;
+          user_id: string;
+      }[];
+  };
+  ```
+</CodeBlock>
+
+([shared\_types/Database.ts](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/shared-types/Database.ts#L1574))
+
+and then it integrates nicely with the app types in a minimal little hook:
+
+<CodeBlock language="typescript">
+  ```typescript
+  async function fetchSocialFeed(userId: string): Promise<Activity[]> {
+    const { data, error } = await supabase
+      .rpc("social_feed", {
+        for_user_id: userId,
+      })
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    if (error) {
+      throw error;
+    }
+
+    return data as Activity[];
+  }
+
+  export function useSocialFeed() {
+    const { session } = useSession();
+    return useQuery({
+      queryFn: () => fetchSocialFeed(session.user.id),
+      queryKey: ["SOCIAL_FEED"],
+      enabled: !!session?.user.id,
+    });
+  }
+  ```
+</CodeBlock>
+
+([mobile/hooks/activities.ts](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/mobile/hooks/activities.ts#L77)\)
+
+The app UI is powered by [Tamagui](https://tamagui.dev/), which I'm also using for the first time. I have mixed feelings about Tamagui. One one hand, it's a
+good stylish cross-platform component library compatible with react native, which puts it in a category basically all
+on its own. On the other hand, it goes wayyyy over the complexity cliff with all of the compilation and theme tokens
+things it tries to do, and I'm still confused by it a month into using it daily. All in all, it feels very cool, but immature, and it doesn't play well with others.
+
+### AI Features
+
+The AI features of the app are very straightforward, powered by a pattern that I really have come to love
+for working with LLMS - client side AI.
+
+I write a bit more about this in [my january blog post (under 'AI engineering musings')](http://localhost:3000/posts/2024-getting-back-to-blogging-and-building-in-public), but essentially, I think that service layer between the client and the AI invocation
+is an antipattern. All prompting is client-side in Ursula, with a `useInvoke` hook:
+
+<CodeBlock language="typescript">
+```typescript
+const { session } = useSession();
+const { data: reviews, isLoading } = useReviews(session.user.id);
+
+const systemMessage = useMemo(() => {
+    let systemReviews = reviews || [];
+    const initialPrompt =
+      "You're a librarian, helping a user choose a book to read. Be concise and helpful. " +
+      "Don't recommend any books they've already read, but use their list to understand their taste.";
+    if (systemReviews.length === 0) {
+      return initialPrompt;
+    } else {
+      const books = reviews.map(({ book, review }, i) => {
+        return `#${i + 1}: ${book.title}\n`;
+      });
+      return `${initialPrompt}\nHere are some books they enjoy,
+      in order of how much they enjoyed them\n:${books}`;
+    }
+}, [reviews]);
+
+const { messages, isInvoking, addMessage } = useInvoke({
+    model: LLM.Model.ANTHROPIC_SONNET,
+    systemMessage,
+    functions: [CHOOSE_BOOK_FUNCTION],
+    messages: [
+      {
+        role: "assistant",
+        content:
+          "Hi! I'm Ursula, your AI librarian. I know about your reading tastes, so I can help you find a book you'll love. What are you in the mood for?",
+      },
+    ],
+});
+```
+</CodeBlock>
+
+\([mobile/pages/Chat/index.tsx](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/mobile/pages/Chat/index.tsx)\)
+
+This is powered by a Deno function that acts as a simple proxy to an LLM provider of your choice.
+This is as simple as you might expect, with the one interesting bit being [an adapter between Anthropic's weird old XML function calling spec and the more standard OpenAI one](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/supabase/functions/invoke-ai/providers/anthropic/function_adapter.ts).
+I want to pull that adapter into Weatherwax, the generalized proxy server I'm working on to do this, at some point.
+
+## Conclusion
+
+> _“We read books to find out who we are. What other people, real or imaginary, do and think and feel... is an essential guide to our understanding of what we ourselves are and may become.”_ - **Ursula Le Guin**
+
+I loved building Ursula. If you try it, I hope you like it. Thanks for reading :)
