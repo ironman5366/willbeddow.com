@@ -47,17 +47,17 @@ friend ranked a restaurant as #1 out of 424 restaurants they've been to, I'll go
 please reach out! I love collaborating - no prior experience in any
 particular area is necessary)
 
-Ursula is a pretty basic React Native app. The backend is run on Supabase.
+Ursula is a pretty basic React Native app. The backend runs on Supabase.
 The data comes from [Open Library](https://openlibrary.org/), and data quality is very much a work in progress.
-In the monorepo, you'll find all react-native code in the `mobile` directory, SQL migrations and supabase functions in
+In the monorepo, you'll find all React Native code in the `mobile` directory, SQL migrations and supabase functions in
 the `supabase` directory, and python scripts that I used to load in ~30M books from Open Library in `data`.
 
-The supabase Deno functions and the react-native code share typescript types which are automatically generated from the
-supabase database - any time I make a change to the database, I run `npm run write-types`, and the types are updated.
+The Supabase Deno functions and the react-native code share typescript types which are automatically generated from the
+Supabase database - any time I make a change to the database, I run `npm run write-types`, and the types are updated.
 
 This is my first time working with Supabase, and I've found it to be very pleasant. I have the very minor complaint
 that the CLI + migrations experience feels like a second-class citizen to the web UI, but in general I love that
-everything is built on top of Postgres, the type integration is excellent, and their pricing is reasonable.
+everything is built on top of Postgres, and the type integration is excellent.
 
 Take the social feed as an example of how everything integrates - I write a SQL migration defining a function that
 returns a feed of activities for a user:
@@ -83,5 +83,60 @@ SELECT DISTINCT ON (feed.id) feed.* FROM (
  ) feed
 $$;
 
+```
+</CodeBlock>
+
+\([supabase/migrations/20240402144217_social_feed_joined_for_everybody.sql](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/supabase/migrations/20240402144217_social_feed_joined_for_everybody.sql)\)
+
+Supabase pulls it into `Database.ts` when I run `npm run write-types`:
+
+<CodeBlock language={"typescript"}>
+```typescript
+social_feed: {
+    Args: {
+        for_user_id: string;
+    };
+    Returns: {
+        created_at: string;
+        data: Json;
+        id: number;
+        type: string;
+        user_id: string;
+    }[];
+};
+```
+</CodeBlock>
+
+\([shared_types/Database.ts](https://github.com/ironman5366/ursula/blob/63b07050f68a39f8a5a690c91d2bbed3810b35bc/shared-types/Database.ts#L1574)\)
+
+
+and then it integrates nicely with the app types in a minimal little hook:
+
+
+<CodeBlock language="typescript">
+```typescript
+    async function fetchSocialFeed(userId: string): Promise<Activity[]> {
+  const { data, error } = await supabase
+    .rpc("social_feed", {
+      for_user_id: userId,
+    })
+    .order("created_at", { ascending: false })
+    .limit(100);
+
+  if (error) {
+    throw error;
+  }
+
+  return data as Activity[];
+}
+
+export function useSocialFeed() {
+  const { session } = useSession();
+  return useQuery({
+    queryFn: () => fetchSocialFeed(session.user.id),
+    queryKey: ["SOCIAL_FEED"],
+    enabled: !!session?.user.id,
+  });
+}
 ```
 </CodeBlock>
