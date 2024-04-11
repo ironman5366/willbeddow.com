@@ -1,5 +1,6 @@
 import { Head, Html, Main, NextScript } from "next/document";
 import { ColorSchemeScript } from "@mantine/core";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function Document() {
   return (
@@ -11,6 +12,7 @@ export default function Document() {
         <Main />
         <NextScript />
       </body>
+      <Analytics />
     </Html>
   );
 }

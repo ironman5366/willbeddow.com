@@ -7,6 +7,7 @@ import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import theme from "@/theme";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { GOOGLE_ANALYTICS_ID } from "@/constants";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "Will Beddow",
@@ -30,6 +31,7 @@ export default function RootLayout({
         </MantineProvider>
       </body>
       <GoogleAnalytics gaId={GOOGLE_ANALYTICS_ID} />
+      <Analytics />
     </html>
   );
 }
