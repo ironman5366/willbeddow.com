@@ -2,6 +2,7 @@ import { Anchor, AnchorProps, Center, Stack } from "@mantine/core";
 import Image from "next/image";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
+import { TinaMarkdown, TinaMarkdownContent } from "tinacms/dist/rich-text";
 
 const POST_COMPONENTS = {
   A: (props: Partial<AnchorProps>) => <Anchor {...props} />,
@@ -76,8 +77,15 @@ const POST_COMPONENTS = {
     language,
   }: {
     language?: string;
-    children: string;
-  }) => <SyntaxHighlighter language={language}>{children}</SyntaxHighlighter>,
+    children: TinaMarkdownContent;
+  }) => {
+    // This is a total hack but tina only supports rich text children and we know this should just be a code block
+    // @ts-ignore
+    const strChildren = children.children[0].value as string;
+    return (
+      <SyntaxHighlighter language={language}>{strChildren}</SyntaxHighlighter>
+    );
+  },
 };
 
 export default POST_COMPONENTS;

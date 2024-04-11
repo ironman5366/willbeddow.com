@@ -63,13 +63,13 @@ Take the social feed as an example of how everything integrates - I write a SQL 
 returns a feed of activities for a user:
 
 <CustomCodeBlock language={"sql"}>
-  -- Users get -- All activities from users they follow -- All join activities
-  -- All activities of anybody following them CREATE OR REPLACE FUNCTION
-  social_feed(for_user_id uuid) RETURNS SETOF activities LANGUAGE sql AS $$
-  SELECT DISTINCT ON (feed.id) feed.* FROM ( SELECT activities.* FROM activities
-  JOIN follows ON activities.user_id = follows.followee_id WHERE
+  ```sql -- Users get -- All activities from users they follow -- All join
+  activities -- All activities of anybody following them CREATE OR REPLACE
+  FUNCTION social_feed(for_user_id uuid) RETURNS SETOF activities LANGUAGE sql
+  AS $$ SELECT DISTINCT ON (feed.id) feed.* FROM ( SELECT activities.* FROM
+  activities JOIN follows ON activities.user_id = follows.followee_id WHERE
   follows.follower_id = for_user_id UNION SELECT activities.* FROM activities
   WHERE activities.type = 'joined' UNION SELECT activities.* FROM activities
   WHERE activities.type = 'followed' AND activities.data->>'user_id' =
-  for_user_id::text ) feed $$;
+  for_user_id::text ) feed $$; ```
 </CustomCodeBlock>

@@ -46,17 +46,14 @@
                   {
                     "type": "rich-text",
                     "name": "children",
-                    "label": "Code",
-                    "required": true,
+                    "parser": { "type": "markdown", "skipEscaping": "all" },
                     "namespace": [
                       "post",
                       "body",
                       "CustomCodeBlock",
                       "children"
                     ],
-                    "searchable": true,
-                    "parser": { "type": "mdx" },
-                    "uid": false
+                    "searchable": true
                   },
                   {
                     "type": "string",

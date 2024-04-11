@@ -60,8 +60,7 @@ export default defineConfig({
                   {
                     type: "rich-text",
                     name: "children",
-                    label: "Code",
-                    required: true,
+                    parser: { type: "markdown", skipEscaping: "all" },
                   },
                   {
                     type: "string",
