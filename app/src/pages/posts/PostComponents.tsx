@@ -72,7 +72,7 @@ const POST_COMPONENTS = {
       </Stack>
     );
   },
-  CustomCodeBlock: ({
+  CodeBlock: ({
     children,
     language,
   }: {

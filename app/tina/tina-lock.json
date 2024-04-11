@@ -40,36 +40,26 @@
             "isBody": true,
             "templates": [
               {
-                "name": "CustomCodeBlock",
+                "name": "CodeBlock",
                 "label": "Code",
                 "fields": [
                   {
                     "type": "rich-text",
                     "name": "children",
                     "parser": { "type": "markdown", "skipEscaping": "all" },
-                    "namespace": [
-                      "post",
-                      "body",
-                      "CustomCodeBlock",
-                      "children"
-                    ],
+                    "namespace": ["post", "body", "CodeBlock", "children"],
                     "searchable": true
                   },
                   {
                     "type": "string",
                     "name": "language",
                     "label": "Language",
-                    "namespace": [
-                      "post",
-                      "body",
-                      "CustomCodeBlock",
-                      "language"
-                    ],
+                    "namespace": ["post", "body", "CodeBlock", "language"],
                     "searchable": true,
                     "uid": false
                   }
                 ],
-                "namespace": ["post", "body", "CustomCodeBlock"]
+                "namespace": ["post", "body", "CodeBlock"]
               },
               {
                 "name": "A",
@@ -1203,7 +1193,7 @@
       },
       {
         "kind": "InputObjectTypeDefinition",
-        "name": { "kind": "Name", "value": "PostBodyCustomCodeBlockFilter" },
+        "name": { "kind": "Name", "value": "PostBodyCodeBlockFilter" },
         "fields": [
           {
             "kind": "InputValueDefinition",
@@ -1392,13 +1382,10 @@
         "fields": [
           {
             "kind": "InputValueDefinition",
-            "name": { "kind": "Name", "value": "CustomCodeBlock" },
+            "name": { "kind": "Name", "value": "CodeBlock" },
             "type": {
               "kind": "NamedType",
-              "name": {
-                "kind": "Name",
-                "value": "PostBodyCustomCodeBlockFilter"
-              }
+              "name": { "kind": "Name", "value": "PostBodyCodeBlockFilter" }
             }
           },
           {

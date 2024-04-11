@@ -54,7 +54,7 @@ export default defineConfig({
             isBody: true,
             templates: [
               {
-                name: "CustomCodeBlock",
+                name: "CodeBlock",
                 label: "Code",
                 fields: [
                   {

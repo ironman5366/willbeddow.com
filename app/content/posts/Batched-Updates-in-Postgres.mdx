@@ -8,6 +8,7 @@ updated_at: 2024-03-14T04:00:00.000Z
 As I've been working on [Ursula](/posts/Ursula-Development-Log-1 "Ursula") this month, I've been managing a large dataset of book metadata in postgres - it's a bit unwieldy, and often, when running some large operation, I want to run it in batches (so I can resume if it fails), and see the progress as it slowly executes. I created this procedure after a lot of pain this week: \
 
 
+<CodeBlock language={"sql"}>
 ```pgsql
 CREATE OR REPLACE PROCEDURE proc_batched_update(table_name text, get_total_query text, update_query text) AS $$
 DECLARE affected_rows INTEGER;
@@ -60,7 +61,8 @@ CALL proc_batched_update(
             WHERE ol_editions.id = cte.id; '
 );
 ```
+</CodeBlock>
 
 Note that the LIMIT in here is the batch size.\
 \
-Hope this is helpful to someone else! 
+Hope this is helpful to someone else!
