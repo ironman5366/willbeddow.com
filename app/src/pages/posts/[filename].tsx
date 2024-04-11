@@ -10,7 +10,7 @@ import NicelyCentered from "@/components/atoms/NicelyCentered";
 import { WINE_MID_COLOR } from "@/theme";
 import { Text } from "@mantine/core";
 import Head from "next/head";
-import POST_COMPONENTS from "@/pages/posts/PostComponents";
+import POST_COMPONENTS from "@/components/organisms/PostComponents";
 
 export async function getStaticPaths() {
   const postsListData = await client.queries.postConnection();
