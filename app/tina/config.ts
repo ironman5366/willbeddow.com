@@ -54,6 +54,23 @@ export default defineConfig({
             isBody: true,
             templates: [
               {
+                name: "CustomCodeBlock",
+                label: "Code",
+                fields: [
+                  {
+                    type: "rich-text",
+                    name: "children",
+                    label: "Code",
+                    required: true,
+                  },
+                  {
+                    type: "string",
+                    name: "language",
+                    label: "Language",
+                  },
+                ],
+              },
+              {
                 name: "A",
                 label: "Link",
                 fields: [
