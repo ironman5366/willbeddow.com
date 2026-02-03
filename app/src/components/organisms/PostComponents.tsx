@@ -1,11 +1,18 @@
-import { Anchor, AnchorProps, Center, Stack } from "@mantine/core";
 import Image from "next/image";
 import React from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { TinaMarkdown, TinaMarkdownContent } from "tinacms/dist/rich-text";
+import { TinaMarkdownContent } from "tinacms/dist/rich-text";
+import { DEEP, TEAL } from "@/theme";
 
 const POST_COMPONENTS = {
-  A: (props: Partial<AnchorProps>) => <Anchor {...props} />,
+  A: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
+    <a
+      style={{
+        color: DEEP,
+      }}
+      {...props}
+    />
+  ),
   Video: ({
     src,
     ...props
@@ -15,16 +22,17 @@ const POST_COMPONENTS = {
     height?: number;
   }) => {
     return (
-      <Center>
+      <div style={{ display: "flex", justifyContent: "center", margin: "16px 0" }}>
         <video
           src={src}
           controls
           style={{
-            maxWidth: "calc(100vw - 75px)",
+            maxWidth: "100%",
+            border: `1px solid ${TEAL}`,
           }}
           {...props}
         />
-      </Center>
+      </div>
     );
   },
   CustomImage: ({
@@ -41,35 +49,36 @@ const POST_COMPONENTS = {
     alt?: string;
     caption?: string;
   }) => {
-    // Show captions in italics beneath the image
     return (
-      <Stack>
-        <Center
-          style={{
-            maxWidth: "calc(100vw - 75px)",
-          }}
-        >
+      <figure style={{ margin: "16px 0" }}>
+        <div style={{ display: "flex", justifyContent: "center" }}>
           <Image
             src={src}
             alt={alt || ""}
             width={width || 512}
             height={height || 512}
             style={{
-              maxWidth: "calc(100vw - 75px)",
+              maxWidth: "100%",
+              height: "auto",
+              border: `1px solid ${TEAL}`,
             }}
             {...props}
           />
-        </Center>
+        </div>
         {caption && (
-          <Center
+          <figcaption
             style={{
               textAlign: "center",
+              fontStyle: "italic",
+              fontSize: "0.9em",
+              color: TEAL,
+              marginTop: "8px",
             }}
           >
-            <i>{caption}</i>
-          </Center>
+            {caption}
+          </figcaption>
         )}
-      </Stack>
+      </figure>
     );
   },
   CodeBlock: ({
@@ -79,11 +88,12 @@ const POST_COMPONENTS = {
     language?: string;
     children: TinaMarkdownContent;
   }) => {
-    // This is a total hack but tina only supports rich text children and we know this should just be a code block
     // @ts-ignore
     const strChildren = children.children[0].value as string;
     return (
-      <SyntaxHighlighter language={language}>{strChildren}</SyntaxHighlighter>
+      <div style={{ margin: "16px 0", border: `1px solid ${TEAL}` }}>
+        <SyntaxHighlighter language={language}>{strChildren}</SyntaxHighlighter>
+      </div>
     );
   },
 };

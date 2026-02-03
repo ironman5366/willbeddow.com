@@ -1,64 +1,75 @@
 "use client";
-import { Affix, Center, Divider, Grid, Stack, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
-import { WINE_MID_COLOR } from "@/theme";
-import NicelyCentered from "@/components/atoms/NicelyCentered";
+import { DEEP } from "@/theme";
 import useIsMobile from "@/hooks/useIsMobile";
-import HeroImage from "@/components/atoms/HeroImage";
 import { Suspense } from "react";
 
-// TODO: for some reason, even though BlogTable is a ClientComponent,
-//  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
-//  next app router - I should look into this again in a few months when things have stabilized more between
-//  next, tina, and mantine
 const BlogList = dynamic(() => import("@/components/organisms/BlogList"), {
   ssr: false,
 });
 
-/**
- * For desktop, shows the hero image affixed and tries to show recent blog posts next to the main content
- */
 function GridHomeLayout() {
   return (
     <div
       style={{
-        marginLeft: "auto",
-        marginRight: "auto",
+        display: "grid",
+        gridTemplateColumns: "1fr 1fr",
+        gap: "8px",
+        maxWidth: "1000px",
+        margin: "0 auto",
       }}
     >
-      <Grid>
-        <Grid.Col span={7}>
-          <HeroCard />
-        </Grid.Col>
-        <Grid.Col span={5}>
-          <Title>Writing</Title>
-          <BlogList truncateTo={4} />
-        </Grid.Col>
-      </Grid>
-      <Affix position={{ bottom: 0, left: 10 }}>
-        <HeroImage />
-      </Affix>
+      <HeroCard />
+      <div
+        className="box"
+        style={{
+          color: DEEP,
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.25em",
+            marginBottom: "12px",
+            fontWeight: 700,
+          }}
+        >
+          writing
+        </h2>
+        <BlogList truncateTo={4} />
+      </div>
     </div>
   );
 }
 
 function MobileHomeLayout() {
   return (
-    <NicelyCentered
-      component={Stack}
+    <div
       style={{
-        textAlign: "center",
+        display: "flex",
+        flexDirection: "column",
+        gap: "8px",
       }}
     >
       <HeroCard />
-      <Divider />
-      <Title>Writing</Title>
-      <BlogList truncateTo={3} />
-      <Center>
-        <HeroImage />
-      </Center>
-    </NicelyCentered>
+      <div
+        className="box"
+        style={{
+          color: DEEP,
+        }}
+      >
+        <h2
+          style={{
+            fontSize: "1.25em",
+            marginBottom: "12px",
+            fontWeight: 700,
+          }}
+        >
+          writing
+        </h2>
+        <BlogList truncateTo={3} />
+      </div>
+    </div>
   );
 }
 
@@ -67,9 +78,8 @@ export default function Home() {
 
   return (
     <div
-      // We only need this style to keep from an SSR flicker
       style={{
-        color: WINE_MID_COLOR,
+        color: DEEP,
       }}
     >
       <Suspense>

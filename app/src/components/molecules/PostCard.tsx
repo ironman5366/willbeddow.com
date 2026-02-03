@@ -1,7 +1,6 @@
 import React from "react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Card, Title, Text } from "@mantine/core";
-import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
+import { DEEP, TEAL } from "@/theme";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { getDocumentPath } from "@/blogUtils";
 import FancyLink from "@/components/atoms/FancyLink";
@@ -13,27 +12,40 @@ interface Props {
 export default function PostCard({ post }: Props) {
   const postLink = getDocumentPath(post);
   return (
-    <Card
+    <div
       style={{
-        backgroundColor: WHITE_SMOKE,
-        borderRadius: 10,
-        padding: 10,
-        border: `2px solid ${WINE_MID_COLOR}`,
-        color: WINE_MID_COLOR,
+        borderBottom: `1px solid ${TEAL}`,
+        padding: "12px 0",
+        color: DEEP,
       }}
     >
-      <Title order={3}>
-        <FancyLink href={postLink} className="underline">
-          {post.title}
-        </FancyLink>
-      </Title>
-      <Text size={"sm"}>
-        Created {<FormattedDate isoString={post.created_at} />}, Updated{" "}
-        {<FormattedDate isoString={post.updated_at} />}
-      </Text>
-      <Text size={"md"}>
-        <i>{post.blurb}</i>
-      </Text>
-    </Card>
+      <h3
+        style={{
+          fontSize: "1em",
+          fontWeight: 600,
+          margin: "0 0 4px 0",
+        }}
+      >
+        <FancyLink href={postLink}>{post.title}</FancyLink>
+      </h3>
+      <p
+        style={{
+          fontSize: "0.8em",
+          margin: "0 0 4px 0",
+          color: TEAL,
+        }}
+      >
+        <FormattedDate isoString={post.created_at} />
+      </p>
+      <p
+        style={{
+          fontSize: "0.9em",
+          margin: 0,
+          fontStyle: "italic",
+        }}
+      >
+        {post.blurb}
+      </p>
+    </div>
   );
 }

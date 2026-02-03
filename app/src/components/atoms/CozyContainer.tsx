@@ -1,4 +1,5 @@
 import React, { PropsWithChildren } from "react";
+import { SAND } from "@/theme";
 
 interface Props {
   style?: React.CSSProperties;
@@ -16,7 +17,8 @@ export default function CozyContainer({
       style={{
         ...style,
         minWidth: "100vw",
-        minHeight: "calc(100vh - 74px)",
+        minHeight: "calc(100vh - 50px)",
+        backgroundColor: SAND,
       }}
     >
       {children}
