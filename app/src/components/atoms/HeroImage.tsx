@@ -5,13 +5,14 @@ export default function HeroImage() {
   return (
     <Image
       src={"/hero.png"}
-      width={414}
-      height={337}
+      width={280}
+      height={228}
       style={{
-        maxWidth: "50vw",
+        maxWidth: "min(280px, 80vw)",
         height: "auto",
+        opacity: 0.9,
       }}
-      alt={"A stylized sketch of me, used as a hero image."}
+      alt={"A stylized sketch of me"}
       priority={true}
     />
   );

@@ -1,61 +1,80 @@
 "use client";
-import { Affix, Center, Divider, Grid, Stack, Title } from "@mantine/core";
+import { Center, Grid, Stack, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
-import { WINE_MID_COLOR } from "@/theme";
+import { PRIMARY_COLOR, SECONDARY_COLOR, TEXT_COLOR } from "@/theme";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
 import useIsMobile from "@/hooks/useIsMobile";
 import HeroImage from "@/components/atoms/HeroImage";
 import { Suspense } from "react";
 
-// TODO: for some reason, even though BlogTable is a ClientComponent,
-//  there's a hydration error when we use it normally. My bet is that this is something weird between Mantine and the new
-//  next app router - I should look into this again in a few months when things have stabilized more between
-//  next, tina, and mantine
 const BlogList = dynamic(() => import("@/components/organisms/BlogList"), {
   ssr: false,
 });
 
-/**
- * For desktop, shows the hero image affixed and tries to show recent blog posts next to the main content
- */
 function GridHomeLayout() {
   return (
     <div
       style={{
+        maxWidth: "1000px",
         marginLeft: "auto",
         marginRight: "auto",
+        paddingTop: "48px",
       }}
     >
-      <Grid>
+      <Grid gutter="xl">
         <Grid.Col span={7}>
           <HeroCard />
+          <div style={{ marginTop: "48px" }}>
+            <HeroImage />
+          </div>
         </Grid.Col>
         <Grid.Col span={5}>
-          <Title>Writing</Title>
+          <Title
+            order={2}
+            style={{
+              fontSize: "1.2em",
+              fontWeight: 600,
+              color: PRIMARY_COLOR,
+              marginBottom: "16px",
+              borderBottom: `1px solid ${SECONDARY_COLOR}`,
+              paddingBottom: "8px",
+            }}
+          >
+            Recent Writing
+          </Title>
           <BlogList truncateTo={4} />
         </Grid.Col>
       </Grid>
-      <Affix position={{ bottom: 0, left: 10 }}>
-        <HeroImage />
-      </Affix>
     </div>
   );
 }
 
 function MobileHomeLayout() {
   return (
-    <NicelyCentered
-      component={Stack}
-      style={{
-        textAlign: "center",
-      }}
-    >
+    <NicelyCentered component={Stack} style={{}}>
       <HeroCard />
-      <Divider />
-      <Title>Writing</Title>
-      <BlogList truncateTo={3} />
-      <Center>
+      <div
+        style={{
+          marginTop: "32px",
+          borderTop: `1px solid ${SECONDARY_COLOR}`,
+          paddingTop: "24px",
+        }}
+      >
+        <Title
+          order={2}
+          style={{
+            fontSize: "1.2em",
+            fontWeight: 600,
+            color: PRIMARY_COLOR,
+            marginBottom: "16px",
+          }}
+        >
+          Recent Writing
+        </Title>
+        <BlogList truncateTo={3} />
+      </div>
+      <Center style={{ marginTop: "32px" }}>
         <HeroImage />
       </Center>
     </NicelyCentered>
@@ -67,9 +86,8 @@ export default function Home() {
 
   return (
     <div
-      // We only need this style to keep from an SSR flicker
       style={{
-        color: WINE_MID_COLOR,
+        color: TEXT_COLOR,
       }}
     >
       <Suspense>

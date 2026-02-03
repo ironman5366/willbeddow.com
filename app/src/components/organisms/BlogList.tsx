@@ -1,22 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, Center, Stack } from "@mantine/core";
+import { Stack, Text } from "@mantine/core";
 import { PostConnectionQuery } from "../../../tina/__generated__/types";
 import client from "../../../tina/__generated__/client";
 import PostCard from "@/components/molecules/PostCard";
 import Link from "next/link";
-import useIsMobile from "@/hooks/useIsMobile";
+import { PRIMARY_COLOR, SECONDARY_COLOR } from "@/theme";
 
-function AllPostsButton({ style }: { style?: React.CSSProperties }) {
+function AllPostsLink() {
   return (
-    <Button
-      component={Link}
+    <Link
       href={"/writing"}
       style={{
-        ...style,
+        color: PRIMARY_COLOR,
+        fontWeight: 500,
+        fontSize: "0.9em",
+        marginTop: "8px",
+        display: "inline-block",
       }}
     >
-      All Posts →
-    </Button>
+      View all posts →
+    </Link>
   );
 }
 
@@ -26,7 +29,6 @@ interface Props {
 
 export default function BlogList({ truncateTo }: Props) {
   const [posts, setPosts] = useState<PostConnectionQuery | undefined>();
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     client.queries
@@ -41,7 +43,6 @@ export default function BlogList({ truncateTo }: Props) {
 
   const postList = useMemo(() => {
     if (posts && posts.postConnection && posts.postConnection.edges) {
-      // Sort by created_at descending
       return posts.postConnection.edges.sort(
         (a, b) =>
           new Date(b!.node!.created_at!).getTime() -
@@ -52,24 +53,17 @@ export default function BlogList({ truncateTo }: Props) {
   }, [posts]);
 
   return (
-    <Stack>
-      {postList.length > 0
-        ? postList.map((post) => (
-            <PostCard post={post!.node!} key={post?.node?.id} />
-          ))
-        : "Loading posts..."}
-      {truncateTo !== undefined &&
-        (isMobile ? (
-          <Center>
-            <AllPostsButton />
-          </Center>
-        ) : (
-          <AllPostsButton
-            style={{
-              marginLeft: "60%",
-            }}
-          />
-        ))}
+    <Stack gap={0}>
+      {postList.length > 0 ? (
+        postList.map((post) => (
+          <PostCard post={post!.node!} key={post?.node?.id} />
+        ))
+      ) : (
+        <Text size="sm" style={{ color: SECONDARY_COLOR }}>
+          Loading...
+        </Text>
+      )}
+      {truncateTo !== undefined && <AllPostsLink />}
     </Stack>
   );
 }

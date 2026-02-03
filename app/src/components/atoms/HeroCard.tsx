@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
-import { Text, Title } from "@mantine/core";
-import { BREE_SERIF, WINE_MID_COLOR } from "@/theme";
+import { Stack, Text, Title } from "@mantine/core";
+import { PRIMARY_COLOR, TEXT_COLOR } from "@/theme";
 import { EMAIL } from "@/constants";
 import FancyLink from "@/components/atoms/FancyLink";
 
@@ -8,21 +8,15 @@ const SECTIONS: ReactNode[] = [
   "I'm a programmer and occasional blogger. I like writing code, being outside, and websites that feel cozy.",
   <>
     I live in San Francisco and work at{" "}
-    <FancyLink href={"https://krea.ai"} className={"underline"}>
-      Krea
-    </FancyLink>
-    .
+    <FancyLink href={"https://krea.ai"}>Krea</FancyLink>.
   </>,
   <>
     You can find my code at{" "}
-    <FancyLink href={"https://github.com/ironman5366"} className={"underline"}>
+    <FancyLink href={"https://github.com/ironman5366"}>
       github.com/ironman5366
     </FancyLink>
     , or email me at{" "}
-    <FancyLink className="underline" href={`mailto:${EMAIL}`}>
-      {EMAIL}
-    </FancyLink>
-    .
+    <FancyLink href={`mailto:${EMAIL}`}>{EMAIL}</FancyLink>.
   </>,
 ];
 
@@ -32,21 +26,32 @@ export default function HeroCard() {
   return (
     <div
       style={{
-        color: WINE_MID_COLOR,
+        color: TEXT_COLOR,
       }}
     >
-      <Title size="3em">{HERO_TITLE}</Title>
-      {SECTIONS.map((section, i) => (
-        <Text
-          key={i}
-          size={"xl"}
-          style={{
-            fontFamily: BREE_SERIF.style.fontFamily,
-          }}
-        >
-          {section}
-        </Text>
-      ))}
+      <Title
+        size="2.5em"
+        style={{
+          color: PRIMARY_COLOR,
+          marginBottom: "16px",
+          fontWeight: 600,
+        }}
+      >
+        {HERO_TITLE}
+      </Title>
+      <Stack gap="sm">
+        {SECTIONS.map((section, i) => (
+          <Text
+            key={i}
+            size="lg"
+            style={{
+              lineHeight: 1.6,
+            }}
+          >
+            {section}
+          </Text>
+        ))}
+      </Stack>
     </div>
   );
 }
