@@ -5,17 +5,24 @@ import client from "../../../tina/__generated__/client";
 import PostCard from "@/components/molecules/PostCard";
 import Link from "next/link";
 import useIsMobile from "@/hooks/useIsMobile";
+import { CHARCOAL, CREAM } from "@/theme";
 
 function AllPostsButton({ style }: { style?: React.CSSProperties }) {
   return (
     <Button
       component={Link}
       href={"/writing"}
+      variant="outline"
+      color={CHARCOAL}
       style={{
+        border: `1px solid ${CHARCOAL}`,
+        backgroundColor: CREAM,
+        color: CHARCOAL,
+        fontWeight: 500,
         ...style,
       }}
     >
-      All Posts →
+      All Posts
     </Button>
   );
 }

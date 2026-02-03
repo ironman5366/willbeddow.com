@@ -2,7 +2,7 @@
 import { Affix, Center, Divider, Grid, Stack, Title } from "@mantine/core";
 import HeroCard from "@/components/atoms/HeroCard";
 import dynamic from "next/dynamic";
-import { WINE_MID_COLOR } from "@/theme";
+import { CHARCOAL } from "@/theme";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
 import useIsMobile from "@/hooks/useIsMobile";
 import HeroImage from "@/components/atoms/HeroImage";
@@ -25,14 +25,15 @@ function GridHomeLayout() {
       style={{
         marginLeft: "auto",
         marginRight: "auto",
+        maxWidth: "1200px",
       }}
     >
-      <Grid>
+      <Grid gutter="xl">
         <Grid.Col span={7}>
           <HeroCard />
         </Grid.Col>
         <Grid.Col span={5}>
-          <Title>Writing</Title>
+          <Title style={{ fontWeight: 500, marginBottom: "16px" }}>Writing</Title>
           <BlogList truncateTo={4} />
         </Grid.Col>
       </Grid>
@@ -52,8 +53,8 @@ function MobileHomeLayout() {
       }}
     >
       <HeroCard />
-      <Divider />
-      <Title>Writing</Title>
+      <Divider color={CHARCOAL} style={{ opacity: 0.3 }} />
+      <Title style={{ fontWeight: 500 }}>Writing</Title>
       <BlogList truncateTo={3} />
       <Center>
         <HeroImage />
@@ -67,9 +68,8 @@ export default function Home() {
 
   return (
     <div
-      // We only need this style to keep from an SSR flicker
       style={{
-        color: WINE_MID_COLOR,
+        color: CHARCOAL,
       }}
     >
       <Suspense>

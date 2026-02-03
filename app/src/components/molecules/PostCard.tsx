@@ -1,7 +1,7 @@
 import React from "react";
 import { PostQuery } from "../../../tina/__generated__/types";
 import { Card, Title, Text } from "@mantine/core";
-import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
+import { CREAM, CHARCOAL, CHARCOAL_LIGHT } from "@/theme";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { getDocumentPath } from "@/blogUtils";
 import FancyLink from "@/components/atoms/FancyLink";
@@ -15,24 +15,22 @@ export default function PostCard({ post }: Props) {
   return (
     <Card
       style={{
-        backgroundColor: WHITE_SMOKE,
-        borderRadius: 10,
-        padding: 10,
-        border: `2px solid ${WINE_MID_COLOR}`,
-        color: WINE_MID_COLOR,
+        backgroundColor: CREAM,
+        padding: "16px",
+        border: `1px solid ${CHARCOAL}`,
+        color: CHARCOAL,
       }}
     >
-      <Title order={3}>
-        <FancyLink href={postLink} className="underline">
+      <Title order={3} style={{ marginBottom: "4px", fontWeight: 500 }}>
+        <FancyLink href={postLink}>
           {post.title}
         </FancyLink>
       </Title>
-      <Text size={"sm"}>
-        Created {<FormattedDate isoString={post.created_at} />}, Updated{" "}
-        {<FormattedDate isoString={post.updated_at} />}
+      <Text size={"sm"} c={CHARCOAL_LIGHT} style={{ marginBottom: "8px" }}>
+        <FormattedDate isoString={post.created_at} />
       </Text>
-      <Text size={"md"}>
-        <i>{post.blurb}</i>
+      <Text size={"sm"} c={CHARCOAL_LIGHT}>
+        {post.blurb}
       </Text>
     </Card>
   );

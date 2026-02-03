@@ -7,7 +7,7 @@ import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
-import { WINE_MID_COLOR } from "@/theme";
+import { CHARCOAL, CHARCOAL_LIGHT, CREAM } from "@/theme";
 import { Text } from "@mantine/core";
 import Head from "next/head";
 import POST_COMPONENTS from "@/components/organisms/PostComponents";
@@ -64,20 +64,22 @@ export default function Post(props: {
       <NicelyCentered
         component={Paper}
         style={{
-          borderRadius: 20,
-          border: `2px dotted ${WINE_MID_COLOR}`,
+          border: `1px solid ${CHARCOAL}`,
+          backgroundColor: CREAM,
         }}
       >
         <Stack>
           <div
             style={{
               textAlign: "center",
+              color: CHARCOAL,
             }}
           >
             <Title
               style={{
                 fontSize: "1.5em",
                 textAlign: "center",
+                fontWeight: 500,
               }}
             >
               {data.post.title}
@@ -85,29 +87,22 @@ export default function Post(props: {
             <Text
               style={{
                 textAlign: "center",
+                color: CHARCOAL_LIGHT,
               }}
             >
               {data.post.blurb}
             </Text>
-            <Center>
-              <Group>
-                <>
-                  <b>Created: </b>{" "}
-                  <FormattedDate isoString={data.post.created_at} />
-                </>
-                <>
-                  <b>Updated: </b>{" "}
-                  <FormattedDate isoString={data.post.updated_at} />
-                </>
-              </Group>
-            </Center>
+            <Text size="sm" c={CHARCOAL_LIGHT} style={{ marginTop: "8px" }}>
+              <FormattedDate isoString={data.post.created_at} />
+            </Text>
           </div>
 
-          <Divider />
+          <Divider color={CHARCOAL} />
           <div
             style={{
-              fontWeight: 50,
               maxWidth: "calc(100vw - 75px)",
+              color: CHARCOAL,
+              lineHeight: 1.7,
             }}
           >
             <TinaMarkdown
