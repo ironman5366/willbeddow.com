@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import { Text, Title } from "@mantine/core";
-import { BREE_SERIF, WINE_MID_COLOR } from "@/theme";
+import { TEXT_COLOR } from "@/theme";
 import { EMAIL } from "@/constants";
 import FancyLink from "@/components/atoms/FancyLink";
 
@@ -8,21 +8,15 @@ const SECTIONS: ReactNode[] = [
   "I'm a programmer and occasional blogger. I like writing code, being outside, and websites that feel cozy.",
   <>
     I live in San Francisco and work at{" "}
-    <FancyLink href={"https://krea.ai"} className={"underline"}>
-      Krea
-    </FancyLink>
-    .
+    <FancyLink href={"https://krea.ai"}>Krea</FancyLink>.
   </>,
   <>
     You can find my code at{" "}
-    <FancyLink href={"https://github.com/ironman5366"} className={"underline"}>
+    <FancyLink href={"https://github.com/ironman5366"}>
       github.com/ironman5366
     </FancyLink>
     , or email me at{" "}
-    <FancyLink className="underline" href={`mailto:${EMAIL}`}>
-      {EMAIL}
-    </FancyLink>
-    .
+    <FancyLink href={`mailto:${EMAIL}`}>{EMAIL}</FancyLink>.
   </>,
 ];
 
@@ -32,16 +26,25 @@ export default function HeroCard() {
   return (
     <div
       style={{
-        color: WINE_MID_COLOR,
+        color: TEXT_COLOR,
       }}
     >
-      <Title size="3em">{HERO_TITLE}</Title>
+      <Title
+        style={{
+          fontSize: "2.5em",
+          marginBottom: "0.5em",
+          fontWeight: 600,
+        }}
+      >
+        {HERO_TITLE}
+      </Title>
       {SECTIONS.map((section, i) => (
         <Text
           key={i}
-          size={"xl"}
+          size="lg"
           style={{
-            fontFamily: BREE_SERIF.style.fontFamily,
+            marginBottom: "0.75em",
+            lineHeight: 1.6,
           }}
         >
           {section}

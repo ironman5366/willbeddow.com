@@ -2,7 +2,7 @@
 import React from "react";
 import { em, Group } from "@mantine/core";
 import Logo from "@/components/atoms/Logo";
-import { WHITE_SMOKE, WINE_MID_COLOR } from "@/theme";
+import { BG_COLOR, TEXT_COLOR, ACCENT_COLOR } from "@/theme";
 import { EMAIL } from "@/constants";
 import useIsMobile from "@/hooks/useIsMobile";
 import { useMediaQuery } from "@mantine/hooks";
@@ -11,57 +11,55 @@ import FancyLink from "@/components/atoms/FancyLink";
 export default function Header() {
   const isMobile = useIsMobile();
   const isTiny = useMediaQuery(`(max-width: ${em(370)})`);
-  const sidePadding = isMobile ? "5px" : "10px";
+  const sidePadding = isMobile ? "8px" : "16px";
 
   let contactSection;
   let fontSize;
   if (isTiny) {
     contactSection = "Email";
-    fontSize = "0.8em";
+    fontSize = "0.85em";
   } else {
     if (isMobile) {
       contactSection = EMAIL;
-      fontSize = "0.8em";
+      fontSize = "0.85em";
     } else {
       contactSection = `Contact: ${EMAIL}`;
-      fontSize = "1em";
+      fontSize = "0.95em";
     }
   }
 
   return (
-    <div
+    <header
       style={{
-        height: "74px",
+        height: "56px",
         paddingLeft: sidePadding,
         paddingRight: sidePadding,
-        paddingBottom: "5px",
-        paddingTop: "5px",
-        backgroundColor: WHITE_SMOKE,
-        borderBottom: `5px solid ${WINE_MID_COLOR}`,
+        paddingBottom: "8px",
+        paddingTop: "8px",
+        backgroundColor: BG_COLOR,
+        borderBottom: `2px solid ${TEXT_COLOR}`,
         maxWidth: "100vw",
+        display: "flex",
+        alignItems: "center",
       }}
     >
-      <Group justify={"space-between"}>
-        <FancyLink href={"/"}>
+      <Group justify={"space-between"} style={{ width: "100%" }}>
+        <FancyLink href={"/"} style={{ textDecoration: "none" }}>
           <Logo />
         </FancyLink>
 
-        <Group
-          justify={"space-evenly"}
-          c={"wine"}
-          style={{
-            fontSize,
-          }}
-        >
-          <FancyLink href={"/writing"}>Writing</FancyLink>
-
-          {
-            // Disabled until I build the projects page
-            //<FancyLink href={"/projects"}>Projects</FancyLink>
-          }
-          <FancyLink href={`mailto:${EMAIL}`}>{contactSection}</FancyLink>
-        </Group>
+        <nav>
+          <Group
+            gap={isMobile ? "sm" : "lg"}
+            style={{
+              fontSize,
+            }}
+          >
+            <FancyLink href={"/writing"}>Writing</FancyLink>
+            <FancyLink href={`mailto:${EMAIL}`}>{contactSection}</FancyLink>
+          </Group>
+        </nav>
       </Group>
-    </div>
+    </header>
   );
 }

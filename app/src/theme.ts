@@ -1,14 +1,26 @@
 import { createTheme } from "@mantine/core";
-import { Bree_Serif, Chicle, Domine } from "next/font/google";
+import { Inter, Source_Serif_4 } from "next/font/google";
 
-const chicle = Chicle({ subsets: ["latin"], weight: "400" });
-export const BREE_SERIF = Bree_Serif({ subsets: ["latin"], weight: "400" });
-const domine = Domine({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"] });
+const sourceSerif = Source_Serif_4({ subsets: ["latin"] });
 
-// We want to use these in a server component that doesn't have mantine access
-export const WHITE_SMOKE = "#F5F5F5";
-export const WINE_MID_COLOR = "#984755";
-export const WINE_COLOR = "#753742";
+// Ocean color palette
+export const FROZEN_WATER = "#D7FFF1";
+export const LIGHT_GREEN = "#AAFCB8";
+export const SEAFOAM = "#8CD790";
+export const MUTED_TEAL = "#77AF9C";
+export const EMERALD_DEPTHS = "#285943";
+
+// Semantic aliases
+export const BG_COLOR = FROZEN_WATER;
+export const TEXT_COLOR = EMERALD_DEPTHS;
+export const ACCENT_COLOR = MUTED_TEAL;
+
+// Legacy exports for compatibility
+export const WHITE_SMOKE = BG_COLOR;
+export const WINE_MID_COLOR = TEXT_COLOR;
+export const WINE_COLOR = EMERALD_DEPTHS;
+export const BREE_SERIF = { style: { fontFamily: sourceSerif.style.fontFamily } };
 
 const theme = createTheme({
   breakpoints: {
@@ -19,70 +31,23 @@ const theme = createTheme({
     xl: "90em",
   },
   headings: {
-    fontFamily: chicle.style.fontFamily,
+    fontFamily: sourceSerif.style.fontFamily,
   },
-  fontFamily: domine.style.fontFamily,
-  primaryColor: "wine",
+  fontFamily: inter.style.fontFamily,
+  primaryColor: "ocean",
+  defaultRadius: 0,
   colors: {
-    mint: [
-      "#bcffde",
-      "#b2ffd2",
-      "#a8ffc6",
-      "#9effbb",
-      "#94f4af",
-      "#8ae4a3",
-      "#80d398",
-      "#76c38c",
-      "#6cb380",
-      "#63A375",
-    ],
-    africanViolet: [
-      "#fffcff",
-      "#ffefff",
-      "#ffe2ff",
-      "#ffd4ff",
-      "#ffc7fa",
-      "#f7bae9",
-      "#e6acd9",
-      "#d49fc8",
-      "#c292b7",
-      "#B185A7",
-    ],
-    wine: [
-      "#de687d",
-      "#d26376",
-      "#c65d70",
-      "#bb5869",
-      "#af5263",
-      "#a34d5c",
-      WINE_MID_COLOR,
-      "#8c424f",
-      "#803c48",
-      WINE_COLOR,
-    ],
-    carrotOrange: [
-      "#ffff09",
-      "#ffff09",
-      "#fff408",
-      "#ffe608",
-      "#ffd807",
-      "#ffc907",
-      "#ffbb06",
-      "#ffac06",
-      "#ff9e05",
-      "#E89005",
-    ],
-    whiteSmoke: [
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      "#ffffff",
-      WHITE_SMOKE,
+    ocean: [
+      FROZEN_WATER,
+      "#c5f5e5",
+      "#b3ebd9",
+      "#a1e1cd",
+      LIGHT_GREEN,
+      SEAFOAM,
+      MUTED_TEAL,
+      "#5a9a84",
+      "#3d856b",
+      EMERALD_DEPTHS,
     ],
   },
 });

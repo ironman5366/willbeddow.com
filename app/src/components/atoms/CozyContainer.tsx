@@ -11,15 +11,15 @@ export default function CozyContainer({
   style,
 }: PropsWithChildren<Props>) {
   return (
-    <div
+    <main
       className="cozy-container"
       style={{
         ...style,
         minWidth: "100vw",
-        minHeight: "calc(100vh - 74px)",
+        minHeight: "calc(100vh - 56px)",
       }}
     >
       {children}
-    </div>
+    </main>
   );
 }

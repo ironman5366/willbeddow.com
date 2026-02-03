@@ -1,31 +1,57 @@
+:root {
+  --frozen-water: #D7FFF1;
+  --light-green: #AAFCB8;
+  --seafoam: #8CD790;
+  --muted-teal: #77AF9C;
+  --emerald-depths: #285943;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--frozen-water);
+  color: var(--emerald-depths);
+}
+
 .cozy-container {
-  background-image: url("/flower.svg");
-  background-repeat: repeat;
-  background-color: #f5f5f5;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
+  background-color: var(--frozen-water);
+  padding: 8px;
 
   @media (min-width: 400px) {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 16px;
   }
 
   @media (min-width: 640px) {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding: 24px 48px;
   }
 }
 
 a {
-  color: #63a375;
+  color: var(--emerald-depths);
+  text-decoration: underline;
   word-wrap: break-word;
 }
 
 a:hover {
-  text-decoration: underline dotted;
+  color: var(--muted-teal);
 }
 
 strong {
-  font-weight: bold;
+  font-weight: 600;
+}
+
+/* Minimal button reset */
+button {
+  border-radius: 0;
+}
+
+/* Clean dividers */
+hr {
+  border: none;
+  border-top: 1px solid var(--muted-teal);
+  margin: 16px 0;
 }

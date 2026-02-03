@@ -1,6 +1,6 @@
 import React, { ComponentProps } from "react";
 import Link from "next/link";
-import { WINE_MID_COLOR } from "@/theme";
+import { TEXT_COLOR } from "@/theme";
 
 export default function FancyLink({
   style,
@@ -9,8 +9,9 @@ export default function FancyLink({
   return (
     <Link
       style={{
-        color: WINE_MID_COLOR,
-        fontWeight: "bold",
+        color: TEXT_COLOR,
+        fontWeight: 500,
+        textDecoration: "underline",
         ...style,
       }}
       {...props}

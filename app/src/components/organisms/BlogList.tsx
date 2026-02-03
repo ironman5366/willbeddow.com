@@ -1,22 +1,26 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, Center, Stack } from "@mantine/core";
+import { Center, Stack } from "@mantine/core";
 import { PostConnectionQuery } from "../../../tina/__generated__/types";
 import client from "../../../tina/__generated__/client";
 import PostCard from "@/components/molecules/PostCard";
 import Link from "next/link";
 import useIsMobile from "@/hooks/useIsMobile";
+import { TEXT_COLOR } from "@/theme";
 
-function AllPostsButton({ style }: { style?: React.CSSProperties }) {
+function AllPostsLink({ style }: { style?: React.CSSProperties }) {
   return (
-    <Button
-      component={Link}
-      href={"/writing"}
+    <Link
+      href="/writing"
       style={{
+        color: TEXT_COLOR,
+        fontWeight: 500,
+        textDecoration: "underline",
+        fontSize: "0.95em",
         ...style,
       }}
     >
-      All Posts →
-    </Button>
+      All posts &rarr;
+    </Link>
   );
 }
 
@@ -41,7 +45,6 @@ export default function BlogList({ truncateTo }: Props) {
 
   const postList = useMemo(() => {
     if (posts && posts.postConnection && posts.postConnection.edges) {
-      // Sort by created_at descending
       return posts.postConnection.edges.sort(
         (a, b) =>
           new Date(b!.node!.created_at!).getTime() -
@@ -52,24 +55,17 @@ export default function BlogList({ truncateTo }: Props) {
   }, [posts]);
 
   return (
-    <Stack>
+    <Stack gap="xs">
       {postList.length > 0
         ? postList.map((post) => (
             <PostCard post={post!.node!} key={post?.node?.id} />
           ))
         : "Loading posts..."}
-      {truncateTo !== undefined &&
-        (isMobile ? (
-          <Center>
-            <AllPostsButton />
-          </Center>
-        ) : (
-          <AllPostsButton
-            style={{
-              marginLeft: "60%",
-            }}
-          />
-        ))}
+      {truncateTo !== undefined && (
+        <div style={{ marginTop: "8px", textAlign: isMobile ? "center" : "right" }}>
+          <AllPostsLink />
+        </div>
+      )}
     </Stack>
   );
 }
