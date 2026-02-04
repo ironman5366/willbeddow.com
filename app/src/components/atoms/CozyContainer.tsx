@@ -1,5 +1,5 @@
 import React, { PropsWithChildren } from "react";
-import { SAND, POOL_LIGHT } from "@/theme";
+import { SAND } from "@/theme";
 import CausticBackground from "./CausticBackground";
 
 interface Props {
@@ -23,7 +23,7 @@ export default function CozyContainer({
         position: "relative",
       }}
     >
-      <CausticBackground baseColor={SAND} lightColor={POOL_LIGHT} />
+      <CausticBackground baseColor={SAND} />
       <div style={{ position: "relative", zIndex: 1 }}>{children}</div>
     </div>
   );
