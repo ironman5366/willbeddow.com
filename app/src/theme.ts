@@ -4,8 +4,9 @@ import { Space_Mono, Inter } from "next/font/google";
 const spaceMono = Space_Mono({ subsets: ["latin"], weight: ["400", "700"] });
 const inter = Inter({ subsets: ["latin"] });
 
-// Ocean/beachy color palette
-export const SAND = "#D7FFF1"; // Frozen Water - light background
+// Ocean/beachy color palette - light pool water tones
+export const SAND = "#e8fffe"; // Lighter pool water background
+export const POOL_LIGHT = "#ffffff"; // Caustic light highlights
 export const SEAFOAM = "#AAFCB8"; // Light Green
 export const SAGE = "#8CD790"; // Light Green
 export const TEAL = "#77AF9C"; // Muted Teal - accent
@@ -32,7 +33,7 @@ const theme = createTheme({
   defaultRadius: 0,
   colors: {
     ocean: [
-      "#D7FFF1",
+      "#e8fffe",
       "#C4F8E5",
       "#B0F0D9",
       "#9DE8CD",
@@ -44,7 +45,7 @@ const theme = createTheme({
       "#285943",
     ],
     teal: [
-      "#D7FFF1",
+      "#e8fffe",
       "#C5EFE4",
       "#B3DFD7",
       "#A1CFCA",
@@ -57,15 +58,15 @@ const theme = createTheme({
     ],
     sand: [
       "#ffffff",
-      "#f8fffc",
-      "#f0fff8",
-      "#e8fff4",
-      "#e0fff0",
-      "#D7FFF1",
-      "#D7FFF1",
-      "#D7FFF1",
-      "#D7FFF1",
-      "#D7FFF1",
+      "#f8fffe",
+      "#f2fffe",
+      "#edfffe",
+      "#e8fffe",
+      "#e8fffe",
+      "#e8fffe",
+      "#e8fffe",
+      "#e8fffe",
+      "#e8fffe",
     ],
   },
 });
