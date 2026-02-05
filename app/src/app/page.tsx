@@ -34,7 +34,7 @@ function GridHomeLayout() {
             fontWeight: 700,
           }}
         >
-          writing
+          Writing
         </h2>
         <BlogList truncateTo={4} />
       </div>
@@ -65,7 +65,7 @@ function MobileHomeLayout() {
             fontWeight: 700,
           }}
         >
-          writing
+          Writing
         </h2>
         <BlogList truncateTo={3} />
       </div>

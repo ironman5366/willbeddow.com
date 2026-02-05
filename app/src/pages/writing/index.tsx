@@ -22,7 +22,7 @@ export default function Writing() {
             fontWeight: 700,
           }}
         >
-          writing
+          Writing
         </h1>
         <BlogList />
       </div>

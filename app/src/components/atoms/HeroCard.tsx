@@ -4,20 +4,18 @@ import { EMAIL } from "@/constants";
 import FancyLink from "@/components/atoms/FancyLink";
 
 const SECTIONS: ReactNode[] = [
-  "programmer and occasional blogger. i like writing code, being outside, and websites that feel fast.",
+  "I'm a programmer and occasional blogger. I like writing code, being outside, and websites that feel cozy.",
   <>
-    living in san francisco, working at{" "}
-    <FancyLink href={"https://krea.ai"}>krea</FancyLink>.
+    I live in San Francisco and work at{" "}
+    <FancyLink href={"https://krea.ai"}>Krea</FancyLink>.
   </>,
   <>
-    code at{" "}
+    You can find my code at{" "}
     <FancyLink href={"https://github.com/ironman5366"}>
       github.com/ironman5366
     </FancyLink>
-  </>,
-  <>
-    reach me at{" "}
-    <FancyLink href={`mailto:${EMAIL}`}>{EMAIL}</FancyLink>
+    , or email me at{" "}
+    <FancyLink href={`mailto:${EMAIL}`}>{EMAIL}</FancyLink>.
   </>,
 ];
 
@@ -37,7 +35,7 @@ export default function HeroCard() {
           fontWeight: 700,
         }}
       >
-        hi, i'm will
+        Hi, I'm Will
       </h1>
       {SECTIONS.map((section, i) => (
         <p
