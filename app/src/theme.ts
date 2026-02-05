@@ -11,6 +11,10 @@ export const SAGE = "#8CD790"; // Light Green
 export const TEAL = "#77AF9C"; // Muted Teal - accent
 export const DEEP = "#285943"; // Emerald Depths - primary text/borders
 
+// Caustic background colors
+export const POOL_DEEP = "#2A9090"; // Deep teal base
+export const POOL_LIGHT = "#FFF9E6"; // Warm cream/yellow for daylight feel
+
 // Legacy exports for compatibility
 export const WHITE_SMOKE = SAND;
 export const WINE_MID_COLOR = DEEP;
