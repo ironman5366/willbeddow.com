@@ -21,7 +21,7 @@ const vertexShaderSource = `
   }
 `;
 
-// Fragment shader - caustic effect
+// Fragment shader - caustic effect with organic distorted Voronoi
 const fragmentShaderSource = `
   precision highp float;
 
@@ -29,131 +29,223 @@ const fragmentShaderSource = `
 
   uniform float u_time;
   uniform vec2 u_resolution;
-  uniform vec2 u_mouse;
   uniform vec3 u_baseColor;
   uniform vec3 u_lightColor;
   uniform float u_intensity;
 
-  // Simplex 3D noise implementation
-  vec4 permute(vec4 x) { return mod(((x*34.0)+1.0)*x, 289.0); }
-  vec4 taylorInvSqrt(vec4 r) { return 1.79284291400159 - 0.85373472095314 * r; }
+  // Mouse trail - up to 32 points with position, age, and velocity
+  uniform vec4 u_trail[32];     // xy = position, z = age (0-1), w = strength
+  uniform vec2 u_trailVel[32];  // velocity at each point for swirl direction
+  uniform int u_trailCount;
 
-  float snoise(vec3 v) {
-    const vec2 C = vec2(1.0/6.0, 1.0/3.0);
-    const vec4 D = vec4(0.0, 0.5, 1.0, 2.0);
+  // Hash functions
+  vec2 hash22(vec2 p) {
+    vec3 p3 = fract(vec3(p.xyx) * vec3(0.1031, 0.1030, 0.0973));
+    p3 += dot(p3, p3.yzx + 33.33);
+    return fract((p3.xx + p3.yz) * p3.zy);
+  }
 
-    vec3 i = floor(v + dot(v, C.yyy));
-    vec3 x0 = v - i + dot(i, C.xxx);
+  float hash21(vec2 p) {
+    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
+  }
 
-    vec3 g = step(x0.yzx, x0.xyz);
-    vec3 l = 1.0 - g;
-    vec3 i1 = min(g.xyz, l.zxy);
-    vec3 i2 = max(g.xyz, l.zxy);
+  // Simple 2D noise for distortion
+  float noise(vec2 p) {
+    vec2 i = floor(p);
+    vec2 f = fract(p);
+    f = f * f * (3.0 - 2.0 * f); // smoothstep
 
-    vec3 x1 = x0 - i1 + C.xxx;
-    vec3 x2 = x0 - i2 + C.yyy;
-    vec3 x3 = x0 - D.yyy;
+    float a = hash21(i);
+    float b = hash21(i + vec2(1.0, 0.0));
+    float c = hash21(i + vec2(0.0, 1.0));
+    float d = hash21(i + vec2(1.0, 1.0));
 
-    i = mod(i, 289.0);
-    vec4 p = permute(permute(permute(
-      i.z + vec4(0.0, i1.z, i2.z, 1.0))
-      + i.y + vec4(0.0, i1.y, i2.y, 1.0))
-      + i.x + vec4(0.0, i1.x, i2.x, 1.0));
+    return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
+  }
 
-    float n_ = 1.0/7.0;
-    vec3 ns = n_ * D.wyz - D.xzx;
+  // Fractal noise for organic distortion
+  float fbm(vec2 p, float time) {
+    float value = 0.0;
+    float amplitude = 0.5;
+    vec2 shift = vec2(100.0);
 
-    vec4 j = p - 49.0 * floor(p * ns.z * ns.z);
+    for(int i = 0; i < 4; i++) {
+      value += amplitude * noise(p + time * 0.1);
+      p = p * 2.0 + shift;
+      amplitude *= 0.5;
+    }
+    return value;
+  }
 
-    vec4 x_ = floor(j * ns.z);
-    vec4 y_ = floor(j - 7.0 * x_);
+  // Voronoi with distorted edges
+  vec2 voronoi(vec2 p, float time, float distortAmount) {
+    // Apply organic distortion to input coordinates
+    vec2 distort = vec2(
+      fbm(p * 0.5 + time * 0.2, time),
+      fbm(p * 0.5 + 50.0 + time * 0.15, time + 10.0)
+    );
+    p += (distort - 0.5) * distortAmount;
 
-    vec4 x = x_ *ns.x + ns.yyyy;
-    vec4 y = y_ *ns.x + ns.yyyy;
-    vec4 h = 1.0 - abs(x) - abs(y);
+    vec2 n = floor(p);
+    vec2 f = fract(p);
 
-    vec4 b0 = vec4(x.xy, y.xy);
-    vec4 b1 = vec4(x.zw, y.zw);
+    // First pass: find closest cell center
+    float minDist = 8.0;
+    vec2 minPoint = vec2(0.0);
+    vec2 minCell = vec2(0.0);
 
-    vec4 s0 = floor(b0)*2.0 + 1.0;
-    vec4 s1 = floor(b1)*2.0 + 1.0;
-    vec4 sh = -step(h, vec4(0.0));
+    for(int j = -1; j <= 1; j++) {
+      for(int i = -1; i <= 1; i++) {
+        vec2 g = vec2(float(i), float(j));
+        vec2 cellId = n + g;
+        vec2 o = hash22(cellId);
+        // Animate with varied speeds per cell
+        float speed = 0.3 + hash21(cellId) * 0.4;
+        o = 0.5 + 0.45 * sin(time * speed + 6.2831 * o);
+        vec2 r = g + o - f;
+        float d = dot(r, r);
 
-    vec4 a0 = b0.xzyw + s0.xzyw*sh.xxyy;
-    vec4 a1 = b1.xzyw + s1.xzyw*sh.zzww;
+        if(d < minDist) {
+          minDist = d;
+          minPoint = r;
+          minCell = cellId;
+        }
+      }
+    }
 
-    vec3 p0 = vec3(a0.xy, h.x);
-    vec3 p1 = vec3(a0.zw, h.y);
-    vec3 p2 = vec3(a1.xy, h.z);
-    vec3 p3 = vec3(a1.zw, h.w);
+    // Second pass: find distance to nearest edge with smoothing
+    float edgeDist = 8.0;
+    for(int j = -2; j <= 2; j++) {
+      for(int i = -2; i <= 2; i++) {
+        vec2 g = vec2(float(i), float(j));
+        vec2 cellId = n + g;
+        vec2 o = hash22(cellId);
+        float speed = 0.3 + hash21(cellId) * 0.4;
+        o = 0.5 + 0.45 * sin(time * speed + 6.2831 * o);
+        vec2 r = g + o - f;
 
-    vec4 norm = taylorInvSqrt(vec4(dot(p0,p0), dot(p1,p1), dot(p2,p2), dot(p3,p3)));
-    p0 *= norm.x;
-    p1 *= norm.y;
-    p2 *= norm.z;
-    p3 *= norm.w;
+        if(dot(minPoint - r, minPoint - r) > 0.00001) {
+          // Smooth edge distance calculation
+          vec2 midpoint = 0.5 * (minPoint + r);
+          vec2 diff = r - minPoint;
+          float len = length(diff);
+          if(len > 0.001) {
+            vec2 edgeDir = diff / len;
+            float d = abs(dot(midpoint, edgeDir));
+            edgeDist = min(edgeDist, d);
+          }
+        }
+      }
+    }
 
-    vec4 m = max(0.6 - vec4(dot(x0,x0), dot(x1,x1), dot(x2,x2), dot(x3,x3)), 0.0);
-    m = m * m;
-    return 42.0 * dot(m*m, vec4(dot(p0,x0), dot(p1,x1), dot(p2,x2), dot(p3,x3)));
+    return vec2(edgeDist, sqrt(minDist));
   }
 
   void main() {
     vec2 uv = v_uv;
     vec2 pos = uv * u_resolution;
 
-    // Apply mouse parallax
-    pos += u_mouse * 30.0;
+    // Simple push-away distortion from mouse trail
+    // Like dragging a stick through water - just displaces, no fancy swirls
+    vec2 totalDistort = vec2(0.0);
 
-    float t = u_time * 0.08;
+    for(int i = 0; i < 32; i++) {
+      if(i >= u_trailCount) break;
 
-    // Scale for sparse, sweeping patterns
-    float scale1 = 0.003;
-    float scale2 = 0.005;
+      vec2 trailPos = u_trail[i].xy;
+      float age = u_trail[i].z;
+      float strength = u_trail[i].w;
 
-    // Primary noise layers
-    float n1 = snoise(vec3(pos * scale1, t));
-    float n2 = snoise(vec3(pos * scale1 + 100.0, t * 0.7 + 50.0));
+      vec2 toPixel = pos - trailPos;
+      float dist = length(toPixel);
 
-    // Secondary detail layer
-    float n3 = snoise(vec3(pos * scale2 + 200.0, t * 1.0 + 100.0));
+      // Radius starts small, expands as it ages (ripple spreading out)
+      float radius = 50.0 + age * 120.0;
+
+      // Strength fades with age squared for lazy drift back
+      float fade = (1.0 - age * age) * strength;
+
+      if(dist < radius && fade > 0.001) {
+        // Soft falloff from center
+        float falloff = 1.0 - smoothstep(0.0, radius, dist);
+        float effect = falloff * fade;
+
+        // Just push outward - simple displacement
+        vec2 pushDir = dist > 0.5 ? normalize(toPixel) : vec2(0.0);
+
+        // Push strength decreases toward edge of influence
+        float pushAmount = effect * 18.0 * falloff;
+
+        totalDistort += pushDir * pushAmount;
+      }
+    }
+
+    pos += totalDistort;
+
+    float t = u_time * 1.0;
+
+    // Variable line thickness based on position
+    float thicknessNoise = fbm(pos * 0.003, t * 0.5);
+
+    // Two Voronoi layers - back to original cell sizes
+    vec2 v1 = voronoi(pos * 0.009, t, 1.5);
+    vec2 v2 = voronoi(pos * 0.006 + 200.0, t * 0.8 + 50.0, 1.6);
+
+    // Random variation along the lines - some fade out, some are strong
+    float lineNoise1 = fbm(pos * 0.015 + t * 0.3, t * 0.2);
+    float lineNoise2 = fbm(pos * 0.008 + 100.0, t * 0.15);
+
+    // Cell merge noise - at low-frequency, removes edges to make some cells appear merged
+    // This creates larger apparent cells without adding another layer
+    float mergeNoise = fbm(pos * 0.004, t * 0.08);
+    float mergeMask1 = smoothstep(0.4, 0.7, mergeNoise); // Even more edges removed = sparser
+    float mergeMask2 = smoothstep(0.45, 0.75, mergeNoise + fbm(pos * 0.003 + 300.0, t * 0.06) * 0.3);
+
+    // Line break/fade variation - less aggressive fading
+    float lineBreak1 = smoothstep(0.15, 0.4, lineNoise1);
+    float lineBreak2 = smoothstep(0.2, 0.45, lineNoise2);
+
+    // Line widths
+    float lineWidth1 = 0.05 + thicknessNoise * 0.035 + lineNoise1 * 0.015;
+    float lineWidth2 = 0.07 + thicknessNoise * 0.04 + lineNoise2 * 0.02;
+
+    // Edge detection with varying softness
+    float edge1 = smoothstep(lineWidth1, lineWidth1 * 0.2, v1.x);
+    float edge2 = smoothstep(lineWidth2, lineWidth2 * 0.3, v2.x);
+
+    // Apply line breaks AND merge mask - some edges disappear entirely
+    edge1 *= lineBreak1 * mergeMask1;
+    edge2 *= lineBreak2 * mergeMask2;
+
+    // Combine layers
+    float edges = edge1 * 0.55 + edge2 * 0.35;
+
+    // Strong bright spots where edges converge
+    // Use distance to cell center (v1.y, v2.y) to find convergence points
+    float convergence1 = 1.0 - smoothstep(0.0, 0.4, v1.y);
+    float convergence2 = 1.0 - smoothstep(0.0, 0.5, v2.y);
+
+    // Bright spots happen where edges meet AND we're near cell vertices
+    float brightSpots = edge1 * convergence1 * 3.0;
+    brightSpots += edge1 * edge2 * 2.5;
+    brightSpots += pow(edge1, 2.0) * convergence1 * 4.0;
+
+    // Extra glow at random hot spots
+    float hotSpot = pow(convergence1 * convergence2, 0.8) * 2.0;
 
     // Large-scale brightness variation
-    float largeVar = snoise(vec3(pos * 0.001, t * 0.25)) * 0.5 + 0.5;
+    float largeVar = fbm(pos * 0.001, t * 0.3) * 0.35 + 0.65;
 
-    // Variable line thickness
-    float thicknessVar = snoise(vec3(pos * 0.0015, t * 0.3 + 500.0)) * 0.5 + 0.5;
-    float lineMult = 6.0 + thicknessVar * 6.0;
+    // Combine everything - edges plus bright spots
+    float combined = (edges + brightSpots * 0.4 + hotSpot * 0.3) * largeVar;
 
-    // Create lines at zero-crossings (sparse contours)
-    float thresh1 = abs(n1);
-    float thresh2 = abs(n2);
-    float thresh3 = abs(n3 - 0.1);
-
-    // Primary flowing light bands
-    float line1 = max(0.0, 1.0 - thresh1 * lineMult);
-    float line2 = max(0.0, 1.0 - thresh2 * lineMult);
-    float primary = max(line1, line2);
-
-    // Secondary thin accent lines
-    float secondary = max(0.0, 1.0 - thresh3 * (lineMult * 1.2)) * 0.5;
-
-    // Bright convergence where lines cross
-    float convergence = line1 * line2 * 2.5;
-
-    // Combine
-    float combined = primary * 0.7 + secondary * 0.2 + convergence * 0.25;
-
-    // Apply large-scale variation
-    float modulated = combined * (0.5 + largeVar * 0.6);
-
-    // Contrast curve
-    float caustic = pow(modulated, 0.65) * u_intensity * 1.6;
+    // Soft contrast curve
+    float caustic = pow(combined, 0.75) * u_intensity * 1.6;
     caustic = min(1.0, caustic);
 
-    // Subtle hue shift
-    float hueShift = snoise(vec3(pos * 0.001, t * 0.2)) * 0.1;
-    vec3 baseAdjusted = u_baseColor + vec3(-hueShift * 0.08, hueShift * 0.06, hueShift * 0.04);
+    // Subtle hue variation
+    float hueVar = fbm(pos * 0.0008, t * 0.15) * 0.08;
+    vec3 baseAdjusted = u_baseColor + vec3(-hueVar * 0.1, hueVar * 0.06, hueVar * 0.04);
 
     // Mix colors
     vec3 color = mix(baseAdjusted, u_lightColor, caustic);
@@ -222,20 +314,26 @@ export default function CausticBackground({
   mouseInfluence = 0.15,
 }: CausticBackgroundProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const glowCanvasRef = useRef<HTMLCanvasElement>(null);
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
   const animationRef = useRef<number>();
   const startTimeRef = useRef<number>(0);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const smoothMouseRef = useRef({ x: 0, y: 0 });
+  const prevMouseRef = useRef({ x: 0, y: 0 });
+  const lastTrailTimeRef = useRef<number>(0);
+  // Trail: array of {x, y, age, strength, vx, vy}
+  const trailRef = useRef<Array<{ x: number; y: number; age: number; strength: number; vx: number; vy: number }>>([]);
 
   const base = parseColor(baseColor);
   const light = parseColor(lightColor);
 
   useEffect(() => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
+    const glowCanvas = glowCanvasRef.current;
+    if (!canvas || !glowCanvas) return;
 
+    // Setup main canvas
     const gl = canvas.getContext("webgl", {
       alpha: false,
       antialias: false,
@@ -246,66 +344,124 @@ export default function CausticBackground({
       return;
     }
 
+    // Setup glow canvas (same WebGL context setup)
+    const glGlow = glowCanvas.getContext("webgl", {
+      alpha: true,
+      antialias: false,
+      preserveDrawingBuffer: false,
+    });
+    if (!glGlow) {
+      console.error("WebGL not supported for glow canvas");
+      return;
+    }
+
     glRef.current = gl;
 
-    // Create shaders
-    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
-    const fragmentShader = createShader(
-      gl,
-      gl.FRAGMENT_SHADER,
-      fragmentShaderSource
-    );
+    // Helper to setup a WebGL program
+    const setupProgram = (glCtx: WebGLRenderingContext) => {
+      const vertexShader = createShader(glCtx, glCtx.VERTEX_SHADER, vertexShaderSource);
+      const fragmentShader = createShader(glCtx, glCtx.FRAGMENT_SHADER, fragmentShaderSource);
+      if (!vertexShader || !fragmentShader) return null;
 
-    if (!vertexShader || !fragmentShader) return;
+      const program = createProgram(glCtx, vertexShader, fragmentShader);
+      if (!program) return null;
 
-    // Create program
-    const program = createProgram(gl, vertexShader, fragmentShader);
-    if (!program) return;
+      glCtx.useProgram(program);
 
-    programRef.current = program;
-    gl.useProgram(program);
+      const positionBuffer = glCtx.createBuffer();
+      glCtx.bindBuffer(glCtx.ARRAY_BUFFER, positionBuffer);
+      glCtx.bufferData(
+        glCtx.ARRAY_BUFFER,
+        new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
+        glCtx.STATIC_DRAW
+      );
 
-    // Create fullscreen quad
-    const positionBuffer = gl.createBuffer();
-    gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
-    gl.bufferData(
-      gl.ARRAY_BUFFER,
-      new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]),
-      gl.STATIC_DRAW
-    );
+      const positionLocation = glCtx.getAttribLocation(program, "a_position");
+      glCtx.enableVertexAttribArray(positionLocation);
+      glCtx.vertexAttribPointer(positionLocation, 2, glCtx.FLOAT, false, 0, 0);
 
-    const positionLocation = gl.getAttribLocation(program, "a_position");
-    gl.enableVertexAttribArray(positionLocation);
-    gl.vertexAttribPointer(positionLocation, 2, gl.FLOAT, false, 0, 0);
+      return {
+        program,
+        timeLocation: glCtx.getUniformLocation(program, "u_time"),
+        resolutionLocation: glCtx.getUniformLocation(program, "u_resolution"),
+        baseColorLocation: glCtx.getUniformLocation(program, "u_baseColor"),
+        lightColorLocation: glCtx.getUniformLocation(program, "u_lightColor"),
+        intensityLocation: glCtx.getUniformLocation(program, "u_intensity"),
+        trailLocation: glCtx.getUniformLocation(program, "u_trail"),
+        trailVelLocation: glCtx.getUniformLocation(program, "u_trailVel"),
+        trailCountLocation: glCtx.getUniformLocation(program, "u_trailCount"),
+      };
+    };
 
-    // Get uniform locations
-    const timeLocation = gl.getUniformLocation(program, "u_time");
-    const resolutionLocation = gl.getUniformLocation(program, "u_resolution");
-    const mouseLocation = gl.getUniformLocation(program, "u_mouse");
-    const baseColorLocation = gl.getUniformLocation(program, "u_baseColor");
-    const lightColorLocation = gl.getUniformLocation(program, "u_lightColor");
-    const intensityLocation = gl.getUniformLocation(program, "u_intensity");
+    const mainProgram = setupProgram(gl);
+    const glowProgram = setupProgram(glGlow);
+
+    if (!mainProgram || !glowProgram) return;
+
+    programRef.current = mainProgram.program;
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
       const width = window.innerWidth;
       const height = window.innerHeight;
+
+      // Main canvas at full resolution
       canvas.width = width * dpr;
       canvas.height = height * dpr;
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       gl.viewport(0, 0, canvas.width, canvas.height);
+
+      // Glow canvas at lower resolution for performance (blur will hide it anyway)
+      const glowScale = 0.5;
+      glowCanvas.width = width * dpr * glowScale;
+      glowCanvas.height = height * dpr * glowScale;
+      glowCanvas.style.width = `${width}px`;
+      glowCanvas.style.height = `${height}px`;
+      glGlow.viewport(0, 0, glowCanvas.width, glowCanvas.height);
     };
 
     resize();
     window.addEventListener("resize", resize);
 
-    // Mouse tracking
+    // Mouse tracking - store actual pixel position and add to trail
     const handleMouseMove = (e: MouseEvent) => {
-      mouseRef.current = {
-        x: (e.clientX / window.innerWidth - 0.5) * mouseInfluence * 2,
-        y: (e.clientY / window.innerHeight - 0.5) * mouseInfluence * 2,
-      };
+      const dpr = window.devicePixelRatio || 1;
+      const rect = canvas.getBoundingClientRect();
+
+      // Get position relative to canvas, scaled by DPR
+      const newX = (e.clientX - rect.left) * dpr;
+      const newY = (e.clientY - rect.top) * dpr;
+
+      // Calculate velocity
+      const vx = newX - mouseRef.current.x;
+      const vy = newY - mouseRef.current.y;
+      const speed = Math.sqrt(vx * vx + vy * vy);
+
+      mouseRef.current = { x: newX, y: newY };
+
+      // Add trail point if moving fast enough and enough time has passed
+      const now = performance.now();
+      if (speed > 3 && now - lastTrailTimeRef.current > 20) {
+        lastTrailTimeRef.current = now;
+
+        // Strength based on speed
+        const strength = Math.min(1.0, speed / 25);
+
+        trailRef.current.push({
+          x: newX,
+          y: newY,
+          age: 0,
+          strength,
+          vx,
+          vy,
+        });
+
+        // Keep max 32 trail points
+        if (trailRef.current.length > 32) {
+          trailRef.current.shift();
+        }
+      }
     };
     window.addEventListener("mousemove", handleMouseMove);
 
@@ -317,30 +473,69 @@ export default function CausticBackground({
     startTimeRef.current = performance.now();
 
     const render = () => {
-      if (!gl || !program) return;
-
-      // Smooth mouse interpolation
-      smoothMouseRef.current.x +=
-        (mouseRef.current.x - smoothMouseRef.current.x) * 0.05;
-      smoothMouseRef.current.y +=
-        (mouseRef.current.y - smoothMouseRef.current.y) * 0.05;
+      if (!gl || !mainProgram.program || !glGlow || !glowProgram.program) return;
 
       const elapsed = prefersReducedMotion
         ? 0
         : (performance.now() - startTimeRef.current) * 0.001 * speed;
 
-      gl.uniform1f(timeLocation, elapsed);
-      gl.uniform2f(resolutionLocation, canvas.width, canvas.height);
-      gl.uniform2f(
-        mouseLocation,
-        smoothMouseRef.current.x,
-        -smoothMouseRef.current.y
-      );
-      gl.uniform3f(baseColorLocation, base[0], base[1], base[2]);
-      gl.uniform3f(lightColorLocation, light[0], light[1], light[2]);
-      gl.uniform1f(intensityLocation, intensity);
+      // Age trail points and remove old ones
+      const ageRate = 0.012 * mouseInfluence; // How fast disturbances fade
+      trailRef.current = trailRef.current.filter((point) => {
+        point.age += ageRate;
+        return point.age < 1.0;
+      });
 
+      // Prepare trail data for shader
+      const trailData = new Float32Array(32 * 4); // vec4 array
+      const trailVelData = new Float32Array(32 * 2); // vec2 array
+      const trail = trailRef.current;
+
+      for (let i = 0; i < Math.min(trail.length, 32); i++) {
+        const p = trail[i];
+        trailData[i * 4 + 0] = p.x;
+        trailData[i * 4 + 1] = canvas.height - p.y; // Flip Y
+        trailData[i * 4 + 2] = p.age;
+        trailData[i * 4 + 3] = p.strength;
+        trailVelData[i * 2 + 0] = p.vx;
+        trailVelData[i * 2 + 1] = -p.vy; // Flip Y
+      }
+
+      // Render main canvas
+      gl.useProgram(mainProgram.program);
+      gl.uniform1f(mainProgram.timeLocation, elapsed);
+      gl.uniform2f(mainProgram.resolutionLocation, canvas.width, canvas.height);
+      gl.uniform3f(mainProgram.baseColorLocation, base[0], base[1], base[2]);
+      gl.uniform3f(mainProgram.lightColorLocation, light[0], light[1], light[2]);
+      gl.uniform1f(mainProgram.intensityLocation, intensity);
+      gl.uniform4fv(mainProgram.trailLocation, trailData);
+      gl.uniform2fv(mainProgram.trailVelLocation, trailVelData);
+      gl.uniform1i(mainProgram.trailCountLocation, Math.min(trail.length, 32));
       gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+
+      // Render glow canvas (same effect, will be blurred via CSS)
+      const glowScale = 0.5;
+
+      // Scale trail data for glow canvas
+      const glowTrailData = new Float32Array(32 * 4);
+      for (let i = 0; i < Math.min(trail.length, 32); i++) {
+        const p = trail[i];
+        glowTrailData[i * 4 + 0] = p.x * glowScale;
+        glowTrailData[i * 4 + 1] = glowCanvas.height - p.y * glowScale;
+        glowTrailData[i * 4 + 2] = p.age;
+        glowTrailData[i * 4 + 3] = p.strength;
+      }
+
+      glGlow.useProgram(glowProgram.program);
+      glGlow.uniform1f(glowProgram.timeLocation, elapsed);
+      glGlow.uniform2f(glowProgram.resolutionLocation, glowCanvas.width, glowCanvas.height);
+      glGlow.uniform3f(glowProgram.baseColorLocation, base[0], base[1], base[2]);
+      glGlow.uniform3f(glowProgram.lightColorLocation, light[0], light[1], light[2]);
+      glGlow.uniform1f(glowProgram.intensityLocation, intensity * 1.2);
+      glGlow.uniform4fv(glowProgram.trailLocation, glowTrailData);
+      glGlow.uniform2fv(glowProgram.trailVelLocation, trailVelData);
+      glGlow.uniform1i(glowProgram.trailCountLocation, Math.min(trail.length, 32));
+      glGlow.drawArrays(glGlow.TRIANGLE_STRIP, 0, 4);
 
       if (!prefersReducedMotion) {
         animationRef.current = requestAnimationFrame(render);
@@ -359,17 +554,36 @@ export default function CausticBackground({
   }, [base, light, intensity, speed, mouseInfluence]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      style={{
-        position: "absolute",
-        top: 0,
-        left: 0,
-        width: "100%",
-        height: "100%",
-        zIndex: 0,
-        pointerEvents: "none",
-      }}
-    />
+    <>
+      {/* Main sharp caustic layer */}
+      <canvas
+        ref={canvasRef}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 0,
+          pointerEvents: "none",
+        }}
+      />
+      {/* Blurred glow layer on top */}
+      <canvas
+        ref={glowCanvasRef}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          zIndex: 1,
+          pointerEvents: "none",
+          filter: "blur(30px)",
+          opacity: 0.7,
+          mixBlendMode: "screen",
+        }}
+      />
+    </>
   );
 }
