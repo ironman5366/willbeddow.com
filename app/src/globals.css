@@ -8,7 +8,7 @@ body {
 }
 
 .cozy-container {
-  background-color: #D7FFF1;
+  background-color: transparent;
   padding: 8px;
 
   @media (min-width: 400px) {

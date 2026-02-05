@@ -3,6 +3,7 @@ import "@/globals.css";
 import "@mantine/core/styles.css";
 import CozyContainer from "@/components/atoms/CozyContainer";
 import Header from "@/components/organisms/Header";
+import CausticBackground from "@/components/atoms/CausticBackground";
 import { ColorSchemeScript, MantineProvider } from "@mantine/core";
 import theme from "@/theme";
 import { GoogleAnalytics } from "@next/third-parties/google";
@@ -25,6 +26,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body>
+        <CausticBackground />
         <MantineProvider theme={theme}>
           <Header />
           <CozyContainer minHeight={"90vh"}>{children}</CozyContainer>
