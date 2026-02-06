@@ -35,7 +35,7 @@ export default function HeroCard() {
           fontWeight: 700,
         }}
       >
-        Hi, I'm Will
+        Hi, I&apos;m Will
       </h1>
       {SECTIONS.map((section, i) => (
         <p
