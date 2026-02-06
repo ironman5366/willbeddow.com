@@ -1,6 +1,4 @@
 import React, { PropsWithChildren } from "react";
-import { Center } from "@mantine/core";
-import useIsMobile from "@/hooks/useIsMobile";
 
 interface Props {
   component: React.ElementType;
@@ -12,21 +10,24 @@ export default function NicelyCentered({
   component,
   style,
 }: PropsWithChildren<Props>) {
-  const isMobile = useIsMobile();
-
   return (
-    <Center>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+      }}
+    >
       {React.createElement(
         component,
         {
           style: {
-            maxWidth: "min(728px, 90vw)",
-            padding: isMobile ? 10 : 30,
+            maxWidth: "min(700px, 100%)",
+            width: "100%",
             ...style,
           },
         },
         children
       )}
-    </Center>
+    </div>
   );
 }

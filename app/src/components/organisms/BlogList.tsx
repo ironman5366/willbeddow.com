@@ -1,22 +1,25 @@
 import React, { useEffect, useMemo, useState } from "react";
-import { Button, Center, Stack } from "@mantine/core";
 import { PostConnectionQuery } from "../../../tina/__generated__/types";
 import client from "../../../tina/__generated__/client";
 import PostCard from "@/components/molecules/PostCard";
 import Link from "next/link";
-import useIsMobile from "@/hooks/useIsMobile";
+import { DEEP, TEAL } from "@/theme";
 
-function AllPostsButton({ style }: { style?: React.CSSProperties }) {
+function AllPostsLink() {
   return (
-    <Button
-      component={Link}
+    <Link
       href={"/writing"}
       style={{
-        ...style,
+        color: DEEP,
+        fontSize: "0.9em",
+        display: "inline-block",
+        marginTop: "8px",
+        borderBottom: `1px solid ${TEAL}`,
+        paddingBottom: "2px",
       }}
     >
       All Posts →
-    </Button>
+    </Link>
   );
 }
 
@@ -26,7 +29,6 @@ interface Props {
 
 export default function BlogList({ truncateTo }: Props) {
   const [posts, setPosts] = useState<PostConnectionQuery | undefined>();
-  const isMobile = useIsMobile();
 
   useEffect(() => {
     client.queries
@@ -41,7 +43,6 @@ export default function BlogList({ truncateTo }: Props) {
 
   const postList = useMemo(() => {
     if (posts && posts.postConnection && posts.postConnection.edges) {
-      // Sort by created_at descending
       return posts.postConnection.edges.sort(
         (a, b) =>
           new Date(b!.node!.created_at!).getTime() -
@@ -52,24 +53,13 @@ export default function BlogList({ truncateTo }: Props) {
   }, [posts]);
 
   return (
-    <Stack>
+    <div>
       {postList.length > 0
         ? postList.map((post) => (
             <PostCard post={post!.node!} key={post?.node?.id} />
           ))
-        : "Loading posts..."}
-      {truncateTo !== undefined &&
-        (isMobile ? (
-          <Center>
-            <AllPostsButton />
-          </Center>
-        ) : (
-          <AllPostsButton
-            style={{
-              marginLeft: "60%",
-            }}
-          />
-        ))}
-    </Stack>
+        : "loading..."}
+      {truncateTo !== undefined && <AllPostsLink />}
+    </div>
   );
 }

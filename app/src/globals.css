@@ -1,31 +1,60 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
 .cozy-container {
-  background-image: url("/flower.svg");
-  background-repeat: repeat;
-  background-color: #f5f5f5;
-  padding-left: 5px;
-  padding-right: 5px;
-  padding-top: 5px;
+  padding: 8px;
 
   @media (min-width: 400px) {
-    padding-left: 20px;
-    padding-right: 20px;
+    padding: 16px;
   }
 
   @media (min-width: 640px) {
-    padding-left: 60px;
-    padding-right: 60px;
+    padding: 24px;
   }
 }
 
 a {
-  color: #63a375;
+  color: #285943;
   word-wrap: break-word;
+  text-decoration: underline;
 }
 
 a:hover {
-  text-decoration: underline dotted;
+  color: #77AF9C;
 }
 
 strong {
   font-weight: bold;
+}
+
+/* Minimal box styling */
+.box {
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(4px);
+}
+
+.box:hover {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* Grid layout for bento-style boxes */
+.grid-container {
+  display: grid;
+  gap: 8px;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  font-weight: 700;
+  color: #285943;
 }

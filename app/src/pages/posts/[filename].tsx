@@ -3,12 +3,10 @@ import client from "../../../tina/__generated__/client";
 import { GetStaticPropsContext } from "next";
 import { useTina } from "tinacms/dist/react";
 import { PostQuery } from "../../../tina/__generated__/types";
-import { Center, Divider, Group, Paper, Stack, Title } from "@mantine/core";
 import FormattedDate from "@/components/atoms/FormattedDate";
 import { TinaMarkdown } from "tinacms/dist/rich-text";
 import NicelyCentered from "@/components/atoms/NicelyCentered";
-import { WINE_MID_COLOR } from "@/theme";
-import { Text } from "@mantine/core";
+import { DEEP, TEAL } from "@/theme";
 import Head from "next/head";
 import POST_COMPONENTS from "@/components/organisms/PostComponents";
 
@@ -61,53 +59,56 @@ export default function Post(props: {
       <Head>
         <title>{data.post.title} | Will Beddow</title>
       </Head>
-      <NicelyCentered
-        component={Paper}
-        style={{
-          borderRadius: 20,
-          border: `2px dotted ${WINE_MID_COLOR}`,
-        }}
-      >
-        <Stack>
-          <div
+      <NicelyCentered component={"article"}>
+        <div
+          className="box"
+          style={{
+            color: DEEP,
+          }}
+        >
+          <header
             style={{
-              textAlign: "center",
+              marginBottom: "24px",
+              paddingBottom: "16px",
+              borderBottom: `1px solid ${TEAL}`,
             }}
           >
-            <Title
+            <h1
               style={{
                 fontSize: "1.5em",
-                textAlign: "center",
+                fontWeight: 700,
+                margin: "0 0 8px 0",
               }}
             >
               {data.post.title}
-            </Title>
-            <Text
+            </h1>
+            <p
               style={{
-                textAlign: "center",
+                fontSize: "1em",
+                margin: "0 0 8px 0",
+                fontStyle: "italic",
               }}
             >
               {data.post.blurb}
-            </Text>
-            <Center>
-              <Group>
-                <>
-                  <b>Created: </b>{" "}
-                  <FormattedDate isoString={data.post.created_at} />
-                </>
-                <>
-                  <b>Updated: </b>{" "}
-                  <FormattedDate isoString={data.post.updated_at} />
-                </>
-              </Group>
-            </Center>
-          </div>
+            </p>
+            <p
+              style={{
+                fontSize: "0.85em",
+                margin: 0,
+                color: TEAL,
+              }}
+            >
+              <FormattedDate isoString={data.post.created_at} />
+              {data.post.updated_at !== data.post.created_at && (
+                <> · updated <FormattedDate isoString={data.post.updated_at} /></>
+              )}
+            </p>
+          </header>
 
-          <Divider />
           <div
             style={{
-              fontWeight: 50,
-              maxWidth: "calc(100vw - 75px)",
+              lineHeight: 1.6,
+              maxWidth: "100%",
             }}
           >
             <TinaMarkdown
@@ -115,7 +116,7 @@ export default function Post(props: {
               components={POST_COMPONENTS}
             />
           </div>
-        </Stack>
+        </div>
       </NicelyCentered>
     </>
   );
