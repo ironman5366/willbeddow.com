@@ -18,7 +18,7 @@ function AllPostsLink() {
         paddingBottom: "2px",
       }}
     >
-      all posts →
+      All Posts →
     </Link>
   );
 }

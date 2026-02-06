@@ -38,7 +38,7 @@ export default function Header() {
           textDecoration: "none",
         }}
       >
-        will beddow
+        Will Beddow
       </FancyLink>
 
       <nav
@@ -48,7 +48,7 @@ export default function Header() {
           fontSize: isMobile ? "0.9em" : "1em",
         }}
       >
-        <FancyLink href={"/writing"}>writing</FancyLink>
+        <FancyLink href={"/writing"}>Writing</FancyLink>
         <FancyLink href={`mailto:${EMAIL}`}>{contactText}</FancyLink>
       </nav>
     </header>
