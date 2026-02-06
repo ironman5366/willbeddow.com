@@ -4,7 +4,7 @@ import { EMAIL } from "@/constants";
 import FancyLink from "@/components/atoms/FancyLink";
 
 const SECTIONS: ReactNode[] = [
-  "I'm a programmer and occasional blogger. I like writing code, being outside, and websites that feel cozy.",
+  "I'm a programmer and occasional blogger. I like writing code, being outside, and websites that feel aquatic.",
   <>
     I live in San Francisco and work at{" "}
     <FancyLink href={"https://krea.ai"}>Krea</FancyLink>.
