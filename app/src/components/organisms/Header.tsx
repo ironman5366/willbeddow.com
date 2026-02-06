@@ -22,6 +22,8 @@ export default function Header() {
   return (
     <header
       style={{
+        position: "relative",
+        zIndex: 2,
         padding: "12px 16px",
         backgroundColor: "#ffffff",
         borderBottom: `1px solid ${DEEP}`,
