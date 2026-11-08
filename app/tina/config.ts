@@ -48,6 +48,11 @@ export default defineConfig({
             required: true,
           },
           {
+            type: "string",
+            name: "link",
+            label: "Link destination (optional)",
+          },
+          {
             type: "rich-text",
             name: "body",
             label: "Body",

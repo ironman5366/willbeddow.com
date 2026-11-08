@@ -1,5 +1,5 @@
 export function getDocumentPath(
-  doc: { _sys?: { filename?: string } } | null | undefined
+  doc: { link?: string | null; _sys?: { filename?: string } } | null | undefined
 ) {
-  return `/posts/${doc?._sys?.filename}`;
+  return doc?.link || `/posts/${doc?._sys?.filename}`;
 }
