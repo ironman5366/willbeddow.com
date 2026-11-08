@@ -15,7 +15,7 @@ export async function getStaticPaths() {
   const edges = postsListData.data.postConnection.edges || [];
 
   return {
-    paths: edges.map((post) => ({
+    paths: edges.filter((post) => !post?.node?.link).map((post) => ({
       params: { filename: post?.node?._sys.filename || "" },
     })),
     fallback: false,

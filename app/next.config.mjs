@@ -1,5 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  async redirects() {
+    return [{
+      source: "/posts/entropybench",
+      destination: "/research/entropybench",
+      permanent: false,
+    }];
+  },
   async rewrites() {
     return [{
       source: "/research/entropybench",
