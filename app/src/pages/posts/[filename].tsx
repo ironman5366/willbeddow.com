@@ -34,6 +34,10 @@ export async function getStaticProps({
   const data = res.data;
   variables = res.variables;
 
+  if (data.post.link) {
+    return { redirect: { destination: data.post.link, permanent: false } };
+  }
+
   return {
     props: {
       variables: variables,

@@ -6,16 +6,24 @@ import FancyLink from "@/components/atoms/FancyLink";
 const SECTIONS: ReactNode[] = [
   "I'm a programmer and occasional blogger. I like writing code, being outside, and websites that feel aquatic.",
   <>
-    I live in San Francisco and work at{" "}
-    <FancyLink href={"https://krea.ai"}>Krea</FancyLink>.
+    I live in San Francisco and am currently exploring independent research projects in superforecasting, security, and autonomous organizations.
   </>,
+  <>
+    Previously, I was a founding engineer at{" "}
+    <FancyLink href={"https://krea.ai"}>Krea</FancyLink>, where I led the supercomputing team.
+  </>,
+
   <>
     You can find my code at{" "}
     <FancyLink href={"https://github.com/ironman5366"}>
       github.com/ironman5366
     </FancyLink>
-    , or email me at{" "}
-    <FancyLink href={`mailto:${EMAIL}`}>{EMAIL}</FancyLink>.
+    , email me at{" "}
+
+    <FancyLink href={`mailto:${EMAIL}`}>{EMAIL}</FancyLink>, or read my dumb tweets at{" "}
+    <FancyLink href={"https://x.com/willbeddow5366?"}>
+      @willbeddow5366
+    </FancyLink>.
   </>,
 ];
 
